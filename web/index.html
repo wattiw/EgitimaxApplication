@@ -54,6 +54,19 @@
         }
       });
     });
+
+      try {
+    // Request necessary permissions
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+      .then(function(stream) {
+        // Handle the success case
+      })
+      .catch(function(error) {
+        // Handle the error case
+      });
+  } catch (e) {
+    // Handle any exceptions related to permissions
+  }
   </script>
 </body>
 </html>
