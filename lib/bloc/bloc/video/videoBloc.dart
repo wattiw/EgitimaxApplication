@@ -312,6 +312,7 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
         BigInt? createdBy = tblVidVideoMainDataSet.firstValueWithType<BigInt>('data', 'created_by', insteadOfNull: BigInt.parse('0'));
         BigInt? updatedBy = tblVidVideoMainDataSet.firstValueWithType<BigInt>('data', 'updated_by', insteadOfNull: BigInt.parse('0'));
         DateTime? createdOn = tblVidVideoMainDataSet.firstValueWithType<DateTime>('data', 'created_on', insteadOfNull:DateTime.now() );
+     double? aggRating = tblVidVideoMainDataSet.firstValueWithType<double?>('data', 'aggRating', insteadOfNull:double.parse('0') );
 
         SetVideoObjects setObject = SetVideoObjects();
         setObject.isDelete=false;
@@ -335,7 +336,7 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
           isPublic: event.videoPageModel.isPublic == true ? 1 : 0,
           isActive: 0,
           isApproved: 0,
-          aggRating: 0,
+          aggRating: aggRating,
           createdBy: createdBy == BigInt.parse('0')
               ? event.videoPageModel.userId
               : createdBy,

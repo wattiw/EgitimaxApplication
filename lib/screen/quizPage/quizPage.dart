@@ -433,10 +433,16 @@ class _QuizPageState extends State<QuizPage> {
     final screenWidth = MediaQuery.of(context).size.width;
     return Container(
       child: FutureBuilder<Widget>(
-        future: quizPageModel.generateHtmlDocument(quizPageModel.quizMain!,context,),
+        future: quizPageModel.generateHtmlDocument(
+          quizPageModel.quizMain!,
+          context,
+        ),
         builder: (BuildContext context, AsyncSnapshot<Widget> snapshot) {
           if (snapshot.hasData) {
-            return snapshot.data ?? Container();
+            return Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: snapshot.data ?? Container(),
+            );
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {

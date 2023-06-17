@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'package:egitimaxapplication/model/common/getDataSet.dart';
+import 'package:egitimaxapplication/model/quiz/setQuizObjects.dart';
 import 'package:egitimaxapplication/model/video/setVideoObjects.dart';
 import 'package:egitimaxapplication/utils/extension/apiDataSetExtension.dart';
 import 'package:egitimaxapplication/utils/service/webApi/apiBasicAuthorization.dart';
@@ -73,7 +74,7 @@ class QuizRepository {
   }
 
   Future<Map<String, dynamic>> setDataSet(
-      {required SetVideoObjects setObject}) async {
+      {required SetQuizObjects setObject}) async {
     if (setObject != null) {
       var data = setObject.toMap();
       Map<String, dynamic> result =
