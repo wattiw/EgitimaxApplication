@@ -1,0 +1,492 @@
+{
+  "lib.main": {
+    "build": {
+      "egitimaxApplicationTitle": "Eğitimax (EN)",
+      "builder": "Hata oluşturucu !!!"
+    }
+  },
+  "lib.utils.widget.appBar.mainAppBar": {
+    "build": {
+      "searchBarHinttext": "Ara...",
+      "appBarHomeButtonText": "Anasayfa",
+      "appBarNetworkButtonText": "Ağ",
+      "appBarLessonsButtonText": "Dersler",
+      "appBarTasksButtonText": "Görevler",
+      "appBarMessagingButtonText": "Mesajlaşma",
+      "appBarNotificationsButtonText": "Bildirimler",
+      "appBarSettingsButtonText": "Ayarlar"
+    },
+    "CustomPopupMenu": {
+      "PopupMenuItemOptionOne": "Seçenek 1",
+      "PopupMenuItemOptionTwo": "Seçenek 2",
+      "CheckedPopupMenuItemCheckedOption": "Seçenek işaretlendi",
+      "PopupMenuItemListTimeOption": "Liste öğesi seçeneği",
+      "PopupMenuItemCustomRowItem": "Özel sıra öğesi",
+      "PopupMenuItemCustomContainerItem": "Özel konteyner öğesi",
+      "PopupMenuItemCustomColumnItem": "Özel sütun öğesi"
+    }
+  },
+  "lib.utils.configs.web.appRouter": {
+    "generateRoute": {
+      "defaultNoRoute": "Yol belirtilmedi: "
+    },
+    "unknownRoute": {
+      "noRouteMessage": "Yol belirtilmedi: "
+    }
+  },
+  "lib.utils.service.webApi.apiBasicAuthorization": {
+    "_response": {
+      "ExceptionMessage": "Veri alınırken hata oluştu"
+    }
+  },
+  "lib.utils.service.webApi.apiBearerAuthorization": {
+    "_response": {
+      "ExceptionMessage": "Veri alınırken hata oluştu"
+    }
+  },
+  "lib.utils.widget.drawer.mainDrawer": {
+    "getDrawer": {
+      "DrawerHeaderText": "Çekmece Başlığı",
+      "ListTileMessages": "Mesajlar",
+      "ListTileProfile": "Profil",
+      "ListTileSettings": "Ayarlar"
+    }
+  },
+  "lib.utils.widget.layout.mainLayout": {
+    "build": {
+      "title": "Eğitimax (EN)",
+      "ErrorStateContainer": "Oops, bir şeyler ters gitti:",
+      "LoadedStateContainer": "Veriler yüklendi!",
+      "LoadingStateContainer": "Lütfen bekleyin...",
+      "InitialStateContainer": "Hoş geldiniz!",
+      "BusyStateContainer": "Yükleniyor...",
+      "IdleStateContainer": "Sabırlı olun, çalışıyoruz!"
+    }
+  },
+  "lib.utils.extension.keyValueListTranslateExtension": {
+    "IntKeyValueListTranslateExtension": {
+      "qt_test": "Test",
+      "at_freetext": "Klasik",
+      "dif_easy": "Kolay",
+      "dif_medium": "Orta",
+      "dif_hard": "Zor"
+    },
+    "BigIntKeyValueListTranslateExtension": {
+      "test": "test"
+    }
+  },
+  "lib.screen.questionPage.questionPageComponents.academicYear": {
+    "build": {
+      "academicYear": "Akademik Yıl"
+    }
+  },
+  "lib.screen.questionPage.questionPageComponents.achievements": {
+    "build": {
+      "achievements": "Kazanımlar",
+      "checkUnCheck": "Seç/Kaldır"
+    }
+  },
+  "lib.screen.questionPage.questionPageComponents.branch": {
+    "build": {
+      "branch": "Branş"
+    }
+  },
+  "lib.screen.questionPage.questionPageComponents.difficultyLevel": {
+    "build": {
+      "difficultyLevel": "Zorluk Seviyesi"
+    }
+  },
+  "lib.screen.questionPage.questionPageComponents.domain": {
+    "build": {
+      "domain": "Alan"
+    }
+  },
+  "lib.screen.questionPage.questionPageComponents.grade": {
+    "build": {
+      "grade": "Sınıf"
+    }
+  },
+  "lib.screen.questionPage.questionPageComponents.isPublic": {
+    "build": {
+      "isPublic": "Herkes bu soruyu görebilir"
+    }
+  },
+  "lib.screen.questionPage.questionPageComponents.optionsAndFreeTextAnswerButtons": {
+    "build": {
+      "options": "Şıklar",
+      "freeTextAnswer": "Serbest Metin Çözüm",
+      "pleaseFillTheAnswerCorrectly": "Lütfen cevabı doğru şekilde doldurun!",
+      "typeHere": "Buraya yazın...",
+      "next": "İleri"
+    }
+  },
+  "lib.screen.questionPage.questionPageComponents.questionFreeTextAnswerQuillHtmlEditor": {
+    "build": {
+      "typeHere": "Buraya yazın..."
+    }
+  },
+  "lib.screen.questionPage.questionPageComponents.questionQuillHtmlEditor": {
+    "build": {
+      "typeHere": "Buraya yazın..."
+    }
+  },
+  "lib.screen.questionPage.questionPageComponents.questionType": {
+    "build": {
+      "questionType": "Soru Türü"
+    }
+  },
+  "lib.screen.questionPage.stepsValidator": {
+    "validateStep1": {
+      "isQuestionSetMessage": "Lütfen soru metnini girin!",
+      "isOptionExistMessage": "Lütfen en az bir şık girin!",
+      "isEachOptionContentExistMessage": "Lütfen tüm şıkların içeriğini girin!",
+      "isCorrectOptionsSetMessage": "Lütfen doğru şıkkı seçin!"
+    },
+    "validateStep2": {
+      "selectedAcademicYearMessage": "Lütfen akademik yıl seçin!",
+      "selectedQuestionTypeMessage": "Lütfen soru türünü seçin!",
+      "selectedDifficultyLevelMessage": "Lütfen zorluk seviyesi seçin!",
+      "isPublicMessage": "Lütfen sorunun herkese açık mı özel mi olduğunu seçin!",
+      "selectedGradeMessage": "Lütfen sınıfı seçin!",
+      "selectedBranchMessage": "Lütfen dal seçin!",
+      "selectedDomainMessage": "Lütfen alan seçin!",
+      "selectedSubDomainMessage": "Lütfen alt alan seçin!",
+      "selectedLearnMessage": "Lütfen kazanım ana konularını seçin!",
+      "selectedAchievementsMessage": "Lütfen en az bir kazanım seçin!"
+    }
+  },
+  "lib.screen.questionPage.questionPageComponents.subDomain": {
+    "build": {
+      "subDomain": "Alt Alan"
+    }
+  },
+  "lib.screen.questionPage.questionOptionsPage": {
+    "setContent": {
+      "noDataRetrieved": "Veri alınamadı!"
+    },
+    "build": {
+      "questionOptions": "Soru Şıkları"
+    },
+    "initialOptionsStateContainer": {
+      "qPOpsPagePreparingToLoad": "QPOps sayfası yüklenmeye hazırlanıyor."
+    },
+    "loadingOptionsStateContainer": {
+      "qPOpsPageComponentsLoading": "QPOps sayfa bileşenleri yükleniyor."
+    },
+    "loadedOptionsStateContainer": {
+      "errorMarked": "Hata)",
+      "isCorrect": "Doğru mu ?",
+      "deleteOption": "Şıkkı Sil",
+      "toolbar": "Araç Çubuğu",
+      "typeHere": "Buraya yazın...",
+      "addOption": "Şık Ekle",
+      "addResolutionText": "Çözüm Metni Ekle",
+      "resolutionText": "Çözüm Metni",
+      "next": "Sonraki",
+      "qPOpsPageLoaded": "QPOps sayfası yüklendi"
+    },
+    "errorOptionsStateContainer": {
+      "qPOpsAnErrorOccurredWhileLoadingThePageError:": "QPOps sayfa yüklenirken bir hata oluştu. Hata:"
+    }
+  },
+  "lib.screen.questionPage.questionPage": {
+    "getStepThreeLayout": {
+      "questionTitle": "Soru:",
+      "resolutionTitle": "Çözümler:"
+    },
+    "getSelectedOptionsTable": {
+      "country": "Ülke",
+      "grade": "Sınıf",
+      "academicYear": "Akademik Yıl",
+      "questionType": "Soru Türü",
+      "isPublic": "Herkes Görebilir mi ?",
+      "isPublicYes": "Evet",
+      "isPublicNo": "Hayır",
+      "difficultyLevel": "Zorluk Seviyesi",
+      "branch": "Branş",
+      "domain": "Alan",
+      "subDomain": "Alt Alan",
+      "learn": "Kazanım Ağacı"
+    },
+    "getSelectedAchievementsTable": {
+      "achievementId": "Kazanım No",
+      "achievementName": "Kazanım Adı"
+    },
+    "build": {
+      "questionOperations": "Soru İşlemleri"
+    },
+    "setQuestionAndOptionsControllers": {
+      "defaultOptionText": "<h1>Eğitimax</h1>Sınırları kaldır - keşfet, öğren, ilerle!"
+    },
+    "questionOperationsSteps": {
+      "questionText": "Soru Metni",
+      "subjectAndAchievements": "Konu ve Kazanımlar",
+      "summaryAndSubmit": "Özet ve Gönder"
+    },
+    "_buildStepper": {
+      "next": "İleri",
+      "back": "Geri",
+      "submit": "Gönder"
+    },
+    "_buildInit": {
+      "initializing": "Başlatılıyor..."
+    },
+    "_buildLoading": {
+      "loading": "Yükleniyor..."
+    },
+    "_buildError": {
+      "unknownError": "Bilinmeyen hata oluştu."
+    },
+    "_buildErrorStep1": {
+      "unknownError": "Bilinmeyen hata oluştu."
+    },
+    "_buildErrorStep2": {
+      "unknownError": "Bilinmeyen hata oluştu."
+    },
+    "_buildErrorStep3": {
+      "unknownError": "Bilinmeyen hata oluştu."
+    },
+    "_buildSavedPm": {
+      "questionSaved": "Soru kaydedildi."
+    },
+    "_buildErrorPm": {
+      "questionNotSaved": "Soru kaydedilemedi."
+    },
+    "_buildLoadingStep1": {
+      "firstStepLoading": "İlk Adım Yükleniyor..."
+    },
+    "_buildLoadingStep2": {
+      "secondStepLoading": "İkinci Adım Yükleniyor..."
+    },
+    "_buildLoadingStep3": {
+      "thirdStepLoading": "Üçüncü Adım Yükleniyor..."
+    },
+    "_buildSavingPm": {
+      "pageModelSaving": "Sayfa Modeli Kaydediliyor..."
+    },
+    "_buildLoadingPm": {
+      "pageModelLoading": "Sayfa Modeli Yükleniyor..."
+    },
+    "_buildDeletingPm": {
+      "pageModelDeleting": "Sayfa Modeli Siliniyor..."
+    },
+    "_buildRemovingPm": {
+      "pageModelRemoving": "Sayfa Modeli Kaldırılıyor..."
+    },
+
+    "gradeDropdownButtonFormField": {
+      "grade": "Sınıf"
+    },
+    "branchDropdownButtonFormField": {
+      "branch": "Branş"
+    },
+    "difficultyLevelDropdownButtonFormField": {
+      "difficultyLevel": "Zorluk Seviyesi"
+    },
+    "academicYearDropdownButtonFormField": {
+      "academicYear": "Akademik Yıl"
+    }
+
+  },
+  "lib.bloc.bloc.video.videoBloc": {
+    "InitEvent": {
+      "videoUploaded": "Video Yüklendi:",
+      "videoNotExist": "Video Mevcut Değil"
+    }
+  },
+  "lib.screen.common.academicYearDropdownButtonFormField": {
+    "build": {
+      "academicYear": "Akademik Yıl"
+    }
+  },
+  "lib.screen.common.achievementsCheckboxListTile": {
+    "build": {
+      "achievements": "Kazanımlar",
+      "checkUnCheck": "İşaretle/Kaldır"
+    }
+  },
+  "lib.screen.common.branchDropdownButtonFormField": {
+    "build": {
+      "branch": "Branş"
+    }
+  },
+  "lib.screen.common.countryDropdownButtonFormField": {
+    "build": {
+      "country": "Ülke"
+    }
+  },
+  "lib.screen.common.difficultyLevelDropdownButtonFormField": {
+    "build": {
+      "difficultyLevel": "Zorluk Seviyesi"
+    }
+  },
+  "lib.screen.common.domainDropdownButtonFormField": {
+    "build": {
+      "domain": "Alan"
+    }
+  },
+  "lib.screen.common.gradeDropdownButtonFormField": {
+    "build": {
+      "grade": "Sınıf"
+    }
+  },
+  "lib.screen.common.isPublicCheckBox": {
+    "build": {
+      "isPublic": "Herkes bu soruyu görebilir"
+    }
+  },
+  "lib.screen.common.questionTypeDropdownButtonFormField": {
+    "build": {
+      "questionType": "Soru Türü"
+    }
+  },
+  "lib.screen.common.subDomainDropdownButtonFormField": {
+    "build": {
+      "subDomain": "Alt Alan"
+    }
+  },
+  "lib.screen.videoPage.stepsValidator": {
+    "validateStep1": {
+      "videoNotUploaded": "Video yüklenmedi",
+      "reUploadVideo": "Please upload video again !",
+      "videoTitleNotSet": "Video başlığı belirtilmedi",
+      "videoDescriptionIsNotSet": "Video açıklaması belirtilmedi",
+      "publicOptionIsNotSet": "Herkese açık seçeneği belirtilmedi",
+      "termsAndConditionsNotAccepted": "Koşullar ve şartlar kabul edilmedi"
+    },
+    "validateStep2": {
+      "academicYearIsNotSelected": "Akademik yıl seçilmedi",
+      "gradeIsNotSelected": "Sınıf seçilmedi",
+      "branchIsNotSelected": "Branş seçilmedi",
+      "domainIsNotSelected": "Alan seçilmedi",
+      "subDomainIsNotSelected": "Alt alan seçilmedi",
+      "learnIsNotSelected": "Lütfen kazanım ana konularını seçin!",
+      "noAchievementsSelected": "Kazanım seçilmedi"
+    }
+  },
+  "lib.screen.videoPage.videoPage": {
+    "showVideoDeleteConfirmationDialog": {
+      "confirmation": "Onay",
+      "message": "Videoyu silmek istiyor musunuz?",
+      "yesButtonText": "Evet",
+      "noButtonText": "Hayır"
+    },
+    "showVideoUploadAcceptConditionsConfirmationDialog": {
+      "confirmation": "Onay",
+      "message": "Topluluğumuzu korumak için Topluluk İlkelerimiz tasarlanmıştır. Bu kurallar, Eğitimax platformundaki tüm içerik türleri, videolar, yorumlar, bağlantılar ve küçük resimler dahil olmak üzere nelerin izin verildiğini ve nelerin izin verilmediğini belirtir. Lütfen topluluk ilkelerimize ve yasalara uyduğunuzu onaylayın.",
+      "yesButtonText": "Evet",
+      "noButtonText": "Hayır"
+    },
+    "uploadVideo": {
+      "videoDurationAlertMessage": "Video süresi en az 1 dakika olmalı ve 3 dakikayı geçmemelidir.",
+      "videoUploaded": "Video Yüklendi",
+      "videoNotExist": "Video Mevcut Değil"
+    },
+    "build": {
+      "videoOperations": "Video İşlemleri"
+    },
+    "videoOperationsSteps": {
+      "videoUpload": "Video Yükle",
+      "videoAchievements": "Video Kazanımları",
+      "summaryAndSubmit": "Özet ve Gönder"
+    },
+    "getStepOneLayout": {
+      "videoPlayer": "Video Oynatıcı",
+      "deleteUploadedVideo": "Yüklenen Videoyu Sil",
+      "videoUploaded": "Video yüklendi",
+      "videoUpload": "Video Yükle",
+      "videoUploading": "Video yükleniyor",
+      "videoTitle": "Video Başlığı",
+      "videoDescription": "Video Açıklaması",
+      "anyoneCanSeeThisVideo": "Herkes bu videoyu görebilir!",
+      "acceptCommunityGuidelines": "Topluluk İlkelerini Kabul Et"
+    },
+    "getStepTwoLayout": {
+      "grade": "Sınıf",
+      "branch": "Branş",
+      "difficultyLevel": "Zorluk Seviyesi",
+      "academicYear": "Akademik Yıl"
+    },
+    "getStepThreeLayout": {
+      "noVideoUploaded": "Yüklenen Video Yok"
+    },
+    "_buildStepper": {
+      "next": "İleri",
+      "back": "Geri",
+      "submit": "Gönder"
+    },
+    "_buildInit": {
+      "initializing": "Başlatılıyor..."
+    },
+    "_buildLoading": {
+      "loading": "Yükleniyor..."
+    },
+    "_buildError": {
+      "unknownError": "Bilinmeyen bir hata oluştu."
+    },
+    "_buildLoadingStep1": {
+      "firstStepLoading": "Birinci Adım Yükleniyor..."
+    },
+    "_buildErrorStep1": {
+      "unknownError": "Bilinmeyen bir hata oluştu."
+    },
+    "_buildLoadingStep2": {
+      "secondStepLoading": "İkinci Adım Yükleniyor..."
+    },
+    "_buildErrorStep2": {
+      "unknownError": "Bilinmeyen bir hata oluştu."
+    },
+    "_buildLoadingStep3": {
+      "thirdStepLoading": "Üçüncü Adım Yükleniyor..."
+    },
+    "_buildErrorStep3": {
+      "unknownError": "Bilinmeyen bir hata oluştu."
+    },
+    "_buildSavingPm": {
+      "pageModelSaving": "Sayfa Modeli Kaydediliyor..."
+    },
+    "_buildLoadingPm": {
+      "pageModelLoading": "Sayfa Modeli Yükleniyor..."
+    },
+    "_buildDeletingPm": {
+      "pageModelDeleting": "Sayfa Modeli Siliniyor..."
+    },
+    "_buildRemovingPm": {
+      "pageModelRemoving": "Sayfa Modeli Kaldırılıyor..."
+    },
+    "_buildSavedPm": {
+      "videoSaved": "Video kaydedildi."
+    },
+    "_buildErrorPm": {
+      "videoNotSaved": "Video kaydedilmedi."
+    }
+  },
+  "lib.model.video.videoPageModel": {
+    "toKeyValuePairs": {
+      "isPublic": "Bu videoyu herkes görebilir",
+      "isPublicYes": "Evet",
+      "isPublicNo": "Hayır",
+      "isAcceptConditions": "Koşulları Kabul Et",
+      "isAcceptConditionsYes": "Evet",
+      "isAcceptConditionsNo": "Hayır",
+      "videoTitle": "Video Başlığı",
+      "videoDescriptions": "Video Açıklamaları",
+      "country": "Ülke",
+      "academicYear": "Akademik Yıl",
+      "grade": "Sınıf",
+      "branch": "Branş",
+      "domain": "Alan",
+      "learn": "Kazanım Ağacı",
+      "subDomain": "Alt Alan"
+
+    }
+  },
+  "lib.screen.common.learnLevels": {
+    "createDropDownBoxesOfLearns": {
+      "ct_dom": "Alan",
+      "ct_subdom": "Alt Alan",
+      "ct_achv": "Kazanımlar",
+      "ct_subject":"Konu"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "egitimax-387209",
+  "private_key_id": "8b825828a68599883f018febaaf87ef49090fdbc",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQC2zjY53EXdw8g0\nOutyAUGVVhheoLNsRU5/SsmSCo94Yo6Hdxjr13FNDJ1iBdTzzQeiSgcnsZntb9ek\nN5GrqfhB55skCgfz+peUUq9Oy+EdNg06JKM2fpdJS1eEaYR0kxINNiPBjwW5f5GX\nz5wXRZf6IsbWCF0VIskSU2qBnPkF1T/7srHLhGg89pSx8j95vcXv+mZzTM31K9vW\nw6dQii9FKPSvrQ7OEVCXMEHKBrYJ+vgMzthEvkZcPT1a8QSqF+UeVqCrWOgXWIYf\ns/F5qpubN4Tlr1moSsedEf04fdZQfrycOHPctgFh+ynlkvYDH2IxCjelvedBGDdm\nX7vF7D+bAgMBAAECggEAHN4uV1oe+Qj/MgBRSLeaERMqK1yv+NvDrFELHoeRuy5q\ng59IeDXq1oK0zSij8GbjBbswVhGzKnkMUgp/HooWLOd+QGVfzCTj5bBeWXsoxDbS\nRT7z50R7xOn48BgZqq8ZnVcnXlxPncjfclx+sc4eVInutxirBQ4b4qD5o24+hQUF\n3BThQfci/y60JVdk/ZIGNEcpVSiBZsexI7ZOYe+Ix6k2693oxtOJ7c6OFG5mtbBI\n1PbpmX582ZlIo+j1Iiv+VExX761DLQXPUat1ELYdc8UyKpmpXXVDAfP6SphwXy8f\n6WhXdnIwzFLMESX16UVek9arlQT8iKF+8jeuSslfgQKBgQD1Kl5yXLTKc+OaegHe\nTG8Bct/WE/oa5Y33ll92LBkb/R8aNsV2IdGbQoImmTVzV5s+PnldlNYimyHrlQhF\nM/pfLiwIDAf0UX+co+6qfnUBOcY2sdnTP6IM4mGsQ1EHuBOzXZ1pFHmvOrkn+1Ne\n7B3E8Iw3YjZYHGsgLYRuVFCnIwKBgQC+4lh4H4Oz7KbZROl2OmSB+YINVIaU3i8T\nqQV78A2aU4hWnqXIccPxuBLM8484b/mFTVFb8Eiu/69qYWiwaRfFpo1eedpY5xFm\nfrx4N9DsheuVtfL6ZHiygN1lPlNjN8uxgF0l21LmE+hrwMYcWla1oMykfBx2uuvU\n1oprhw3JKQKBgQCdth7BtM98eSaOZjQze7nhFbPWdE1s5gT4o5xPWbjhX2iVpWxL\nPSAon5U4HVDcHRw541iRkcBazK76bInActp6Rip/FrY7Pf44luBefzDnk/Hll22H\nzqSBY1Pvy/IhZBIQTYWIZmqNBdq8VJniM0RHP3MD4cMR1V44ee96RfUIPwKBgQCV\nLC4XMgmqwnZhtQj97AQ/zs1jvXqvPDNuGdi/UopO4JjbmH/WdZG7hS6sHGsAoAFP\nu2ypfM5QdGCRsi4uLvL084PnITMR5wIiJ0kCahxLuxywktCf/YSVez+Jr3tbPm9g\n9//TZeMTCtvH2Y74+WBp8I/8u0FDSDCk1ES4Y4LSgQKBgQCrWvpxhFmzAMALAUEe\ne7pnaVthqRjqntXqigovG4QPLF0OpktXnfRcg93rHPNCgIXCIZnAgzBrHS9qSyy1\nLgsNLJmU6cniYcIPBZtT0AJ4JaDAmqbMeMcoGZ2IAYlVtM+KHfdvD+bbUefyJN0z\naYAFZ8wZbzYw0XRZvnFtvwnj6w==\n-----END PRIVATE KEY-----\n",
+  "client_email": "egitimax@egitimax-387209.iam.gserviceaccount.com",
+  "client_id": "109921316438983058008",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/egitimax%40egitimax-387209.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

@@ -1,0 +1,490 @@
+{
+  "lib.main": {
+    "build": {
+      "egitimaxApplicationTitle": "Eğitimax (EN)",
+      "builder": "Error builder !!!"
+    }
+  },
+  "lib.utils.widget.appBar.mainAppBar": {
+    "build": {
+      "searchBarHinttext": "Search...",
+      "appBarHomeButtonText": "Home",
+      "appBarNetworkButtonText": "Network",
+      "appBarLessonsButtonText": "Lessons",
+      "appBarTasksButtonText": "Tasks",
+      "appBarMessagingButtonText": "Messaging",
+      "appBarNotificationsButtonText": "Notifications",
+      "appBarSettingsButtonText": "Settings"
+    },
+    "CustomPopupMenu": {
+      "PopupMenuItemOptionOne": "Option 1",
+      "PopupMenuItemOptionTwo": "Option 2",
+      "CheckedPopupMenuItemCheckedOption": "Checked Option",
+      "PopupMenuItemListTimeOption": "List Tile Option",
+      "PopupMenuItemCustomRowItem": "Custom Row Item",
+      "PopupMenuItemCustomContainerItem": "Custom Container Item",
+      "PopupMenuItemCustomColumnItem": "Custom Column Item"
+    }
+  },
+  "lib.utils.configs.web.appRouter": {
+    "generateRoute": {
+      "defaultNoRoute": "No route defined for "
+    },
+    "unknownRoute": {
+      "noRouteMessage": "No route defined for "
+    }
+  },
+  "lib.utils.service.webApi.apiBasicAuthorization": {
+    "_response": {
+      "ExceptionMessage": "Error while fetching data"
+    }
+  },
+  "lib.utils.service.webApi.apiBearerAuthorization": {
+    "_response": {
+      "ExceptionMessage": "Error while fetching data"
+    }
+  },
+  "lib.utils.widget.drawer.mainDrawer": {
+    "getDrawer": {
+      "DrawerHeaderText": "Drawer Header",
+      "ListTileMessages": "Messages",
+      "ListTileProfile": "Profile",
+      "ListTileSettings": "Settings"
+    }
+  },
+  "lib.utils.widget.layout.mainLayout": {
+    "build": {
+      "title": "Eğitimax (EN)",
+      "ErrorStateContainer": "Oops, something went wrong:",
+      "LoadedStateContainer": "Data loaded!",
+      "LoadingStateContainer": "Please wait...",
+      "InitialStateContainer": "Welcome!"
+    }
+  },
+  "lib.utils.extension.keyValueListTranslateExtension": {
+    "IntKeyValueListTranslateExtension": {
+      "qt_test": "Test",
+      "at_freetext": "Classic",
+      "dif_easy": "Easy",
+      "dif_medium": "Medium",
+      "dif_hard": "Hard"
+    },
+    "BigIntKeyValueListTranslateExtension": {
+      "test": "test"
+    }
+  },
+  "lib.screen.questionPage.questionPageComponents.academicYear": {
+    "build": {
+      "academicYear": "Academic Year"
+    }
+  },
+  "lib.screen.questionPage.questionPageComponents.achievements": {
+    "build": {
+      "achievements": "Achievements",
+      "checkUnCheck": "Check/UnCheck"
+    }
+  },
+  "lib.screen.questionPage.questionPageComponents.branch": {
+    "build": {
+      "branch": "Branch"
+    }
+  },
+  "lib.screen.questionPage.questionPageComponents.difficultyLevel": {
+    "build": {
+      "difficultyLevel": "Difficulty Level"
+    }
+  },
+  "lib.screen.questionPage.questionPageComponents.domain": {
+    "build": {
+      "domain": "Domain"
+    }
+  },
+  "lib.screen.questionPage.questionPageComponents.grade": {
+    "build": {
+      "grade": "Grade"
+    }
+  },
+  "lib.screen.questionPage.questionPageComponents.isPublic": {
+    "build": {
+      "isPublic": "Anyone can see this question"
+    }
+  },
+  "lib.screen.questionPage.questionPageComponents.optionsAndFreeTextAnswerButtons": {
+    "build": {
+      "options": "Options",
+      "freeTextAnswer": "Free Text Answer",
+      "pleaseFillTheAnswerCorrectly": "Please fill the answer correctly !",
+      "typeHere": "Type here...",
+      "next": "Next"
+    }
+  },
+  "lib.screen.questionPage.questionPageComponents.questionFreeTextAnswerQuillHtmlEditor": {
+    "build": {
+      "typeHere": "Type here..."
+    }
+  },
+  "lib.screen.questionPage.questionPageComponents.questionQuillHtmlEditor": {
+    "build": {
+      "typeHere": "Type here..."
+    }
+  },
+  "lib.screen.questionPage.questionPageComponents.questionType": {
+    "build": {
+      "questionType": "Question Type"
+    }
+  },
+  "lib.screen.questionPage.stepsValidator": {
+    "validateStep1": {
+      "isQuestionSetMessage": "Please enter the question text!",
+      "isOptionExistMessage": "Please provide at least one option!",
+      "isEachOptionContentExistMessage": "Please enter the content for all options!",
+      "isCorrectOptionsSetMessage": "Please select the correct option!"
+    },
+    "validateStep2": {
+      "selectedAcademicYearMessage": "Please select academic year!",
+      "selectedQuestionTypeMessage": "Please select question type!",
+      "selectedDifficultyLevelMessage": "Please select difficulty level!",
+      "isPublicMessage": "Please select whether the question is public or private!",
+      "selectedGradeMessage": "Please select grade!",
+      "selectedBranchMessage": "Please select branch!",
+      "selectedDomainMessage": "Please select domain!",
+      "selectedSubDomainMessage": "Please select sub-domain!",
+      "selectedLearnMessage": "Please select achievement main subjects!",
+      "selectedAchievementsMessage": "Please select at least one achievement!"
+    }
+  },
+  "lib.screen.questionPage.questionPageComponents.subDomain": {
+    "build": {
+      "subDomain": "SubDomain"
+    }
+  },
+  "lib.screen.questionPage.questionOptionsPage": {
+    "setContent": {
+      "noDataRetrieved": "No data retrieved !"
+    },
+    "build": {
+      "questionOptions": "Question Options"
+    },
+    "initialOptionsStateContainer": {
+      "qPOpsPagePreparingToLoad": "QPOps Page Preparing to Load."
+    },
+    "loadingOptionsStateContainer": {
+      "qPOpsPageComponentsLoading": "QPOps Page Components Loading."
+    },
+    "loadedOptionsStateContainer": {
+      "errorMarked": "Error)",
+      "isCorrect": "Is Correct ?",
+      "deleteOption": "Delete Option",
+      "toolbar": "Toolbar",
+      "typeHere": "Type here...",
+      "addOption": "Add Option",
+      "addResolutionText": "Add Resolution Text",
+      "resolutionText": "Resolution Text",
+      "next": "Next",
+      "qPOpsPageLoaded": "QPOps Page Loaded"
+    },
+    "errorOptionsStateContainer": {
+      "qPOpsAnErrorOccurredWhileLoadingThePageError:": "QPOps An Error Occurred While Loading The Page. Error:"
+    }
+  },
+  "lib.screen.questionPage.questionPage": {
+    "getStepThreeLayout": {
+      "questionTitle": "Question:",
+      "resolutionTitle": "Resolutions:"
+    },
+    "getSelectedOptionsTable": {
+      "country": "Country",
+      "grade": "Grade",
+      "academicYear": "Academic Year",
+      "questionType": "Question Type",
+      "isPublic": "Is Public",
+      "isPublicYes": "Yes",
+      "isPublicNo": "No",
+      "difficultyLevel": "Difficulty Level",
+      "branch": "Branch",
+      "domain": "Domain",
+      "subDomain": "Sub Domain",
+      "learn": "Achievement Tree"
+    },
+    "getSelectedAchievementsTable": {
+      "achievementId": "Achievement Id",
+      "achievementName": "Achievement Name"
+    },
+    "build": {
+      "questionOperations": "Question Operations"
+    },
+    "setQuestionAndOptionsControllers": {
+      "defaultOptionText": "<h1>Egitimax</h1>Remove limits - explore, learn, progress!"
+    },
+    "questionOperationsSteps": {
+      "questionText": "Question Text",
+      "subjectAndAchievements": "Subject and Achievements",
+      "summaryAndSubmit": "Summary And Submit"
+    },
+    "_buildStepper": {
+      "next": "Next",
+      "back": "Back",
+      "submit": "Submit"
+    },
+    "_buildInit": {
+      "initializing": "Initializing..."
+    },
+    "_buildLoading": {
+      "loading": "Loading..."
+    },
+    "_buildError": {
+      "unknownError": "Unknown error occurred."
+    },
+    "_buildErrorStep1": {
+      "unknownError": "Unknown error occurred."
+    },
+    "_buildErrorStep2": {
+      "unknownError": "Unknown error occurred."
+    },
+    "_buildErrorStep3": {
+      "unknownError": "Unknown error occurred."
+    },
+    "_buildSavedPm": {
+      "questionSaved": "Question saved."
+    },
+    "_buildErrorPm": {
+      "questionNotSaved": "Question not saved."
+    },
+    "_buildLoadingStep1": {
+      "firstStepLoading": "First Step Loading..."
+    },
+    "_buildLoadingStep2": {
+      "secondStepLoading": "Second Step Loading..."
+    },
+    "_buildLoadingStep3": {
+      "thirdStepLoading": "Third Step Loading..."
+    },
+    "_buildSavingPm": {
+      "pageModelSaving": "Page Model Saving..."
+    },
+    "_buildLoadingPm": {
+      "pageModelLoading": "Page Model Loading..."
+    },
+    "_buildDeletingPm": {
+      "pageModelDeleting": "Page Model Deleting..."
+    },
+    "_buildRemovingPm": {
+      "pageModelRemoving": "Page Model Removing..."
+    },
+
+    "gradeDropdownButtonFormField": {
+      "grade": "Grade"
+    },
+    "branchDropdownButtonFormField": {
+      "branch": "Branch"
+    },
+    "difficultyLevelDropdownButtonFormField": {
+      "difficultyLevel": "Difficulty Level"
+    },
+    "academicYearDropdownButtonFormField": {
+      "academicYear": "Academic Year"
+    }
+
+
+  },
+  "lib.bloc.bloc.video.videoBloc": {
+    "InitEvent": {
+      "videoUploaded": "Video Uploaded:",
+      "videoNotExist": "Not Exist Video"
+    }
+  },
+  "lib.screen.common.academicYearDropdownButtonFormField": {
+    "build": {
+      "academicYear": "Academic Year"
+    }
+  },
+  "lib.screen.common.achievementsCheckboxListTile": {
+    "build": {
+      "achievements": "Achievements",
+      "checkUnCheck": "Check/UnCheck"
+    }
+  },
+  "lib.screen.common.branchDropdownButtonFormField": {
+    "build": {
+      "branch": "Branch"
+    }
+  },
+  "lib.screen.common.countryDropdownButtonFormField": {
+    "build": {
+      "country": "Country"
+    }
+  },
+  "lib.screen.common.difficultyLevelDropdownButtonFormField": {
+    "build": {
+      "difficultyLevel": "Difficulty Level"
+    }
+  },
+  "lib.screen.common.domainDropdownButtonFormField": {
+    "build": {
+      "domain": "Domain"
+    }
+  },
+  "lib.screen.common.gradeDropdownButtonFormField": {
+    "build": {
+      "grade": "Grade"
+    }
+  },
+  "lib.screen.common.isPublicCheckBox": {
+    "build": {
+      "isPublic": "Anyone can see this question"
+    }
+  },
+  "lib.screen.common.questionTypeDropdownButtonFormField": {
+    "build": {
+      "questionType": "Question Type"
+    }
+  },
+  "lib.screen.common.subDomainDropdownButtonFormField": {
+    "build": {
+      "subDomain": "SubDomain"
+    }
+  },
+  "lib.screen.videoPage.stepsValidator": {
+    "validateStep1": {
+      "videoNotUploaded": "Video not uploaded",
+      "reUploadVideo": "Please upload video again !",
+      "videoTitleNotSet": "Video title is not set",
+      "videoDescriptionIsNotSet": "Video description is not set",
+      "publicOptionIsNotSet": "Public option is not set",
+      "termsAndConditionsNotAccepted": "Terms and conditions not accepted"
+    },
+    "validateStep2": {
+      "academicYearIsNotSelected": "Academic year is not selected",
+      "gradeIsNotSelected": "Grade is not selected",
+      "branchIsNotSelected": "Branch is not selected",
+      "domainIsNotSelected": "Domain is not selected",
+      "subDomainIsNotSelected": "Subdomain is not selected",
+      "learnIsNotSelected": "Please select achievement main subjects!",
+      "noAchievementsSelected": "No achievements selected"
+    }
+  },
+  "lib.screen.videoPage.videoPage": {
+    "showVideoDeleteConfirmationDialog": {
+      "confirmation": "Confirmation",
+      "message": "Do you want to delete video ?",
+      "yesButtonText": "Yes",
+      "noButtonText": "No"
+    },
+    "showVideoUploadAcceptConditionsConfirmationDialog": {
+      "confirmation": "Confirmation",
+      "message": "Our Community Guidelines are designed to protect our community. These guidelines specify what is allowed and what is not allowed on Eğitimax, and they apply to all types of content on our platform, including videos, comments, links, and thumbnails. Please confirm that you comply with our community guidelines and the law.",
+      "yesButtonText": "Yes",
+      "noButtonText": "No"
+    },
+    "uploadVideo": {
+      "videoDurationAlertMessage": "The video duration should be at least 1 minute and not exceed 3 minutes.",
+      "videoUploaded": "Video Uploaded",
+      "videoNotExist": "Video Not Exist"
+    },
+    "build": {
+      "videoOperations": "Video Operations"
+    },
+    "videoOperationsSteps": {
+      "videoUpload": "Video Upload",
+      "videoAchievements": "Video Achievements",
+      "summaryAndSubmit": "Summary And submit"
+    },
+    "getStepOneLayout": {
+      "videoPlayer": "Video Player",
+      "deleteUploadedVideo": "Delete Uploaded Video",
+      "videoUploaded": "Video uploaded",
+      "videoUpload": "Video Upload",
+      "videoUploading": "Video uploading",
+      "videoTitle": "Video Title",
+      "videoDescription": "Video Description",
+      "anyoneCanSeeThisVideo": "Anyone can see this video !",
+      "acceptCommunityGuidelines": "Accept Community Guidelines"
+    },
+    "getStepTwoLayout": {
+      "grade": "Grade",
+      "branch": "Branch",
+      "difficultyLevel": "Difficulty Level",
+      "academicYear": "Academic Year"
+    },
+    "getStepThreeLayout": {
+      "noVideoUploaded": "No Video Uploaded"
+    },
+    "_buildStepper": {
+      "next": "Next",
+      "back": "Back",
+      "submit": "Submit"
+    },
+    "_buildInit": {
+      "initializing": "initializing..."
+    },
+    "_buildLoading": {
+      "loading": "Loading..."
+    },
+    "_buildError": {
+      "unknownError": "Unknown error occurred."
+    },
+    "_buildLoadingStep1": {
+      "firstStepLoading": "First Step Loading..."
+    },
+    "_buildErrorStep1": {
+      "unknownError": "Unknown error occurred."
+    },
+    "_buildLoadingStep2": {
+      "secondStepLoading": "Second Step Loading..."
+    },
+    "_buildErrorStep2": {
+      "unknownError": "Unknown error occurred."
+    },
+    "_buildLoadingStep3": {
+      "thirdStepLoading": "Third Step Loading..."
+    },
+    "_buildErrorStep3": {
+      "unknownError": "Unknown error occurred."
+    },
+    "_buildSavingPm": {
+      "pageModelSaving": "Page Model Saving..."
+    },
+    "_buildLoadingPm": {
+      "pageModelLoading": "Page Model Loading..."
+    },
+    "_buildDeletingPm": {
+      "pageModelDeleting": "Page Model Deleting..."
+    },
+    "_buildRemovingPm": {
+      "pageModelRemoving": "Page Model Removing..."
+    },
+    "_buildSavedPm": {
+      "videoSaved": "Video saved."
+    },
+    "_buildErrorPm": {
+      "videoNotSaved": "Video not saved."
+    }
+  },
+  "lib.model.video.videoPageModel": {
+    "toKeyValuePairs": {
+      "isPublic": "Anyone can see this video",
+      "isPublicYes": "Yes",
+      "isPublicNo": "No",
+      "isAcceptConditions": "Accept Conditions",
+      "isAcceptConditionsYes": "Yes",
+      "isAcceptConditionsNo": "No",
+      "videoTitle": "Video Title",
+      "videoDescriptions": "Video Descriptions",
+      "country": "Country",
+      "academicYear": "Academic Year",
+      "grade": "Grade",
+      "branch": "Branch",
+      "domain": "Domain",
+      "learn": "Achievement Tree",
+      "subDomain": "Subdomain"
+    }
+  },
+  "lib.screen.common.learnLevels": {
+    "createDropDownBoxesOfLearns": {
+      "ct_dom": "Domain",
+      "ct_subdom": "Sub Domain",
+      "ct_achv": "Achievements",
+      "ct_subject":"Subject"
+    }
+  }
+}
