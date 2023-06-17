@@ -7,7 +7,7 @@ import 'package:egitimaxapplication/utils/log/navigatorObserver.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
-//Started.
+
 
 GetIt getIt = GetIt.instance;
 
