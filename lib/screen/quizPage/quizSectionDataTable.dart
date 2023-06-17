@@ -920,7 +920,7 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
             padding: 0,
             onStateChanged: (value) {},
             header: Text(
-              '${emptySection.sectionDesc} Questions',
+              '${emptySection.sectionDesc} Sections',
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.grey,

@@ -104,6 +104,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
 
         event.quizPageModel.quizMain?.country = countryId;
 
+        event.quizPageModel.quizMain!.id = event.quizPageModel.quizId;
         int? academicYear = tblQuizMainDataSet
             .firstValue('data', 'academic_year', insteadOfNull: 0);
 
@@ -191,8 +192,6 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
         event.quizPageModel.quizMain!.quizSections = List.empty(growable: true);
         var sections = tblQuizSectionDataSet.selectDataTable('data');
         for (var section in sections.toList()) {
-
-
           QuizSection qs = QuizSection();
 
           try {
@@ -200,7 +199,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
             qs.quizId = BigInt.parse((section['quiz_id'] ?? '0').toString());
             qs.branchId = section['branch_id'];
             qs.orderNo = section['order_no'];
-            qs.sectionDesc =section['section_desc'];
+            qs.sectionDesc = section['section_desc'];
             qs.isActive = section['is_active'];
             qs.quizSectionQuestionMaps = List.empty(growable: true);
 
@@ -220,8 +219,10 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
               for (var map in maps.toList()) {
                 QuizSectionQuestionMap qsqm = QuizSectionQuestionMap();
                 qsqm.id = BigInt.parse((map['id'] ?? '0').toString());
-                qsqm.sectionId = BigInt.parse((map['section_id'] ?? '0').toString());
-                qsqm.questionId = BigInt.parse((map['question_id'] ?? '0').toString());
+                qsqm.sectionId =
+                    BigInt.parse((map['section_id'] ?? '0').toString());
+                qsqm.questionId =
+                    BigInt.parse((map['question_id'] ?? '0').toString());
                 qsqm.orderNo = map['order_no'];
                 qsqm.isActive = map['is_active'];
 
