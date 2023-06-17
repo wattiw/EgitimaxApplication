@@ -25,7 +25,7 @@ class SetQuizObjects {
       'QuizId': quizId,
       'QuizObjectId': quizObjectId,
       'UserId': userId,
-      'TblVidVideoMain': tblQuizMain?.toMap(),
+      'TblQuizMain': tblQuizMain?.toMap(),
     };
   }
 
@@ -37,7 +37,7 @@ class SetQuizObjects {
       quizId: map['QuizId'] ?? 0,
       quizObjectId: map['QuizObjectId'],
       userId: map['UserId'] ?? 0,
-      tblQuizMain: TblQuizMain.fromMap(map['TblVidVideoMain']),
+      tblQuizMain: TblQuizMain.fromMap(map['TblQuizMain']),
     );
   }
 }

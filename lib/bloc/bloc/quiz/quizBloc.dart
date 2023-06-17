@@ -118,7 +118,8 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
                 valueColumn: 'acad_year');
         event.quizPageModel.quizMain?.academicYear = academicYear;
 
-        BigInt? userId = tblQuizMainDataSet.firstValue('data', 'user_id',
+        BigInt? userId = tblQuizMainDataSet.firstValueWithType<BigInt>(
+            'data', 'user_id',
             insteadOfNull: BigInt.parse('0'));
         event.quizPageModel.quizMain?.userId = userId;
 
@@ -167,33 +168,39 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
             insteadOfNull: 0.0);
         event.quizPageModel.quizMain?.aggRating = aggRating;
 
-        var createdBy = tblQuizMainDataSet.firstValue('data', 'created_by',
+        var createdBy = tblQuizMainDataSet.firstValueWithType<BigInt>(
+            'data', 'created_by',
             insteadOfNull: BigInt.parse('0'));
         event.quizPageModel.quizMain?.createdBy = createdBy;
 
-        var createdOn = tblQuizMainDataSet.firstValue('data', 'created_on',
+        var createdOn = tblQuizMainDataSet.firstValueWithType<DateTime>(
+            'data', 'created_on',
             insteadOfNull: DateTime.now());
         event.quizPageModel.quizMain?.createdOn = createdOn;
 
-        var updatedBy = tblQuizMainDataSet.firstValue('data', 'updated_by',
+        var updatedBy = tblQuizMainDataSet.firstValueWithType<BigInt>(
+            'data', 'updated_by',
             insteadOfNull: BigInt.parse('0'));
         event.quizPageModel.quizMain?.updatedBy = updatedBy;
 
-        var updatedOn = tblQuizMainDataSet.firstValue('data', 'updated_on',
+        var updatedOn = tblQuizMainDataSet.firstValueWithType<DateTime>(
+            'data', 'updated_on',
             insteadOfNull: DateTime.now());
         event.quizPageModel.quizMain?.updatedOn = updatedOn;
 
         event.quizPageModel.quizMain!.quizSections = List.empty(growable: true);
-        for (var section
-            in tblQuizSectionDataSet.selectDataTable('data').toList()) {
+        var sections = tblQuizSectionDataSet.selectDataTable('data');
+        for (var section in sections.toList()) {
+
+
           QuizSection qs = QuizSection();
 
           try {
-            qs.id = section['id'];
-            qs.quizId = section['quiz_id'];
+            qs.id = BigInt.parse((section['id'] ?? '0').toString());
+            qs.quizId = BigInt.parse((section['quiz_id'] ?? '0').toString());
             qs.branchId = section['branch_id'];
             qs.orderNo = section['order_no'];
-            qs.sectionDesc = section['section_desc'];
+            qs.sectionDesc =section['section_desc'];
             qs.isActive = section['is_active'];
             qs.quizSectionQuestionMaps = List.empty(growable: true);
 
@@ -209,13 +216,12 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
                         'is_active'
                       ],
                       section_id: qs.id);
-              for (var map in tblQuizSectQuestMapDataSet
-                  .selectDataTable('data')
-                  .toList()) {
+              var maps = tblQuizSectQuestMapDataSet.selectDataTable('data');
+              for (var map in maps.toList()) {
                 QuizSectionQuestionMap qsqm = QuizSectionQuestionMap();
-                qsqm.id = map['id'];
-                qsqm.sectionId = map['section_id'];
-                qsqm.questionId = map['question_id'];
+                qsqm.id = BigInt.parse((map['id'] ?? '0').toString());
+                qsqm.sectionId = BigInt.parse((map['section_id'] ?? '0').toString());
+                qsqm.questionId = BigInt.parse((map['question_id'] ?? '0').toString());
                 qsqm.orderNo = map['order_no'];
                 qsqm.isActive = map['is_active'];
 
@@ -405,7 +411,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
       await Future.delayed(const Duration(seconds: 1));
       try {
         var tblUserSubuserDataSet = await appRepositories.tblUserSubuser(
-            'Question/GetObject', ['id', 'main_user_id', 'sub_user_id'],
+            'Quiz/GetObject', ['id', 'main_user_id', 'sub_user_id'],
             sub_user_id: event.quizPageModel.userId);
         var mainUserId = tblUserSubuserDataSet.firstValueWithType<BigInt>(
             'data', 'main_user_id',
@@ -419,7 +425,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
         }
 
         var tblQuizMainDataSet = await appRepositories.tblQuizMain(
-            'Video/GetObject', ['id', 'created_by', 'updated_by', 'created_on'],
+            'Quiz/GetObject', ['id', 'created_by', 'updated_by', 'created_on'],
             id: event.quizPageModel.quizId);
 
         BigInt? quizId = tblQuizMainDataSet.firstValueWithType<BigInt>(
@@ -491,15 +497,15 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
               createdBy: createdBy == BigInt.parse('0')
                   ? event.quizPageModel.userId
                   : createdBy,
-              createdOn: event.quizPageModel.quizId == 0
-                  ? DateTime.now()
-                  : createdOn,
+              createdOn:
+                  event.quizPageModel.quizId == 0 ? DateTime.now() : createdOn,
               updatedBy: event.quizPageModel.userId,
               updatedOn: DateTime.now(),
-                userId: isCorporateUser ? mainUserId :event.quizPageModel.userId,
+              userId: isCorporateUser ? mainUserId : event.quizPageModel.userId,
             ));
 
-                var IsSaved =await quizRepository.setDataSet(setObject: setQuizObjects);
+        var IsSaved =
+            await quizRepository.setDataSet(setObject: setQuizObjects);
         int bekle = 0;
 
         emit(SavedPmState(quizPageModel: event.quizPageModel));

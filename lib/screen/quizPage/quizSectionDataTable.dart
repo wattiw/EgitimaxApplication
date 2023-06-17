@@ -832,7 +832,7 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
           sectionQuestionOrderNo++;
         }
 
-        var sectionHeader = Text('${section.sectionDesc} Questions');
+        var sectionHeader = Text('${section.sectionDesc} Section');
         var sectionQuestionMapDataTable = CommonDataTable(
           dataTableKeyColumnName: 'id',
           dataTableSelectedKeys: null,

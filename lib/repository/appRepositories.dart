@@ -3231,7 +3231,8 @@ extension AppRepositoriesExtension on AppRepositories {
       String? title,
       BigInt? updated_by,
       DateTime? updated_on,
-      BigInt? user_id,int? getNoSqlData }) async {
+      BigInt? user_id,
+      int? getNoSqlData }) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_quiz_main ) rt";
