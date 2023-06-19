@@ -33,28 +33,26 @@ class _isPublicCheckBoxState extends State<isPublicCheckBox> {
     } else {
       widget.isPublic = false;
     }
-    return Expanded(
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Checkbox(
-            value: _isPublic,
-            onChanged: widget.onChanged != null
-                ? (value) {
-                    setState(() {
-                      _isPublic = value ?? false;
-                    });
-                    widget.onChanged!(_isPublic);
-                  }
-                : null,
-          ),
-          Text(
-            AppLocalization.instance.translate(
-                'lib.screen.common.isPublicCheckBox', 'build', 'isPublic'),
-            style: widget.componentTextStyle,
-          ),
-        ],
-      ),
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Checkbox(
+          value: _isPublic,
+          onChanged: widget.onChanged != null
+              ? (value) {
+            setState(() {
+              _isPublic = value ?? false;
+            });
+            widget.onChanged!(_isPublic);
+          }
+              : null,
+        ),
+        Text(
+          AppLocalization.instance.translate(
+              'lib.screen.common.isPublicCheckBox', 'build', 'isPublic'),
+          style: widget.componentTextStyle,
+        ),
+      ],
     );
   }
 }

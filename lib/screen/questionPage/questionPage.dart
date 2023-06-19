@@ -118,24 +118,27 @@ class _QuestionPageState extends State<QuestionPage> {
             difficultyLevelDropdownButtonFormField(),
             gradeDropdownButtonFormField(),
             branchDropdownButtonFormField(),
-            LearnLevels(
-                learnId: questionPageModel.selectedLearn,
-                branchId: questionPageModel.selectedBranch,
-                gradeId: questionPageModel.selectedGrade,
-                countryId:questionPageModel.selectedCountry,
-                onChangedLearnId:(selectedLearnId){
-                  questionPageModel.selectedLearn=selectedLearnId;
-                  questionPageModel.selectedSubDomain=selectedLearnId;
-                  setState(() {});
-                },
-                onChangedSelectedAchievements: (selectedAchievements){
-                  questionPageModel.selectedAchievements=selectedAchievements ?? {};
-                },
-                onChangedAchievements:(achievements){
-                  questionPageModel.achievements=achievements ?? {};
-                },
-                selectedAchievements:questionPageModel.selectedAchievements,
-                componentTextStyle: componentTextStyle),
+            SizedBox(
+              width: double.infinity,
+              child: LearnLevels(
+                  learnId: questionPageModel.selectedLearn,
+                  branchId: questionPageModel.selectedBranch,
+                  gradeId: questionPageModel.selectedGrade,
+                  countryId:questionPageModel.selectedCountry,
+                  onChangedLearnId:(selectedLearnId){
+                    questionPageModel.selectedLearn=selectedLearnId;
+                    questionPageModel.selectedSubDomain=selectedLearnId;
+                    setState(() {});
+                  },
+                  onChangedSelectedAchievements: (selectedAchievements){
+                    questionPageModel.selectedAchievements=selectedAchievements ?? {};
+                  },
+                  onChangedAchievements:(achievements){
+                    questionPageModel.achievements=achievements ?? {};
+                  },
+                  selectedAchievements:questionPageModel.selectedAchievements,
+                  componentTextStyle: componentTextStyle),
+            ),
           ],
         ),
       ),
