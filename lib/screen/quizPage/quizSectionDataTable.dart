@@ -13,12 +13,11 @@ import 'package:egitimaxapplication/utils/helper/getDeviceType.dart';
 import 'package:egitimaxapplication/utils/widget/layout/mainLayout.dart';
 import 'package:flutter/material.dart';
 
-
 class QuizSectionDataTable extends StatefulWidget {
-  final QuizPageModel quizPageModel;
+  QuizPageModel quizPageModel;
   final TextStyle componentTextStyle;
   Function(List<Map<String, dynamic>>? rows, List<dynamic>? rowKeys)?
-  onSelectedRowsChanged;
+      onSelectedRowsChanged;
   final Function(List<QuizSection>? quizSections) onChanged;
 
   QuizSectionDataTable({
@@ -32,7 +31,6 @@ class QuizSectionDataTable extends StatefulWidget {
 }
 
 class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
-
   List<String>? disabledColumFilters = List.empty(growable: true);
 
   @override
@@ -84,7 +82,7 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
     result = widget.quizPageModel.quizMain!.quizSections!;
 
     List<Map<Map<String, String>, Widget>>? rowList =
-    List.empty(growable: true);
+        List.empty(growable: true);
     for (var section in widget.quizPageModel.quizMain!.quizSections!) {
       Map<Map<String, String>, Widget> cells = {};
       Map<String, String> key0 = {};
@@ -123,12 +121,11 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
           widget.quizPageModel.branches[section?.branchId].toString();
       cells[key3] = Text(
         ((widget.quizPageModel.branches[section?.branchId].toString() ?? '')
-            .length >
-            15)
-            ? '${(widget.quizPageModel.branches[section?.branchId].toString() ??
-            '').substring(0, 15)}...'
+                    .length >
+                15)
+            ? '${(widget.quizPageModel.branches[section?.branchId].toString() ?? '').substring(0, 15)}...'
             : (widget.quizPageModel.branches[section?.branchId].toString() ??
-            ''),
+                ''),
         softWrap: true,
         maxLines: 3,
         overflow: TextOverflow.ellipsis,
@@ -152,79 +149,78 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
         children: [
           PopupMenuButton<String>(
               padding: const EdgeInsets.all(3.0),
-              itemBuilder: (BuildContext context) =>
-              [
-                const PopupMenuItem<String>(
-                  padding: EdgeInsets.all(3.0),
-                  value: 'add_question',
-                  textStyle: TextStyle(fontSize: 10),
-                  child: Row(
-                    children: [
-                      Icon(Icons.add, size: 14),
-                      SizedBox(width: 8),
-                      Text('Add Question', style: TextStyle(fontSize: 10)),
-                    ],
-                  ),
-                ),
-                const PopupMenuItem<String>(
-                  padding: EdgeInsets.all(3.0),
-                  value: 'edit',
-                  textStyle: TextStyle(fontSize: 10),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.edit,
-                        size: 14,
+              itemBuilder: (BuildContext context) => [
+                    const PopupMenuItem<String>(
+                      padding: EdgeInsets.all(3.0),
+                      value: 'add_question',
+                      textStyle: TextStyle(fontSize: 10),
+                      child: Row(
+                        children: [
+                          Icon(Icons.add, size: 14),
+                          SizedBox(width: 8),
+                          Text('Add Question', style: TextStyle(fontSize: 10)),
+                        ],
                       ),
-                      SizedBox(width: 8),
-                      Text('Edit', style: TextStyle(fontSize: 10)),
-                    ],
-                  ),
-                ),
-                if (section.orderNo != 1)
-                  const PopupMenuItem<String>(
-                    padding: EdgeInsets.all(3.0),
-                    value: 'move_up',
-                    textStyle: TextStyle(fontSize: 10),
-                    child: Row(
-                      children: [
-                        Icon(Icons.arrow_upward, size: 14),
-                        SizedBox(width: 8),
-                        Text('Move Up', style: TextStyle(fontSize: 10)),
-                      ],
                     ),
-                  ),
-                if (widget.quizPageModel.quizMain!.quizSections?.length !=
-                    section.orderNo)
-                  const PopupMenuItem<String>(
-                    padding: EdgeInsets.all(3.0),
-                    value: 'move_down',
-                    textStyle: TextStyle(fontSize: 10),
-                    child: Row(
-                      children: [
-                        Icon(Icons.arrow_downward, size: 14),
-                        SizedBox(width: 8),
-                        Text('Move Down', style: TextStyle(fontSize: 10)),
-                      ],
+                    const PopupMenuItem<String>(
+                      padding: EdgeInsets.all(3.0),
+                      value: 'edit',
+                      textStyle: TextStyle(fontSize: 10),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.edit,
+                            size: 14,
+                          ),
+                          SizedBox(width: 8),
+                          Text('Edit', style: TextStyle(fontSize: 10)),
+                        ],
+                      ),
                     ),
-                  ),
-                if (section.orderNo != 1)
-                  const PopupMenuItem<String>(
-                    padding: EdgeInsets.all(3.0),
-                    value: 'delete',
-                    textStyle: TextStyle(fontSize: 10),
-                    child: Row(
-                      children: [
-                        Icon(Icons.delete, size: 14),
-                        SizedBox(width: 8),
-                        Text(
-                          'Delete',
-                          style: TextStyle(fontSize: 10),
+                    if (section.orderNo != 1)
+                      const PopupMenuItem<String>(
+                        padding: EdgeInsets.all(3.0),
+                        value: 'move_up',
+                        textStyle: TextStyle(fontSize: 10),
+                        child: Row(
+                          children: [
+                            Icon(Icons.arrow_upward, size: 14),
+                            SizedBox(width: 8),
+                            Text('Move Up', style: TextStyle(fontSize: 10)),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-              ],
+                      ),
+                    if (widget.quizPageModel.quizMain!.quizSections?.length !=
+                        section.orderNo)
+                      const PopupMenuItem<String>(
+                        padding: EdgeInsets.all(3.0),
+                        value: 'move_down',
+                        textStyle: TextStyle(fontSize: 10),
+                        child: Row(
+                          children: [
+                            Icon(Icons.arrow_downward, size: 14),
+                            SizedBox(width: 8),
+                            Text('Move Down', style: TextStyle(fontSize: 10)),
+                          ],
+                        ),
+                      ),
+                    if (section.orderNo != 1)
+                      const PopupMenuItem<String>(
+                        padding: EdgeInsets.all(3.0),
+                        value: 'delete',
+                        textStyle: TextStyle(fontSize: 10),
+                        child: Row(
+                          children: [
+                            Icon(Icons.delete, size: 14),
+                            SizedBox(width: 8),
+                            Text(
+                              'Delete',
+                              style: TextStyle(fontSize: 10),
+                            ),
+                          ],
+                        ),
+                      ),
+                  ],
               onSelected: (String? value) {
                 if (value == 'edit') {
                   showDialog(
@@ -239,13 +235,13 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
                             if (newSection.orderNo != null &&
                                 newSection.sectionDesc != null &&
                                 newSection.branchId != null) {
-                              widget.quizPageModel.quizMain!.quizSections?.removeWhere(
-                                      (section) =>
-                                  section.orderNo == newSection?.orderNo);
+                              widget.quizPageModel.quizMain!.quizSections
+                                  ?.removeWhere((section) =>
+                                      section.orderNo == newSection?.orderNo);
                               widget.quizPageModel.quizMain!.quizSections
                                   ?.add(newSection!);
-                              widget
-                                  .onChanged(widget.quizPageModel.quizMain!.quizSections);
+                              widget.onChanged(
+                                  widget.quizPageModel.quizMain!.quizSections);
                             }
                           }
                         },
@@ -257,7 +253,8 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
                     int currentOrder = section.orderNo ?? 0;
 
                     var currentSection = section;
-                    var replacedSection = widget.quizPageModel.quizMain!.quizSections
+                    var replacedSection = widget
+                        .quizPageModel.quizMain!.quizSections
                         ?.firstWhere((sec) => sec.orderNo == currentOrder - 1);
 
                     currentSection.orderNo = (currentOrder - 1)!;
@@ -268,10 +265,13 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
                     widget.quizPageModel.quizMain!.quizSections
                         ?.removeWhere((sec) => sec.orderNo == currentOrder);
 
-                    widget.quizPageModel.quizMain!.quizSections?.add(currentSection);
-                    widget.quizPageModel.quizMain!.quizSections?.add(replacedSection!);
+                    widget.quizPageModel.quizMain!.quizSections
+                        ?.add(currentSection);
+                    widget.quizPageModel.quizMain!.quizSections
+                        ?.add(replacedSection!);
 
-                    widget.onChanged(widget.quizPageModel.quizMain!.quizSections);
+                    widget
+                        .onChanged(widget.quizPageModel.quizMain!.quizSections);
                   }
                 } else if (value == 'move_down') {
                   if (section.orderNo !=
@@ -279,7 +279,8 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
                     int currentOrder = section.orderNo ?? 0;
 
                     var currentSection = section;
-                    var replacedSection = widget.quizPageModel.quizMain!.quizSections
+                    var replacedSection = widget
+                        .quizPageModel.quizMain!.quizSections
                         ?.firstWhere((sec) => sec.orderNo == currentOrder + 1);
 
                     currentSection.orderNo = (currentOrder + 1)!;
@@ -290,19 +291,23 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
                     widget.quizPageModel.quizMain!.quizSections
                         ?.removeWhere((sec) => sec.orderNo == currentOrder);
 
-                    widget.quizPageModel.quizMain!.quizSections?.add(currentSection);
-                    widget.quizPageModel.quizMain!.quizSections?.add(replacedSection!);
+                    widget.quizPageModel.quizMain!.quizSections
+                        ?.add(currentSection);
+                    widget.quizPageModel.quizMain!.quizSections
+                        ?.add(replacedSection!);
 
-                    widget.onChanged(widget.quizPageModel.quizMain!.quizSections);
+                    widget
+                        .onChanged(widget.quizPageModel.quizMain!.quizSections);
                   }
                 } else if (value == 'delete') {
                   widget.quizPageModel.quizMain!.quizSections
                       ?.removeWhere((sec) => sec.orderNo == section.orderNo);
 
                   widget.quizPageModel.quizMain!.quizSections!.sort(
-                          (a, b) => (a.orderNo ?? 0).compareTo(b.orderNo ?? 0));
+                      (a, b) => (a.orderNo ?? 0).compareTo(b.orderNo ?? 0));
                   int newOrder = 1;
-                  for (var section in widget.quizPageModel.quizMain!.quizSections!) {
+                  for (var section
+                      in widget.quizPageModel.quizMain!.quizSections!) {
                     section.orderNo = newOrder;
                     newOrder++;
                   }
@@ -312,73 +317,71 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) =>
-                          MainLayout(
-                              context: context,
-                              loadedStateContainer: QuestionDataTable(
-                                userId: BigInt.parse('2'),
-                                componentTextStyle: widget.componentTextStyle,
-                                selectedQuestionIds: getSectionQuestionIds(
-                                    widget
-                                        .quizPageModel.quizMain!.quizSections!
-                                        .firstWhere((element) =>
-                                    element.orderNo == section.orderNo)) ??
-                                    List.empty(growable: true),
-                                onSelectedRowsChanged:
-                                    (selectedRows, selectedKeys) {
-                                  if (widget.onSelectedRowsChanged != null) {
-                                    widget.onSelectedRowsChanged!(
-                                        selectedRows, selectedKeys);
-                                  }
-                                  selectedQuestionIdList = selectedKeys;
+                      builder: (_) => MainLayout(
+                          context: context,
+                          loadedStateContainer: QuestionDataTable(
+                            userId: widget.quizPageModel.userId,
+                            componentTextStyle: widget.componentTextStyle,
+                            selectedQuestionIds: getSectionQuestionIds(widget
+                                    .quizPageModel.quizMain!.quizSections!
+                                    .firstWhere((element) =>
+                                        element.orderNo == section.orderNo)) ??
+                                List.empty(growable: true),
+                            onSelectedRowsChanged:
+                                (selectedRows, selectedKeys) {
+                              if (widget.onSelectedRowsChanged != null) {
+                                widget.onSelectedRowsChanged!(
+                                    selectedRows, selectedKeys);
+                              }
+                              selectedQuestionIdList = selectedKeys;
 
-                                  // Değişiklikleri Anında Yansıt
-                                  section.quizSectionQuestionMaps =
-                                      List.empty(growable: true);
+                              // Değişiklikleri Anında Yansıt
+                              section.quizSectionQuestionMaps =
+                                  List.empty(growable: true);
 
-                                  if (selectedQuestionIdList != null &&
-                                      selectedQuestionIdList!.isNotEmpty) {
-                                    int questionOrderNo = 1;
-                                    for (BigInt questionId
+                              if (selectedQuestionIdList != null &&
+                                  selectedQuestionIdList!.isNotEmpty) {
+                                int questionOrderNo = 1;
+                                for (BigInt questionId
                                     in selectedQuestionIdList!) {
-                                      var qsqm = QuizSectionQuestionMap();
+                                  var qsqm = QuizSectionQuestionMap();
 
-                                      qsqm.orderNo = questionOrderNo;
-                                      qsqm.questionId = questionId;
-                                      qsqm.sectionId = section.id;
-                                      qsqm.id = BigInt.parse('0');
-                                      qsqm.isActive = 0;
+                                  qsqm.orderNo = questionOrderNo;
+                                  qsqm.questionId = questionId;
+                                  qsqm.sectionId = section.id;
+                                  qsqm.id = BigInt.parse('0');
+                                  qsqm.isActive = 0;
 
-                                      section.quizSectionQuestionMaps!.add(
-                                          qsqm);
-                                      questionOrderNo++;
-                                    }
+                                  section.quizSectionQuestionMaps!.add(qsqm);
+                                  questionOrderNo++;
+                                }
 
-                                    widget.quizPageModel.quizMain!.quizSections =
-                                        updateQuizSectionQuestionMapsByOrderNo(
-                                            widget.quizPageModel.quizMain!.quizSections!,
-                                            section.orderNo!,
-                                            section.quizSectionQuestionMaps!,
-                                            selectedRows);
-                                  } else {
-                                    widget.quizPageModel.quizMain!.quizSections =
-                                        updateQuizSectionQuestionMapsByOrderNo(
-                                            widget.quizPageModel.quizMain!.quizSections!,
-                                            section.orderNo!,
-                                            section.quizSectionQuestionMaps!,
-                                            selectedRows);
-                                  }
+                                widget.quizPageModel.quizMain!.quizSections =
+                                    updateQuizSectionQuestionMapsByOrderNo(
+                                        widget.quizPageModel.quizMain!
+                                            .quizSections!,
+                                        section.orderNo!,
+                                        section.quizSectionQuestionMaps!,
+                                        selectedRows);
+                              } else {
+                                widget.quizPageModel.quizMain!.quizSections =
+                                    updateQuizSectionQuestionMapsByOrderNo(
+                                        widget.quizPageModel.quizMain!
+                                            .quizSections!,
+                                        section.orderNo!,
+                                        section.quizSectionQuestionMaps!,
+                                        selectedRows);
+                              }
 
-                                  setState(() {});
-                                  widget
-                                      .onChanged(
-                                      widget.quizPageModel.quizMain!.quizSections);
-                                },
-                                onSelectedQuestionIdsChanged:
-                                    (List<BigInt>? selectedQuestionIds) {
-                                  int c00 = 0;
-                                },
-                              )),
+                              setState(() {});
+                              widget.onChanged(
+                                  widget.quizPageModel.quizMain!.quizSections);
+                            },
+                            onSelectedQuestionIdsChanged:
+                                (List<BigInt>? selectedQuestionIds) {
+                              int c00 = 0;
+                            },
+                          )),
                       settings: const RouteSettings(
                           name: HeroTagConstant
                               .questionSelector), // use the route name as the Hero tag
@@ -406,7 +409,10 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
     var collapsibleItems = createSectionQuestionsWidget(theme);
 
     var collapsibleItemBuilder = CollapsibleItemBuilder(
-      items: collapsibleItems, onStateChanged: (value) {}, padding: 0,);
+      items: collapsibleItems,
+      onStateChanged: (value) {},
+      padding: 0,
+    );
 
     return Wrap(
       alignment: WrapAlignment.start,
@@ -418,7 +424,8 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
             IconButton(
               onPressed: () {
                 var existDefaultSection =
-                    widget.quizPageModel.quizMain!.quizSections?.first ?? QuizSection();
+                    widget.quizPageModel.quizMain!.quizSections?.first ??
+                        QuizSection();
 
                 QuizSection newSection = QuizSection();
                 newSection.id = existDefaultSection.id;
@@ -426,7 +433,7 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
                 newSection.quizId = existDefaultSection.quizId;
                 newSection.isActive = existDefaultSection.isActive;
                 newSection?.orderNo =
-                (widget.quizPageModel.quizMain!.quizSections!.length + 1)!;
+                    (widget.quizPageModel.quizMain!.quizSections!.length + 1)!;
                 String? secDescription =
                     widget.quizPageModel.branches[newSection?.branchId] ?? '';
                 secDescription = '$secDescription Questions';
@@ -444,8 +451,10 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
                           if (newSec.orderNo != null &&
                               newSec.sectionDesc != null &&
                               newSec.branchId != null) {
-                            widget.quizPageModel.quizMain!.quizSections?.add(newSec!);
-                            widget.onChanged(widget.quizPageModel.quizMain!.quizSections);
+                            widget.quizPageModel.quizMain!.quizSections
+                                ?.add(newSec!);
+                            widget.onChanged(
+                                widget.quizPageModel.quizMain!.quizSections);
                           }
                         }
                       },
@@ -495,7 +504,7 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
             ColumnDataType('sectionDesc', String),
             ColumnDataType('branchId', int),
             ColumnDataType('qIds', int),
-            ColumnDataType('actions',String),
+            ColumnDataType('actions', String),
           ],
           showCheckboxColumn: false,
           onFilterValueChanged:
@@ -527,10 +536,10 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
     List<List<String>> rowsAsString = [];
     List<List<dynamic>> rowsAsIsType = [];
     List<Map<Map<String, String>, Widget>>? rowsAsWidget = [];
-    List<int?> addedSections=List.empty(growable: true);
+    List<int?> addedSections = List.empty(growable: true);
     for (var section in widget.quizPageModel.quizMain!.quizSections!) {
       List<Map<Map<String, String>, Widget>>? modifiedSectionRows =
-      List.empty(growable: true);
+          List.empty(growable: true);
 
       int orderNo = 0;
       String id = '0';
@@ -554,7 +563,12 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
 
           //Yukarıda her satırı daha önce hazırladığımız yardımcı datatable creatordan faydalandık
 
-          BigInt questionId = BigInt.parse('0');
+          String questionIdAsString = row['id'] ?? '0';
+          if (questionIdAsString == '' || questionIdAsString == null) {
+            questionIdAsString = '0';
+          }
+
+          BigInt questionId = BigInt.parse(questionIdAsString ?? '0');
           int orderNo = 0;
           Map<String, String> keyOrderNo = {};
           Map<Map<String, String>, Widget> cells = {};
@@ -562,9 +576,7 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
           bool addOrderNo = true;
           for (var cell in row.entries) {
             if (cell.key == "TableMenu" || cell.key == "actions") {
-
-            }
-            else {
+            } else {
               if (cell.key == 'id') {
                 id = cell.value;
               } else if (cell.key == 'acad_year') {
@@ -587,7 +599,7 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
                 // question selections lardan section -questiom map içindeki sırasını aldık
                 var map = section.quizSectionQuestionMaps!
                     .where((element) =>
-                element.questionId == BigInt.parse(cell.value))
+                        element.questionId == BigInt.parse(cell.value))
                     .toList();
                 if (map.isNotEmpty) {
                   questionId = map.first.questionId ?? BigInt.parse('0');
@@ -634,7 +646,7 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
                         textStyle: MaterialStateProperty.all<TextStyle>(
                           TextStyle(
                               fontSize:
-                              theme.dataTableTheme.dataTextStyle?.fontSize),
+                                  theme.dataTableTheme.dataTextStyle?.fontSize),
                         ),
                       ),
                       child: Tooltip(
@@ -642,8 +654,7 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
                         child: Wrap(
                           children: [
                             Text(
-                              cell.value != null &&
-                                  cell.value.length > 20
+                              cell.value != null && cell.value.length > 20
                                   ? "${cell.value.substring(0, 20)}..."
                                   : cell.value ?? "",
                             ),
@@ -656,8 +667,8 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
                   Map<String, String> key = {};
 
                   var reversedAchievementTree = cell.value.split('>>').toList();
-                  var reversedString = reversedAchievementTree.reversed.toList()
-                      .join('>>');
+                  var reversedString =
+                      reversedAchievementTree.reversed.toList().join('>>');
                   key[cell.key] = reversedString;
                   cells[key] = Text(
                     reversedString,
@@ -666,8 +677,7 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(fontSize: 10),
                   );
-                }
-                else {
+                } else {
                   Map<String, String> key = {};
                   key[cell.key] = cell.value;
                   cells[key] = Text(
@@ -693,52 +703,51 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
             children: [
               PopupMenuButton<String>(
                   padding: const EdgeInsets.all(3.0),
-                  itemBuilder: (BuildContext context) =>
-                  [
-                    if (orderNo != 1)
-                      const PopupMenuItem<String>(
-                        padding: EdgeInsets.all(3.0),
-                        value: 'move_up',
-                        textStyle: TextStyle(fontSize: 10),
-                        child: Row(
-                          children: [
-                            Icon(Icons.arrow_upward, size: 14),
-                            SizedBox(width: 8),
-                            Text('Move Up', style: TextStyle(fontSize: 10)),
-                          ],
-                        ),
-                      ),
-                    if (section.quizSectionQuestionMaps!.length != orderNo)
-                      const PopupMenuItem<String>(
-                        padding: EdgeInsets.all(3.0),
-                        value: 'move_down',
-                        textStyle: TextStyle(fontSize: 10),
-                        child: Row(
-                          children: [
-                            Icon(Icons.arrow_downward, size: 14),
-                            SizedBox(width: 8),
-                            Text('Move Down',
-                                style: TextStyle(fontSize: 10)),
-                          ],
-                        ),
-                      ),
-                    if (orderNo != 1)
-                      const PopupMenuItem<String>(
-                        padding: EdgeInsets.all(3.0),
-                        value: 'delete',
-                        textStyle: TextStyle(fontSize: 10),
-                        child: Row(
-                          children: [
-                            Icon(Icons.delete, size: 14),
-                            SizedBox(width: 8),
-                            Text(
-                              'Delete',
-                              style: TextStyle(fontSize: 10),
+                  itemBuilder: (BuildContext context) => [
+                        if (orderNo != 1)
+                          const PopupMenuItem<String>(
+                            padding: EdgeInsets.all(3.0),
+                            value: 'move_up',
+                            textStyle: TextStyle(fontSize: 10),
+                            child: Row(
+                              children: [
+                                Icon(Icons.arrow_upward, size: 14),
+                                SizedBox(width: 8),
+                                Text('Move Up', style: TextStyle(fontSize: 10)),
+                              ],
                             ),
-                          ],
-                        ),
-                      ),
-                  ],
+                          ),
+                        if (section.quizSectionQuestionMaps!.length != orderNo)
+                          const PopupMenuItem<String>(
+                            padding: EdgeInsets.all(3.0),
+                            value: 'move_down',
+                            textStyle: TextStyle(fontSize: 10),
+                            child: Row(
+                              children: [
+                                Icon(Icons.arrow_downward, size: 14),
+                                SizedBox(width: 8),
+                                Text('Move Down',
+                                    style: TextStyle(fontSize: 10)),
+                              ],
+                            ),
+                          ),
+                        if (orderNo != 1)
+                          const PopupMenuItem<String>(
+                            padding: EdgeInsets.all(3.0),
+                            value: 'delete',
+                            textStyle: TextStyle(fontSize: 10),
+                            child: Row(
+                              children: [
+                                Icon(Icons.delete, size: 14),
+                                SizedBox(width: 8),
+                                Text(
+                                  'Delete',
+                                  style: TextStyle(fontSize: 10),
+                                ),
+                              ],
+                            ),
+                          ),
+                      ],
                   onSelected: (String? value) {
                     if (value == 'move_up') {
                       if (orderNo != 1) {
@@ -747,27 +756,28 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
                         var currentSectionQuestionMap = section
                             .quizSectionQuestionMaps!
                             .where((element) =>
-                        element.orderNo == currentOrder &&
-                            element.questionId == questionId)
+                                element.orderNo == currentOrder &&
+                                element.questionId == questionId)
                             .first
                             .updateOrderNo(currentOrder - 1);
                         var replacedSectionQuestionMap = section
                             .quizSectionQuestionMaps!
                             .where((element) =>
-                        element.orderNo == currentOrder - 1 &&
-                            element.questionId != questionId)
+                                element.orderNo == currentOrder - 1 &&
+                                element.questionId != questionId)
                             .first
                             .updateOrderNo(currentOrder);
 
-
-                        widget.quizPageModel.quizMain!.quizSections!.where((element) =>
-                        element.orderNo == section.orderNo)
-                            .first.updatequizSectionQuestionMaps(section
-                            .quizSectionQuestionMaps!, section.orderNo ?? 0);
-                        widget.onChanged(widget.quizPageModel.quizMain!.quizSections);
-                        setState(() {
-
-                        });
+                        widget.quizPageModel.quizMain!.quizSections!
+                            .where(
+                                (element) => element.orderNo == section.orderNo)
+                            .first
+                            .updatequizSectionQuestionMaps(
+                                section.quizSectionQuestionMaps!,
+                                section.orderNo ?? 0);
+                        widget.onChanged(
+                            widget.quizPageModel.quizMain!.quizSections);
+                        setState(() {});
                       }
                     } else if (value == 'move_down') {
                       if (section.quizSectionQuestionMaps!.length != orderNo) {
@@ -775,43 +785,47 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
                         var currentSectionQuestionMap = section
                             .quizSectionQuestionMaps!
                             .where((element) =>
-                        element.orderNo == currentOrder &&
-                            element.questionId == questionId)
+                                element.orderNo == currentOrder &&
+                                element.questionId == questionId)
                             .first
                             .updateOrderNo(currentOrder + 1);
                         var replacedSectionQuestionMap = section
                             .quizSectionQuestionMaps!
                             .where((element) =>
-                        element.orderNo == currentOrder + 1 &&
-                            element.questionId != questionId)
+                                element.orderNo == currentOrder + 1 &&
+                                element.questionId != questionId)
                             .first
                             .updateOrderNo(currentOrder);
 
-                        widget.quizPageModel.quizMain!.quizSections!.where((element) =>
-                        element.orderNo == section.orderNo)
-                            .first.updatequizSectionQuestionMaps(section
-                            .quizSectionQuestionMaps!, section.orderNo ?? 0);
+                        widget.quizPageModel.quizMain!.quizSections!
+                            .where(
+                                (element) => element.orderNo == section.orderNo)
+                            .first
+                            .updatequizSectionQuestionMaps(
+                                section.quizSectionQuestionMaps!,
+                                section.orderNo ?? 0);
 
-                        widget.onChanged(widget.quizPageModel.quizMain!.quizSections);
+                        widget.onChanged(
+                            widget.quizPageModel.quizMain!.quizSections);
 
-                        setState(() {
-
-                        });
+                        setState(() {});
                       }
                     } else if (value == 'delete') {
                       section.quizSectionQuestionMaps!.removeWhere(
-                              (element) => element.questionId == questionId);
+                          (element) => element.questionId == questionId);
 
-                      widget.quizPageModel.quizMain!.quizSections!.where((
-                          element) => element.orderNo == section.orderNo).first
-                          .updatequizSectionQuestionMaps(section
-                          .quizSectionQuestionMaps!, section.orderNo ?? 0);
+                      widget.quizPageModel.quizMain!.quizSections!
+                          .where(
+                              (element) => element.orderNo == section.orderNo)
+                          .first
+                          .updatequizSectionQuestionMaps(
+                              section.quizSectionQuestionMaps!,
+                              section.orderNo ?? 0);
 
-                      widget.onChanged(widget.quizPageModel.quizMain!.quizSections);
+                      widget.onChanged(
+                          widget.quizPageModel.quizMain!.quizSections);
 
-                      setState(() {
-
-                      });
+                      setState(() {});
                     }
                   },
                   child: const Row(
@@ -870,7 +884,7 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
             ColumnDataType('achievementTree', String),
             ColumnDataType('created_on', DateTime),
             ColumnDataType('favCount', int),
-            ColumnDataType('actions',String),
+            ColumnDataType('actions', String),
           ],
           dataTableDisableColumnFilter: const [
             'id',
@@ -912,25 +926,25 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
     //---------------------------------------------------------------
 
     //Add section which have not questions
-    var notAddedSections=widget.quizPageModel.quizMain!.quizSections!.where((element) => !addedSections!.contains(element.orderNo));
+    var notAddedSections = widget.quizPageModel.quizMain!.quizSections!
+        .where((element) => !addedSections!.contains(element.orderNo));
 
-    for(var emptySection in notAddedSections)
-      {
-        var cID = CollapsibleItemData(
-            padding: 0,
-            onStateChanged: (value) {},
-            header: Text(
-              '${emptySection.sectionDesc} Sections',
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.grey,
-                fontSize: 12,
-              ),
+    for (var emptySection in notAddedSections) {
+      var cID = CollapsibleItemData(
+          padding: 0,
+          onStateChanged: (value) {},
+          header: Text(
+            '${emptySection.sectionDesc} Sections',
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.grey,
+              fontSize: 12,
             ),
-            content: Container());
+          ),
+          content: Container());
 
-        items.add(cID);
-      }
+      items.add(cID);
+    }
 
     return items;
   }
@@ -943,10 +957,11 @@ class QuizSectionDataTableEditPopup extends StatefulWidget {
   final TextStyle componentTextStyle;
   final Function(QuizSection? section) onSavePressed;
 
-  QuizSectionDataTableEditPopup({required this.branches,
-    required this.section,
-    required this.onSavePressed,
-    required this.componentTextStyle});
+  QuizSectionDataTableEditPopup(
+      {required this.branches,
+      required this.section,
+      required this.onSavePressed,
+      required this.componentTextStyle});
 
   @override
   _QuizSectionDataTableEditPopupState createState() =>

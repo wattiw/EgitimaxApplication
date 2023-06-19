@@ -12,7 +12,7 @@ class QuizPageModel {
   QuizPageModel({
     required this.isEditorMode,
     required this.userId,
-    this.quizId,
+    required this.quizId,
   });
 
   late bool isEditorMode;

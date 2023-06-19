@@ -6,6 +6,7 @@ import 'package:egitimaxapplication/model/quiz/quizSection.dart';
 import 'package:egitimaxapplication/model/quiz/quizSectionQuestionMap.dart';
 import 'package:egitimaxapplication/model/quiz/setQuizObjects.dart';
 import 'package:egitimaxapplication/repository/appRepositories.dart';
+import 'package:egitimaxapplication/repository/question/questionRepository.dart';
 import 'package:egitimaxapplication/repository/quiz/quizRepository.dart';
 import 'package:egitimaxapplication/utils/extension/apiDataSetExtension.dart';
 import 'package:flutter/material.dart';
@@ -15,9 +16,11 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
   QuizBloc() : super(InitState()) {
     AppRepositories appRepositories = AppRepositories();
     QuizRepository quizRepository;
+    QuestionRepository questionRepository;
 
     on<InitEvent>((event, emit) async {
       quizRepository = await appRepositories.quizRepository();
+      questionRepository = await appRepositories.questionRepository();
       emit(LoadingState());
       await Future.delayed(const Duration(seconds: 1));
       try {
@@ -202,6 +205,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
             qs.sectionDesc = section['section_desc'];
             qs.isActive = section['is_active'];
             qs.quizSectionQuestionMaps = List.empty(growable: true);
+            qs.sectionSelectedQuestionsData=List.empty(growable: true);
 
             try {
               var tblQuizSectQuestMapDataSet =
@@ -217,6 +221,46 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
                       section_id: qs.id);
               var maps = tblQuizSectQuestMapDataSet.selectDataTable('data');
               for (var map in maps.toList()) {
+
+                var singleSelectedQuestionData = await questionRepository.getQuestionDataTableData(['*'], getNoSqlData: 0, id: BigInt.parse((map['question_id'] ?? '0').toString()));
+
+                Map<String, dynamic> row = {};
+
+                for(var item in singleSelectedQuestionData.first('data')!.entries)
+                  {
+
+                    int c =0;
+
+                    if (item.key == 'id') {
+                      row['id']  = item.value.toString();
+                    } else if (item.key == 'acad_year') {
+                      row['acad_year'] = item.value.toString();
+                    } else if (item.key == 'question_text') {
+                      row['question_text'] = item.value.toString();
+                    } else if (item.key == 'dif_level') {
+                      row['dif_level'] = item.value.toString();
+                    } else if (item.key == 'branch_name') {
+                      row['branch_name'] = item.value.toString();
+                    } else if (item.key == 'achievementTree') {
+                      row['achievementTree'] = item.value.toString();
+                    } else if (item.key == 'created_on') {
+                      row['created_on'] = item.value.toString();
+                    } else if (item.key == 'favCount') {
+                      row['favCount'] = item.value.toString();
+                    }
+                  }
+
+                qs.sectionSelectedQuestionsData!.add(row);
+
+  /*              List<Map<String, dynamic>> json = [];
+                Map<String, dynamic> row = {};
+
+
+
+                */
+
+
+
                 QuizSectionQuestionMap qsqm = QuizSectionQuestionMap();
                 qsqm.id = BigInt.parse((map['id'] ?? '0').toString());
                 qsqm.sectionId =
@@ -228,6 +272,9 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
 
                 qs.quizSectionQuestionMaps?.add(qsqm);
               }
+
+
+
             } catch (e) {
               debugPrint(e.toString());
             }
@@ -253,71 +300,11 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
           qs.quizId = event.quizPageModel.quizId;
           qs.branchId = userBranchId;
           qs.orderNo = 1;
-          qs.sectionDesc = 'Main Section 1';
+          qs.sectionDesc = 'Main Section';
           qs.isActive = 0;
           qs.quizSectionQuestionMaps = List.empty(growable: true);
 
-          QuizSection qs1 = QuizSection();
-          qs1.id = BigInt.parse('0');
-          qs1.quizId = event.quizPageModel.quizId;
-          qs1.branchId = 2;
-          qs1.orderNo = 2;
-          qs1.sectionDesc = 'Section 2';
-          qs1.isActive = 0;
-          qs.quizSectionQuestionMaps = List.empty(growable: true);
-
-          QuizSection qs2 = QuizSection();
-          qs2.id = BigInt.parse('0');
-          qs2.quizId = event.quizPageModel.quizId;
-          qs2.branchId = 3;
-          qs2.orderNo = 3;
-          qs2.sectionDesc = 'Section 3';
-          qs2.isActive = 0;
-          qs.quizSectionQuestionMaps = List.empty(growable: true);
-
-          QuizSection qs3 = QuizSection();
-          qs3.id = BigInt.parse('0');
-          qs3.quizId = event.quizPageModel.quizId;
-          qs3.branchId = 4;
-          qs3.orderNo = 4;
-          qs3.sectionDesc = 'Section 4';
-          qs3.isActive = 0;
-          qs.quizSectionQuestionMaps = List.empty(growable: true);
-
-          QuizSection qs4 = QuizSection();
-          qs4.id = BigInt.parse('0');
-          qs4.quizId = event.quizPageModel.quizId;
-          qs4.branchId = 1;
-          qs4.orderNo = 5;
-          qs4.sectionDesc = 'Section 5';
-          qs4.isActive = 0;
-          qs.quizSectionQuestionMaps = List.empty(growable: true);
-
-          QuizSection qs5 = QuizSection();
-          qs5.id = BigInt.parse('0');
-          qs5.quizId = event.quizPageModel.quizId;
-          qs5.branchId = userBranchId;
-          qs5.orderNo = 6;
-          qs5.sectionDesc = 'Section 6';
-          qs5.isActive = 0;
-          qs.quizSectionQuestionMaps = List.empty(growable: true);
-
-          QuizSection qs6 = QuizSection();
-          qs6.id = BigInt.parse('0');
-          qs6.quizId = event.quizPageModel.quizId;
-          qs6.branchId = 3;
-          qs6.orderNo = 7;
-          qs6.sectionDesc = 'Section 7';
-          qs6.isActive = 0;
-          qs.quizSectionQuestionMaps = List.empty(growable: true);
-
           event.quizPageModel.quizMain!.quizSections?.add(qs);
-          event.quizPageModel.quizMain!.quizSections?.add(qs1);
-          event.quizPageModel.quizMain!.quizSections?.add(qs2);
-          event.quizPageModel.quizMain!.quizSections?.add(qs3);
-          event.quizPageModel.quizMain!.quizSections?.add(qs4);
-          event.quizPageModel.quizMain!.quizSections?.add(qs5);
-          event.quizPageModel.quizMain!.quizSections?.add(qs6);
         }
 
         var tblLearnBranch = await appRepositories.tblLearnBranch(
