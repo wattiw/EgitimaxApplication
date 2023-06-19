@@ -11,29 +11,35 @@ class StepsValidator {
   StepsValidator(this.quizModel);
 
   bool validateStep1() {
-   /* bool isVideoSet = false;
-    bool isVideoTitleSet = false;
-    bool isVideoDescriptionsSet = true;
+    bool isAcademicYearSet = false;
+    bool isGradeSet = false;
+    bool isTitleSet = false;
+    bool isDescriptionSet = false;
+    bool isDurationSet = false;
     bool isPublicSet = false;
     bool isConditionsAccepted = false;
-    bool isExistVideoObjectId = false;
 
-    if (quizModel.videoData != null) {
-      isVideoSet = true;
+
+
+    if (quizModel.quizMain!.academicYear != null) {
+      isAcademicYearSet = true;
     }
 
-    if (quizModel.videoObjectId != null) {
-      isExistVideoObjectId = true;
+    if (quizModel.quizMain!.gradeId != null) {
+      isGradeSet = true;
     }
 
-    if (quizModel.videoTitle != null && quizModel.videoTitle!='') {
-      isVideoTitleSet = true;
+    if (quizModel.quizMain!.title != null && quizModel.quizMain!.title!='') {
+      isTitleSet = true;
     }
-    if (quizModel.videoDescriptions != null && quizModel.videoDescriptions!='') {
-      isVideoDescriptionsSet = true;
+    if (quizModel.quizMain!.description != null && quizModel.quizMain!.description!='') {
+      isDescriptionSet = true;
+    }
+    if (quizModel.quizMain!.duration != null && quizModel.quizMain!.duration!=0) {
+      isDurationSet = true;
     }
 
-    if (quizModel.isPublic != null) {
+    if (quizModel.quizMain!.isPublic != null) {
       isPublicSet = true;
     }
     if (quizModel.isAcceptConditions != null && quizModel.isAcceptConditions==true) {
@@ -41,71 +47,58 @@ class StepsValidator {
     }
 
 
-    if (!isVideoSet) {
-      UIMessage.showError(AppLocalization.instance.translate('lib.screen.videoPage.stepsValidator', 'validateStep1', 'videoNotUploaded'), gravity: ToastGravity.CENTER);
+    if (!isAcademicYearSet) {
+      UIMessage.showError(AppLocalization.instance.translate('lib.screen.quizPage.stepsValidator', 'validateStep1', 'isAcademicYearSet'), gravity: ToastGravity.CENTER);
       return false;
     }
-
-    if (!isExistVideoObjectId) {
-      UIMessage.showError(AppLocalization.instance.translate('lib.screen.videoPage.stepsValidator', 'validateStep1', 'reUploadVideo'), gravity: ToastGravity.CENTER);
+    if (!isGradeSet) {
+      UIMessage.showError(AppLocalization.instance.translate('lib.screen.quizPage.stepsValidator', 'validateStep1', 'isGradeSet'), gravity: ToastGravity.CENTER);
       return false;
     }
-
-
-    if (!isVideoTitleSet) {
-      UIMessage.showError(AppLocalization.instance.translate('lib.screen.videoPage.stepsValidator', 'validateStep1', 'videoTitleNotSet'), gravity: ToastGravity.CENTER);
+    if (!isTitleSet) {
+      UIMessage.showError(AppLocalization.instance.translate('lib.screen.quizPage.stepsValidator', 'validateStep1', 'isTitleSet'), gravity: ToastGravity.CENTER);
       return false;
     }
-
-    if (!isVideoDescriptionsSet) {
-      UIMessage.showError(AppLocalization.instance.translate('lib.screen.videoPage.stepsValidator', 'validateStep1', 'videoDescriptionIsNotSet'), gravity: ToastGravity.CENTER);
+    if (!isDescriptionSet) {
+      UIMessage.showError(AppLocalization.instance.translate('lib.screen.quizPage.stepsValidator', 'validateStep1', 'isDescriptionSet'), gravity: ToastGravity.CENTER);
+      return false;
+    }
+    if (!isDurationSet) {
+      UIMessage.showError(AppLocalization.instance.translate('lib.screen.quizPage.stepsValidator', 'validateStep1', 'isDurationSet'), gravity: ToastGravity.CENTER);
       return false;
     }
 
     if (!isPublicSet) {
-      UIMessage.showError(AppLocalization.instance.translate('lib.screen.videoPage.stepsValidator', 'validateStep1', 'publicOptionIsNotSet'), gravity: ToastGravity.CENTER);
+      UIMessage.showError(AppLocalization.instance.translate('lib.screen.quizPage.stepsValidator', 'validateStep1', 'isPublicSet'), gravity: ToastGravity.CENTER);
       return false;
     }
-
     if (!isConditionsAccepted) {
-      UIMessage.showError(AppLocalization.instance.translate('lib.screen.videoPage.stepsValidator', 'validateStep1', 'termsAndConditionsNotAccepted'), gravity: ToastGravity.CENTER);
+      UIMessage.showError(AppLocalization.instance.translate('lib.screen.quizPage.stepsValidator', 'validateStep1', 'isConditionsAccepted'), gravity: ToastGravity.CENTER);
       return false;
     }
 
-*/
+
+
     return true;
   }
 
   bool validateStep2() {
-    // if (quizModel.selectedAcademicYear == null && quizModel.selectedAcademicYear==0) {
-    //   UIMessage.showError(AppLocalization.instance.translate('lib.screen.videoPage.stepsValidator', 'validateStep2', 'academicYearIsNotSelected'), gravity: ToastGravity.CENTER);
-    //   return false;
-    // }
-    //
-    // if (quizModel.selectedGrade == null && quizModel.selectedGrade==0) {
-    //   UIMessage.showError(AppLocalization.instance.translate('lib.screen.videoPage.stepsValidator', 'validateStep2', 'gradeIsNotSelected'), gravity: ToastGravity.CENTER);
-    //   return false;
-    // }
-    //
-    // if (quizModel.selectedBranch == null && quizModel.selectedBranch==0) {
-    //   UIMessage.showError(AppLocalization.instance.translate('lib.screen.videoPage.stepsValidator', 'validateStep2', 'branchIsNotSelected'), gravity: ToastGravity.CENTER);
-    //   return false;
-    // }
-    //
-    // if (quizModel.selectedDomain == null && quizModel.selectedSubDomain==0) {
-    //   UIMessage.showError(AppLocalization.instance.translate('lib.screen.videoPage.stepsValidator', 'validateStep2', 'domainIsNotSelected'), gravity: ToastGravity.CENTER);
-    //   return false;
-    // }
-    //
-    // if (quizModel.selectedSubDomain == null && quizModel.selectedSubDomain==0) {
-    //   UIMessage.showError(AppLocalization.instance.translate('lib.screen.videoPage.stepsValidator', 'validateStep2', 'subDomainIsNotSelected'), gravity: ToastGravity.CENTER);
-    //   return false;
-    // }
-    //
-    // if (quizModel.selectedAchievements.isEmpty || quizModel.achievements .length==0 ||  quizModel.achievements.length < quizModel.selectedAchievements.length) {
-    //   UIMessage.showError(AppLocalization.instance.translate('lib.screen.videoPage.stepsValidator', 'validateStep2', 'noAchievementsSelected'), gravity: ToastGravity.CENTER);
-    //   return false;
-    // }
+
+    bool isAddedSectionQuestions=true;
+    for(var section in quizModel.quizMain!.quizSections!)
+      {
+        if(section.quizSectionQuestionMaps==null || section.quizSectionQuestionMaps!.isEmpty)
+          {
+            isAddedSectionQuestions=false;
+            break;
+          }
+
+      }
+    if (!isAddedSectionQuestions) {
+      UIMessage.showError(AppLocalization.instance.translate('lib.screen.quizPage.stepsValidator', 'validateStep2', 'emptySection'), gravity: ToastGravity.CENTER);
+       return false;
+     }
+
 
     return true;
   }

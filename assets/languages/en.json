@@ -486,5 +486,303 @@
       "ct_achv": "Achievements",
       "ct_subject":"Subject"
     }
+  },
+  "lib.screen.quizPage.quizPage": {
+    "showAcceptConditionsConfirmationDialog": {
+      "confirmation": "Confirmation",
+      "message": "Our Community Guidelines are designed to protect our community. These guidelines specify what is allowed and what is not allowed on Eğitimax, and they apply to all types of content on our platform, including videos, comments, links, and thumbnails. Please confirm that you comply with our community guidelines and the law.",
+      "yesButtonText": "Yes",
+      "noButtonText": "No"
+    },
+    "build": {
+      "title": "Quiz Operations"
+    },
+    "quizOperationsSteps": {
+      "quizCreate": "Quiz Create",
+      "addSectionAdnQuestion": "Add Section and Section Question",
+      "summaryAndSubmit": "Summary And Submit"
+    },
+    "getStepOneLayout": {
+      "title": "Title",
+      "descriptions": "Descriptions",
+      "duration": "Duration (Minutes)",
+      "pleaseEnterAValidNumber": "Please enter a valid number.",
+      "pleaseEnterAValue": "Please enter a value.",
+      "clickForHeaderInformation": "Click for Header Information",
+      "headerInformation": "Header Information",
+      "clickForFooterInformation": "Click for Footer Information",
+      "footerInformation": "Footer Information",
+      "canEveryoneSeeTheExam": "Can everyone see the exam ?",
+      "acceptCommunityGuidelines": "Accept Community Guidelines",
+      "academicYear": "Academic Year",
+      "grade": "Grade"
+    },
+    "getStepThreeLayout": {
+      "error": "Error:"
+    },
+    "_buildStepper": {
+      "next": "Next",
+      "back": "Back",
+      "submit": "Submit"
+    },
+    "_buildInit": {
+      "initializing": "initializing"
+    },
+    "_buildLoading": {
+      "loading": "Loading..."
+    },
+    "_buildError": {
+      "unknownError": "Unknown Error..."
+    },
+    "_buildLoadingStep1": {
+      "firstStepLoading": "First Step Loading"
+    },
+    "_buildErrorStep1": {
+      "unknownError": "Unknown Error..."
+    },
+    "_buildLoadingStep2": {
+      "secondStepLoading": "Second Step Loading"
+    },
+    "_buildErrorStep2": {
+      "unknownError": "Unknown Error..."
+    },
+    "_buildLoadingStep3": {
+      "thirdStepLoading": "Third Step Loading"
+    },
+    "_buildErrorStep3": {
+      "unknownError": "Unknown Error..."
+    },
+    "_buildLoadingPm": {
+      "pageModelLoading": "Page Model Loading"
+    },
+    "_buildDeletingPm": {
+      "pageModelDeleting": "Page Model Deleting"
+    },
+    "_buildRemovingPm": {
+      "pageModelRemoving": "Page Model Removing"
+    },
+    "_buildSavingPm": {
+      "pageModelSaving": "Page Model Saving"
+    },
+    "_buildSavedPm": {
+      "pageModelSaved": "Page Model Saved"
+    },
+    "_buildErrorPm": {
+      "pageModelNotSaved": "Page Model Not Saved"
+    }
+  },
+  "lib.screen.quizPage.quizSectionDataTable": {
+    "build": {
+      "addQuestion": "Add Question",
+      "edit": "Edit",
+      "moveUp": "Move Up",
+      "moveDown": "Move Down",
+      "delete": "Delete",
+      "selectAction": "Select Action",
+      "questions": "Questions",
+      "addSection": "Add Section",
+      "id": "Id",
+      "order": "Order",
+      "sectionName": "Section Name",
+      "branch": "Branch",
+      "questionQuantity": "Question Quantity",
+      "actions": "Actions"
+    },
+    "createSectionQuestionsWidget": {
+      "moveUp": "Move Up",
+      "moveDown": "Move Down",
+      "delete": "Delete",
+      "actions": "Actions",
+      "section": "Section",
+      "id": "Id",
+      "order": "Order",
+      "question": "Question",
+      "academicYear": "Academic Year",
+      "difficultyLevel": "Difficulty Level",
+      "branchName": "Branch Name",
+      "achievementTree": "Achievement Tree",
+      "createdOn": "Created On",
+      "favorite": "Favorite",
+      "selectActions": "Actions",
+      "sections": "Sections"
+    }
+  },
+  "lib.screen.quizPage.quizSectionDataTableEditPopup": {
+    "build": {
+      "sectionOperation": "Section Operation",
+      "questions": "Questions",
+      "branchName": "Branch Name",
+      "sectionDescriptions": "Section Descriptions",
+      "cancel": "Cancel",
+      "save": "Save"
+    }
+  },
+  "lib.screen.quizPage.stepsValidator": {
+    "validateStep1": {
+      "isAcademicYearSet": "Please select academic year !",
+      "isGradeSet": "Please select grade !",
+      "isTitleSet": "Please type title !",
+      "isDescriptionSet": "Please define description !",
+      "isDurationSet": "Please define duration !",
+      "isPublicSet": "Please define is public or not !",
+      "isConditionsAccepted": "Please accept conditions !"
+    },
+    "validateStep2": {
+      "emptySection": "Please add question(s) for empty section(s) !"
+    }
+  },
+  "lib.model.quiz.quizPageModel": {
+    "generateSummary": {
+      "country": "Country",
+      "academicYear": "Academic Year'",
+      "grade": "Grade",
+      "title": "Title",
+      "description": "Description",
+      "duration": "Duration",
+      "headerText": "Header Text",
+      "footerText": "Footer Text",
+      "isPublic": "Is Public",
+      "yes": "Yes",
+      "no": "No",
+      "aggregatingRating": "Aggregating Rating",
+      "questionQuantity": "Question Quantity",
+      "branch": "Branch",
+      "orderNo": "Order No",
+      "sectionDescription": "Section Description",
+      "questionOrderNo": "Question Order No",
+      "question": "Question"
+    }
+  },
+  "lib.bloc.bloc.quiz.quizBloc": {
+    "initEvent": {
+      "mainSection": "Main Section"
+    }
+  },
+  "lib.screen.common.questionDataTable": {
+    "_QuestionDataTableState": {
+      "myQuestion": "My Questions",
+      "myFavoriteQuestion": "My Favorite Questions",
+      "searchInEgitimax": "Search In Eğitimax"
+    },
+    "build": {
+      "filters": "Filters",
+      "pleaseSelectQuestionSource": "Please select question source !",
+      "searchInEgitimax": "Search In Eğitimax",
+      "error": "Error",
+      "clear": "Clear",
+      "search": "Search",
+      "questionSelector": "Question Selector",
+      "noData": "No Data",
+      "cancel": "Cancel",
+      "save": "Save"
+    },
+    "searchButtonOnPressed": {
+      "id": "Id",
+      "academicYear": "Academic Year",
+      "question": "Question",
+      "difficultyLevel": "Difficulty Level",
+      "branchName": "Branch Name",
+      "achievementTree": "Achievement Tree",
+      "createdOn": "Created On",
+      "favorite": "Favorite",
+      "pleaseSelectSourceType": "Please question source type !"
+
+    },
+    "filterAcademicYears": {
+      "all": "All",
+      "academicYear": "Academic Year",
+      "pleaseSelectAcademicYear": "Please select academic year !"
+
+    },
+    "filterGrades": {
+      "all": "All",
+      "gradeName": "Grade",
+      "pleaseSelectGradeName": "Please select grade !"
+
+    },
+    "filterBranches": {
+      "all": "All",
+      "branchName": "Branch",
+      "pleaseSelectBranchName": "Please select branch !"
+
+    },
+    "filterDifficultyLevels": {
+      "all": "All",
+      "difficultyLevel": "Difficulty Level",
+      "pleaseSelectDifficultyLevel": "Please select difficulty level !"
+
+    },
+    "filterQuestionText": {
+      "questionKeyWords": "Question key words"
+
+    },
+    "questionFavoriteGroups": {
+      "all": "All",
+      "favGroup": "Favorite Group"
+    },
+    "questionSources": {
+      "questionResource": "Question Source"
+    }
+  },
+  "lib.screen.common.commonDataTable": {
+    "filters": {
+      "search": "Search"
+    },
+    "columnChooserButton": {
+      "choseColumn": "Column Chooser"
+    },
+    "columnFilterChooserButton": {
+      "choseFilterColumn": "Filter Chooser"
+    },
+    "editButton": {
+      "edit": "Edit"
+    },
+    "deleteButton": {
+      "delete": "Delete"
+    },
+    "saveButton": {
+      "save": "Save"
+    },
+    "exportButton": {
+      "export": "Export"
+    }
+  },
+
+  "lib.screen.common.commonDropdownButtonFormField": {
+    "build": {
+      "search": "Search"
+    }
+  },
+  "lib.screen.common.questionOverView": {
+    "build": {
+      "viewQuestion": "View Question",
+      "error": "Error",
+      "resolutionTitle": "Resolution",
+      "branchName": "Branch Name",
+      "academicYear": "Academic Year",
+      "gradeName": "Grade Name",
+      "difficultyLevel": "Difficulty Level",
+      "achievementTree": "Achievement Tree",
+      "achievements": "Achievement",
+      "domain": "Domain",
+      "subdomain": "Subdomain",
+      "subject": "Subject",
+      "subTopic": "Sub Topic",
+      "showQuestionResolutions": "Show Question Resolutions",
+      "showQuestionDetails": "Show Question Details",
+      "unlike": "Unlike",
+      "like": "Like",
+      "removeDisLike": "Remove Dislike",
+      "disLike": "Dislike",
+      "removeFav": "Remove Favorite",
+      "addFav": "Add Favorite",
+      "shareQuestion": "Share Question",
+      "share": "Share",
+      "likes": "Likes"
+
+    }
   }
+
+
+
 }

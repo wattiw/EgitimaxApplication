@@ -7,7 +7,6 @@ import 'package:egitimaxapplication/repository/quiz/quizRepository.dart';
 import 'package:egitimaxapplication/screen/common/commonDropdownButtonFormField.dart';
 import 'package:egitimaxapplication/screen/common/commonTextFormField.dart';
 import 'package:egitimaxapplication/screen/common/userInteractiveMessage.dart';
-import 'package:egitimaxapplication/screen/common/webViewPage.dart';
 import 'package:egitimaxapplication/screen/quizPage/quizSectionDataTable.dart';
 import 'package:egitimaxapplication/screen/quizPage/stepsValidator.dart';
 import 'package:egitimaxapplication/utils/config/language/appLocalizations.dart';
@@ -64,20 +63,20 @@ class _QuizPageState extends State<QuizPage> {
   void showAcceptConditionsConfirmationDialog(BuildContext context) {
     UserInteractiveMessage(
       title: AppLocalization.instance.translate(
-          'lib.screen.videoPage.videoPage',
-          'showVideoUploadAcceptConditionsConfirmationDialog',
+          'lib.screen.quizPage.quizPage',
+          'showAcceptConditionsConfirmationDialog',
           'confirmation'),
       message: AppLocalization.instance.translate(
-          'lib.screen.videoPage.videoPage',
-          'showVideoUploadAcceptConditionsConfirmationDialog',
+          'lib.screen.quizPage.quizPage',
+          'showAcceptConditionsConfirmationDialog',
           'message'),
       yesButtonText: AppLocalization.instance.translate(
-          'lib.screen.videoPage.videoPage',
-          'showVideoUploadAcceptConditionsConfirmationDialog',
+          'lib.screen.quizPage.quizPage',
+          'showAcceptConditionsConfirmationDialog',
           'yesButtonText'),
       noButtonText: AppLocalization.instance.translate(
-          'lib.screen.videoPage.videoPage',
-          'showVideoUploadAcceptConditionsConfirmationDialog',
+          'lib.screen.quizPage.quizPage',
+          'showAcceptConditionsConfirmationDialog',
           'noButtonText'),
       onSelection: (bool value) {
         if (value) {
@@ -95,8 +94,11 @@ class _QuizPageState extends State<QuizPage> {
     return BlocProvider(
       create: (_) => quizBloc,
       child: Scaffold(
-        appBar: const InnerAppBar(
-          title: 'Quiz Operations',
+        appBar:  InnerAppBar(
+          title: AppLocalization.instance.translate(
+              'lib.screen.quizPage.quizPage',
+              'build',
+              'title'),
         ),
         body: BlocBuilder<QuizBloc, QuizState>(
           builder: (context, state) {
@@ -158,7 +160,10 @@ class _QuizPageState extends State<QuizPage> {
       Step(
         state: _activeCurrentStep <= 0 ? StepState.editing : StepState.complete,
         isActive: _activeCurrentStep >= 0,
-        title: Text('Quiz Create'),
+        title: Text( AppLocalization.instance.translate(
+            'lib.screen.quizPage.quizPage',
+            'quizOperationsSteps',
+            'quizCreate')),
         //subtitle: const Text('Fill in the details'),
         content: Container(
           padding: const EdgeInsets.symmetric(horizontal: 1),
@@ -175,7 +180,10 @@ class _QuizPageState extends State<QuizPage> {
       Step(
         state: _activeCurrentStep <= 1 ? StepState.editing : StepState.complete,
         isActive: _activeCurrentStep >= 1,
-        title: Text('Add Section and Section Question'),
+        title: Text( AppLocalization.instance.translate(
+            'lib.screen.quizPage.quizPage',
+            'quizOperationsSteps',
+            'addSectionAdnQuestion')),
         //subtitle: const Text('Fill in the details'),
         content: Container(
           padding: const EdgeInsets.symmetric(horizontal: 1),
@@ -185,7 +193,10 @@ class _QuizPageState extends State<QuizPage> {
       Step(
         state: _activeCurrentStep <= 2 ? StepState.editing : StepState.complete,
         isActive: _activeCurrentStep >= 2,
-        title: Text('Summary And Submit'),
+        title: Text(AppLocalization.instance.translate(
+            'lib.screen.quizPage.quizPage',
+            'quizOperationsSteps',
+            'summaryAndSubmit')),
         //subtitle: const Text('Please check and submit !'),
         content: Container(
           padding: const EdgeInsets.symmetric(horizontal: 1),
@@ -217,7 +228,10 @@ class _QuizPageState extends State<QuizPage> {
         spacing: 10,
         children: [
           CommonDropdownButtonFormField(
-            label: "Academic Year",
+            label: AppLocalization.instance.translate(
+                'lib.screen.quizPage.quizPage',
+                'getStepOneLayout',
+                'academicYear'),
             componentTextStyle: componentTextStyle,
             items: quizPageModel.academicYears,
             selectedItem: quizPageModel.quizMain?.academicYear,
@@ -226,7 +240,10 @@ class _QuizPageState extends State<QuizPage> {
             },
           ),
           CommonDropdownButtonFormField(
-            label: "Grade",
+            label: AppLocalization.instance.translate(
+                'lib.screen.quizPage.quizPage',
+                'getStepOneLayout',
+                'grade'),
             componentTextStyle: componentTextStyle,
             items: quizPageModel.grades,
             selectedItem: quizPageModel.quizMain?.gradeId,
@@ -236,7 +253,10 @@ class _QuizPageState extends State<QuizPage> {
           ),
           CommonTextFormField(
             controller: quizTitleController,
-            labelText: 'Title',
+            labelText:  AppLocalization.instance.translate(
+                'lib.screen.quizPage.quizPage',
+                'getStepOneLayout',
+                'title'),
             maxLines: 1,
             minLines: 1,
             onChanged: (text) {
@@ -245,7 +265,10 @@ class _QuizPageState extends State<QuizPage> {
           ),
           CommonTextFormField(
             controller: quizDescriptionController,
-            labelText: 'Descriptions',
+            labelText:AppLocalization.instance.translate(
+                'lib.screen.quizPage.quizPage',
+                'getStepOneLayout',
+                'descriptions'),
             maxLines: 3,
             minLines: 1,
             onChanged: (text) {
@@ -254,7 +277,10 @@ class _QuizPageState extends State<QuizPage> {
           ),
           CommonTextFormField(
             controller: quizDurationNumberController,
-            labelText: 'Duration (Minutes)',
+            labelText:AppLocalization.instance.translate(
+                'lib.screen.quizPage.quizPage',
+                'getStepOneLayout',
+                'duration') ,
             maxLines: 1,
             minLines: 1,
             onChanged: (text) {
@@ -269,7 +295,10 @@ class _QuizPageState extends State<QuizPage> {
                 // Assign the valid duration to quizPageModel.quizMain?.duration
                 quizPageModel.quizMain?.duration = duration;
               } catch (e) {
-                UIMessage.showError('Please enter a valid number.',
+                UIMessage.showError(AppLocalization.instance.translate(
+                    'lib.screen.quizPage.quizPage',
+                    'getStepOneLayout',
+                    'pleaseEnterAValidNumber') ,
                     gravity: ToastGravity.CENTER);
                 quizPageModel.quizMain?.duration = 0;
                 setState(() {});
@@ -278,13 +307,22 @@ class _QuizPageState extends State<QuizPage> {
             keyboardType: TextInputType.number,
             validator: (value) {
               if (value!.isEmpty) {
-                return 'Please enter a value.';
+                return AppLocalization.instance.translate(
+                    'lib.screen.quizPage.quizPage',
+                    'getStepOneLayout',
+                    'pleaseEnterAValue');
               }
               if (double.tryParse(value) == null) {
-                UIMessage.showError('Please enter a valid number.',
+                UIMessage.showError(AppLocalization.instance.translate(
+                    'lib.screen.quizPage.quizPage',
+                    'getStepOneLayout',
+                    'pleaseEnterAValidNumber') ,
                     gravity: ToastGravity.CENTER);
                 quizPageModel.quizMain?.duration = 0;
-                return 'Please enter a valid number.';
+                return AppLocalization.instance.translate(
+                    'lib.screen.quizPage.quizPage',
+                    'getStepOneLayout',
+                    'pleaseEnterAValue');
               }
               return null;
             },
@@ -298,7 +336,10 @@ class _QuizPageState extends State<QuizPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Click for Header Information'),
+                Text(AppLocalization.instance.translate(
+                    'lib.screen.quizPage.quizPage',
+                    'getStepOneLayout',
+                    'clickForHeaderInformation')),
                 Icon(!isHeaderTextCollapsed
                     ? Icons.arrow_drop_up_outlined
                     : Icons.arrow_drop_down_outlined),
@@ -310,7 +351,10 @@ class _QuizPageState extends State<QuizPage> {
               padding: const EdgeInsets.all(15.0),
               child: CommonTextFormField(
                 controller: quizHeaderTextController,
-                labelText: 'Header Information',
+                labelText:AppLocalization.instance.translate(
+                    'lib.screen.quizPage.quizPage',
+                    'getStepOneLayout',
+                    'headerInformation'),
                 maxLines: null,
                 minLines: 1,
                 onChanged: (text) {
@@ -327,7 +371,10 @@ class _QuizPageState extends State<QuizPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Click for Footer Information'),
+                Text(AppLocalization.instance.translate(
+                    'lib.screen.quizPage.quizPage',
+                    'getStepOneLayout',
+                    'clickForFooterInformation')),
                 Icon(!isFooterTextCollapsed
                     ? Icons.arrow_drop_up_outlined
                     : Icons.arrow_drop_down_outlined),
@@ -339,7 +386,10 @@ class _QuizPageState extends State<QuizPage> {
               padding: const EdgeInsets.all(15.0),
               child: CommonTextFormField(
                 controller: quizFooterTextController,
-                labelText: 'Footer Information',
+                labelText: AppLocalization.instance.translate(
+                    'lib.screen.quizPage.quizPage',
+                    'getStepOneLayout',
+                    'footerInformation'),
                 maxLines: null,
                 minLines: 1,
                 onChanged: (text) {
@@ -376,7 +426,10 @@ class _QuizPageState extends State<QuizPage> {
                           }
                         });
                       },
-                      child: const Text('Can everyone see the exam ?'),
+                      child: Text(AppLocalization.instance.translate(
+                          'lib.screen.quizPage.quizPage',
+                          'getStepOneLayout',
+                          'canEveryoneSeeTheExam')),
                     ),
                   ],
                 ),
@@ -401,8 +454,10 @@ class _QuizPageState extends State<QuizPage> {
                       onPressed: () {
                         showAcceptConditionsConfirmationDialog(context);
                       },
-                      child: const Text(
-                        'Accept Community Guidelines',
+                      child: Text(AppLocalization.instance.translate(
+                          'lib.screen.quizPage.quizPage',
+                          'getStepOneLayout',
+                          'acceptCommunityGuidelines'),
                         style: TextStyle(decoration: TextDecoration.underline),
                       ),
                     ),
@@ -433,7 +488,7 @@ class _QuizPageState extends State<QuizPage> {
     final screenWidth = MediaQuery.of(context).size.width;
     return Container(
       child: FutureBuilder<Widget>(
-        future: quizPageModel.generateHtmlDocument(
+        future: quizPageModel.generateSummary(
           quizPageModel.quizMain!,
           context,
         ),
@@ -444,7 +499,10 @@ class _QuizPageState extends State<QuizPage> {
               child: snapshot.data ?? Container(),
             );
           } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
+            return Text('${AppLocalization.instance.translate(
+                'lib.screen.quizPage.quizPage',
+                'getStepThreeLayout',
+                'error')} ${snapshot.error}');
           } else {
             return const CircularProgressIndicator(); // or any other loading indicator
           }
@@ -515,7 +573,10 @@ class _QuizPageState extends State<QuizPage> {
                     child: ElevatedButton(
                       //onPressed: controlsDetails.onStepContinue,
                       onPressed: controlsDetails.onStepContinue,
-                      child: Text('Next'),
+                      child: Text(AppLocalization.instance.translate(
+                          'lib.screen.quizPage.quizPage',
+                          '_buildStepper',
+                          'next')),
                     ),
                   ),
                 ),
@@ -528,7 +589,10 @@ class _QuizPageState extends State<QuizPage> {
                           alignment: Alignment.centerLeft,
                           child: ElevatedButton(
                             onPressed: controlsDetails.onStepCancel,
-                            child: Text('Back'),
+                            child: Text(AppLocalization.instance.translate(
+                                'lib.screen.quizPage.quizPage',
+                                '_buildStepper',
+                                'back')),
                           ),
                         ),
                       ),
@@ -538,7 +602,10 @@ class _QuizPageState extends State<QuizPage> {
                           alignment: Alignment.centerRight,
                           child: ElevatedButton(
                             onPressed: controlsDetails.onStepContinue,
-                            child: Text('Next'),
+                            child: Text(AppLocalization.instance.translate(
+                                'lib.screen.quizPage.quizPage',
+                                '_buildStepper',
+                                'next')),
                           ),
                         ),
                       ),
@@ -554,7 +621,10 @@ class _QuizPageState extends State<QuizPage> {
                           alignment: Alignment.centerLeft,
                           child: ElevatedButton(
                             onPressed: controlsDetails.onStepCancel,
-                            child: Text('Back'),
+                            child: Text(AppLocalization.instance.translate(
+                                'lib.screen.quizPage.quizPage',
+                                '_buildStepper',
+                                'back')),
                           ),
                         ),
                       ),
@@ -567,7 +637,10 @@ class _QuizPageState extends State<QuizPage> {
                               quizBloc.add(
                                   SavePmEvent(quizPageModel: quizPageModel));
                             },
-                            child: Text('Submit'),
+                            child: Text(AppLocalization.instance.translate(
+                                'lib.screen.quizPage.quizPage',
+                                '_buildStepper',
+                                'submit')),
                           ),
                         ),
                       ),
@@ -589,7 +662,7 @@ class _QuizPageState extends State<QuizPage> {
           const CircularProgressIndicator(),
           const SizedBox(height: 16),
           Text(AppLocalization.instance.translate(
-              'lib.screen.QuizPage.QuizPage', '_buildInit', 'initializing')),
+              'lib.screen.quizPage.quizPage', '_buildInit', 'initializing')),
         ],
       ),
     );
@@ -604,7 +677,7 @@ class _QuizPageState extends State<QuizPage> {
           const SizedBox(height: 16),
           Text(
             AppLocalization.instance.translate(
-                'lib.screen.QuizPage.QuizPage', '_buildLoading', 'loading'),
+                'lib.screen.quizPage.quizPage', '_buildLoading', 'loading'),
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -627,7 +700,7 @@ class _QuizPageState extends State<QuizPage> {
       errorMessage = state.errorMessage;
     } else {
       errorMessage = AppLocalization.instance.translate(
-          'lib.screen.QuizPage.QuizPage', '_buildError', 'unknownError');
+          'lib.screen.quizPage.quizPage', '_buildError', 'unknownError');
     }
     return Center(
       child: Column(
@@ -656,7 +729,7 @@ class _QuizPageState extends State<QuizPage> {
           const CircularProgressIndicator(),
           const SizedBox(height: 16),
           Text(
-            AppLocalization.instance.translate('lib.screen.QuizPage.QuizPage',
+            AppLocalization.instance.translate('lib.screen.quizPage.quizPage',
                 '_buildLoadingStep1', 'firstStepLoading'),
             style: const TextStyle(
               fontSize: 16,
@@ -679,7 +752,7 @@ class _QuizPageState extends State<QuizPage> {
       errorMessage = state.errorMessage;
     } else {
       errorMessage = AppLocalization.instance.translate(
-          'lib.screen.QuizPage.QuizPage', '_buildErrorStep1', 'unknownError');
+          'lib.screen.quizPage.quizPage', '_buildErrorStep1', 'unknownError');
     }
     return Center(
       child: Column(
@@ -708,7 +781,7 @@ class _QuizPageState extends State<QuizPage> {
           const CircularProgressIndicator(),
           const SizedBox(height: 16),
           Text(
-            AppLocalization.instance.translate('lib.screen.QuizPage.QuizPage',
+            AppLocalization.instance.translate('lib.screen.quizPage.quizPage',
                 '_buildLoadingStep2', 'secondStepLoading'),
             style: const TextStyle(
               fontSize: 16,
@@ -735,7 +808,7 @@ class _QuizPageState extends State<QuizPage> {
       errorMessage = state.errorMessage;
     } else {
       errorMessage = AppLocalization.instance.translate(
-          'lib.screen.QuizPage.QuizPage', '_buildErrorStep2', 'unknownError');
+          'lib.screen.quizPage.quizPage', '_buildErrorStep2', 'unknownError');
     }
     return Center(
       child: Column(
@@ -764,7 +837,7 @@ class _QuizPageState extends State<QuizPage> {
           const CircularProgressIndicator(),
           const SizedBox(height: 16),
           Text(
-            AppLocalization.instance.translate('lib.screen.QuizPage.QuizPage',
+            AppLocalization.instance.translate('lib.screen.quizPage.quizPage',
                 '_buildLoadingStep3', 'thirdStepLoading'),
             style: const TextStyle(
               fontSize: 16,
@@ -795,7 +868,7 @@ class _QuizPageState extends State<QuizPage> {
       errorMessage = state.errorMessage;
     } else {
       errorMessage = AppLocalization.instance.translate(
-          'lib.screen.QuizPage.QuizPage', '_buildErrorStep3', 'unknownError');
+          'lib.screen.quizPage.quizPage', '_buildErrorStep3', 'unknownError');
     }
     return Center(
       child: Column(
@@ -824,7 +897,7 @@ class _QuizPageState extends State<QuizPage> {
           const CircularProgressIndicator(),
           const SizedBox(height: 16),
           Text(
-            AppLocalization.instance.translate('lib.screen.QuizPage.QuizPage',
+            AppLocalization.instance.translate('lib.screen.quizPage.quizPage',
                 '_buildLoadingPm', 'pageModelLoading'),
             style: const TextStyle(
               fontSize: 16,
@@ -849,7 +922,7 @@ class _QuizPageState extends State<QuizPage> {
           const CircularProgressIndicator(),
           const SizedBox(height: 16),
           Text(
-            AppLocalization.instance.translate('lib.screen.QuizPage.QuizPage',
+            AppLocalization.instance.translate('lib.screen.quizPage.quizPage',
                 '_buildDeletingPm', 'pageModelDeleting'),
             style: const TextStyle(
               fontSize: 16,
@@ -874,7 +947,7 @@ class _QuizPageState extends State<QuizPage> {
           const CircularProgressIndicator(),
           const SizedBox(height: 16),
           Text(
-            AppLocalization.instance.translate('lib.screen.QuizPage.QuizPage',
+            AppLocalization.instance.translate('lib.screen.quizPage.quizPage',
                 '_buildRemovingPm', 'pageModelRemoving'),
             style: const TextStyle(
               fontSize: 16,
@@ -899,7 +972,7 @@ class _QuizPageState extends State<QuizPage> {
           const CircularProgressIndicator(),
           const SizedBox(height: 16),
           Text(
-            AppLocalization.instance.translate('lib.screen.QuizPage.QuizPage',
+            AppLocalization.instance.translate('lib.screen.quizPage.quizPage',
                 '_buildSavingPm', 'pageModelSaving'),
             style: const TextStyle(
               fontSize: 16,
@@ -914,7 +987,7 @@ class _QuizPageState extends State<QuizPage> {
   Widget _buildSavedPm(BuildContext context, SavedPmState state) {
     UIMessage.showSuccess(
         AppLocalization.instance.translate(
-            'lib.screen.QuizPage.QuizPage', '_buildSavedPm', 'videoSaved'),
+            'lib.screen.quizPage.quizPage', '_buildSavedPm', 'pageModelSaved'),
         gravity: ToastGravity.CENTER);
     _activeCurrentStep = 2;
     return _buildStepper(context, state);
@@ -923,7 +996,7 @@ class _QuizPageState extends State<QuizPage> {
   Widget _buildErrorPm(BuildContext context, ErrorPmState state) {
     UIMessage.showSuccess(
         AppLocalization.instance.translate(
-            'lib.screen.QuizPage.QuizPage', '_buildErrorPm', 'videoNotSaved'),
+            'lib.screen.quizPage.quizPage', '_buildErrorPm', 'pageModelNotSaved'),
         gravity: ToastGravity.CENTER);
 
     _activeCurrentStep = 2;

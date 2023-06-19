@@ -1,7 +1,5 @@
-import 'dart:typed_data';
 import 'package:egitimaxapplication/model/common/getDataSet.dart';
 import 'package:egitimaxapplication/model/quiz/setQuizObjects.dart';
-import 'package:egitimaxapplication/model/video/setVideoObjects.dart';
 import 'package:egitimaxapplication/utils/extension/apiDataSetExtension.dart';
 import 'package:egitimaxapplication/utils/service/webApi/apiBasicAuthorization.dart';
 import 'package:egitimaxapplication/utils/service/webApi/apiBearerAuthorization.dart';

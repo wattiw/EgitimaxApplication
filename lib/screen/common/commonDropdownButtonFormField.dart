@@ -1,4 +1,5 @@
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:egitimaxapplication/utils/config/language/appLocalizations.dart';
 import 'package:flutter/material.dart';
 
 class CommonDropdownButtonFormField extends StatefulWidget {
@@ -198,7 +199,7 @@ class _CommonDropdownButtonFormFieldState
             showSearchBox: true,
             searchFieldProps: TextFieldProps(
               decoration:InputDecoration(
-                labelText:'Search',
+                labelText: AppLocalization.instance.translate('lib.screen.common.commonDropdownButtonFormField','build', 'search'),
                 contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
                 isDense: true,
                 enabledBorder: OutlineInputBorder(

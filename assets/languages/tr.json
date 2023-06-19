@@ -488,5 +488,293 @@
       "ct_achv": "Kazanımlar",
       "ct_subject":"Konu"
     }
+  },
+  "lib.screen.quizPage.quizPage": {
+    "showAcceptConditionsConfirmationDialog": {
+      "confirmation": "Onay",
+      "message": "Topluluğumuzu korumak için Topluluk Kurallarımız tasarlanmıştır. Bu kurallar, Eğitimax'deki videolar, yorumlar, bağlantılar ve küçük resimler de dahil olmak üzere platformumuzdaki tüm içerik türleri için geçerlidir ve nelerin izin verildiğini ve nelerin izin verilmediğini belirtir. Lütfen topluluk kurallarımıza ve yasalara uyduğunuzu onaylayın.",
+      "yesButtonText": "Evet",
+      "noButtonText": "Hayır"
+    },
+    "build": {
+      "title": "Quiz İşlemleri"
+    },
+    "quizOperationsSteps": {
+      "quizCreate": "Quiz Oluştur",
+      "addSectionAdnQuestion": "Bölüm ve Soru Ekle",
+      "summaryAndSubmit": "Özet ve Gönder"
+    },
+    "getStepOneLayout": {
+      "title": "Başlık",
+      "descriptions": "Açıklamalar",
+      "duration": "Süre (Dakika)",
+      "pleaseEnterAValidNumber": "Lütfen geçerli bir sayı girin.",
+      "pleaseEnterAValue": "Lütfen bir değer girin.",
+      "clickForHeaderInformation": "Üst bilgi için tıklayın",
+      "headerInformation": "Üst Başlık Bilgisi",
+      "clickForFooterInformation": "Alt bilgi için tıklayın",
+      "footerInformation": "Alt Başlık Bilgisi",
+      "canEveryoneSeeTheExam": "Herkes sınava erişebilir mi?",
+      "acceptCommunityGuidelines": "Topluluk Kurallarını Kabul Et",
+      "academicYear": "Akademik Yıl",
+      "grade": "Sınıf"
+    },
+    "getStepThreeLayout": {
+      "error": "Hata:"
+    },
+    "_buildStepper": {
+      "next": "İleri",
+      "back": "Geri",
+      "submit": "Gönder"
+    },
+    "_buildInit": {
+      "initializing": "Başlatılıyor"
+    },
+    "_buildLoading": {
+      "loading": "Yükleniyor..."
+    },
+    "_buildError": {
+      "unknownError": "Bilinmeyen Hata..."
+    },
+    "_buildLoadingStep1": {
+      "firstStepLoading": "İlk Adım Yükleniyor"
+    },
+    "_buildErrorStep1": {
+      "unknownError": "Bilinmeyen Hata..."
+    },
+    "_buildLoadingStep2": {
+      "secondStepLoading": "İkinci Adım Yükleniyor"
+    },
+    "_buildErrorStep2": {
+      "unknownError": "Bilinmeyen Hata..."
+    },
+    "_buildLoadingStep3": {
+      "thirdStepLoading": "Üçüncü Adım Yükleniyor"
+    },
+    "_buildErrorStep3": {
+      "unknownError": "Bilinmeyen Hata..."
+    },
+    "_buildLoadingPm": {
+      "pageModelLoading": "Sayfa Modeli Yükleniyor"
+    },
+    "_buildDeletingPm": {
+      "pageModelDeleting": "Sayfa Modeli Siliniyor"
+    },
+    "_buildRemovingPm": {
+      "pageModelRemoving": "Sayfa Modeli Kaldırılıyor"
+    },
+    "_buildSavingPm": {
+      "pageModelSaving": "Sayfa Modeli Kaydediliyor"
+    },
+    "_buildSavedPm": {
+      "pageModelSaved": "Sayfa Modeli Kaydedildi"
+    },
+    "_buildErrorPm": {
+      "pageModelNotSaved": "Sayfa Modeli Kaydedilmedi"
+    }
+  },
+  "lib.screen.quizPage.quizSectionDataTable": {
+    "build": {
+      "addQuestion": "Soru Ekle",
+      "edit": "Düzenle",
+      "moveUp": "Yukarı Taşı",
+      "moveDown": "Aşağı Taşı",
+      "delete": "Sil",
+      "selectAction": "İşlem Seç",
+      "questions": "Sorular",
+      "addSection": "Bölüm Ekle",
+      "id": "Kimlik",
+      "order": "Sıra",
+      "sectionName": "Bölüm Adı",
+      "branch": "Branş",
+      "questionQuantity": "Soru Sayısı",
+      "actions": "İşlemler"
+    },
+    "createSectionQuestionsWidget": {
+      "moveUp": "Yukarı Taşı",
+      "moveDown": "Aşağı Taşı",
+      "delete": "Sil",
+      "actions": "İşlemler",
+      "section": "Bölüm",
+      "id": "Kimlik",
+      "order": "Sıra",
+      "question": "Soru",
+      "academicYear": "Akademik Yıl",
+      "difficultyLevel": "Zorluk Seviyesi",
+      "branchName": "Branş Adı",
+      "achievementTree": "Kazanım Ağacı",
+      "createdOn": "Oluşturulma Tarihi",
+      "favorite": "Favori",
+      "selectActions": "İşlemler",
+      "sections": "Bölümler"
+    }
+  },
+  "lib.screen.quizPage.quizSectionDataTableEditPopup": {
+    "build": {
+      "sectionOperation": "Bölüm İşlemi",
+      "questions": "Sorular",
+      "branchName": "Branş Adı",
+      "sectionDescriptions": "Bölüm Tanımı",
+      "cancel": "İptal",
+      "save": "Kaydet"
+    }
+  },
+  "lib.screen.quizPage.stepsValidator": {
+    "validateStep1": {
+      "isAcademicYearSet": "Lütfen akademik yılı seçin!",
+      "isGradeSet": "Lütfen sınıfı seçin!",
+      "isTitleSet": "Lütfen başlık girin!",
+      "isDescriptionSet": "Lütfen açıklama belirtin!",
+      "isDurationSet": "Lütfen süre belirtin!",
+      "isPublicSet": "Lütfen sınavın herkese açık olup olmadığını belirtin!",
+      "isConditionsAccepted": "Lütfen koşulları kabul edin!"
+    },
+    "validateStep2": {
+      "emptySection": "Lütfen boş bölümler için soru(lar) ekleyin!"
+    }
+  },
+  "lib.model.quiz.quizPageModel": {
+    "generateSummary": {
+      "country": "Ülke",
+      "academicYear": "Akademik Yıl",
+      "grade": "Sınıf",
+      "title": "Başlık",
+      "description": "Açıklama",
+      "duration": "Süre",
+      "headerText": "Başlık Metni",
+      "footerText": "Alt Bilgi Metni",
+      "isPublic": "Herkes Tarafından Görülebilir",
+      "yes": "Evet",
+      "no": "Hayır",
+      "aggregatingRating": "Toplanan Puan",
+      "questionQuantity": "Soru Sayısı",
+      "branch": "Branş",
+      "orderNo": "Sıra No",
+      "sectionDescription": "Bölüm Açıklaması",
+      "questionOrderNo": "Soru Sıra No",
+      "question": "Soru"
+    }
+  },
+  "lib.bloc.bloc.quiz.quizBloc": {
+    "initEvent": {
+      "mainSection": "Ana Bölüm"
+    }
+  },
+  "lib.screen.common.questionDataTable": {
+    "_QuestionDataTableState": {
+      "myQuestion": "Benim Sorularım",
+      "myFavoriteQuestion": "Favori Sorularım",
+      "searchInEgitimax": "Eğitimax'ta Ara"
+    },
+    "build": {
+      "filters": "Filtreler",
+      "pleaseSelectQuestionSource": "Lütfen soru kaynağı seçin!",
+      "searchInEgitimax": "Eğitimax'ta Ara",
+      "error": "Hata",
+      "clear": "Temizle",
+      "search": "Ara",
+      "questionSelector": "Soru Seçici",
+      "noData": "Veri Yok",
+      "cancel": "İptal",
+      "save": "Kaydet"
+    },
+    "searchButtonOnPressed": {
+      "id": "Kimlik",
+      "academicYear": "Akademik Yıl",
+      "question": "Soru",
+      "difficultyLevel": "Zorluk Seviyesi",
+      "branchName": "Branş Adı",
+      "achievementTree": "Kazanım Ağacı",
+      "createdOn": "Oluşturulma Tarihi",
+      "favorite": "Favori",
+      "pleaseSelectSourceType": "Lütfen soru kaynak türünü seçin!"
+    },
+    "filterAcademicYears": {
+      "all": "Hepsi",
+      "academicYear": "Akademik Yıl",
+      "pleaseSelectAcademicYear": "Lütfen akademik yıl seçin!"
+    },
+    "filterGrades": {
+      "all": "Hepsi",
+      "gradeName": "Sınıf",
+      "pleaseSelectGradeName": "Lütfen sınıf seçin!"
+    },
+    "filterBranches": {
+      "all": "Hepsi",
+      "branchName": "Branş",
+      "pleaseSelectBranchName": "Lütfen branş seçin!"
+    },
+    "filterDifficultyLevels": {
+      "all": "Hepsi",
+      "difficultyLevel": "Zorluk Seviyesi",
+      "pleaseSelectDifficultyLevel": "Lütfen zorluk seviyesi seçin!"
+    },
+    "filterQuestionText": {
+      "questionKeyWords": "Soru anahtar kelimeleri"
+    },
+    "questionFavoriteGroups": {
+      "all": "Hepsi",
+      "favGroup": "Favori Grup"
+    },
+    "questionSources": {
+      "questionResource": "Soru Kaynağı"
+    }
+  },
+  "lib.screen.common.commonDataTable": {
+    "filters": {
+      "search": "Ara"
+    },
+    "columnChooserButton": {
+      "choseColumn": "Sütun Seçici"
+    },
+    "columnFilterChooserButton": {
+      "choseFilterColumn": "Filtre Seçici"
+    },
+    "editButton": {
+      "edit": "Düzenle"
+    },
+    "deleteButton": {
+      "delete": "Sil"
+    },
+    "saveButton": {
+      "save": "Kaydet"
+    },
+    "exportButton": {
+      "export": "Dışa Aktar"
+    }
+  },
+  "lib.screen.common.commonDropdownButtonFormField": {
+    "build": {
+      "search": "Ara"
+    }
+  },
+  "lib.screen.common.questionOverView": {
+    "build": {
+      "viewQuestion": "Soruyu Görüntüle",
+      "error": "Hata",
+      "resolutionTitle": "Çözüm",
+      "branchName": "Branş Adı",
+      "academicYear": "Akademik Yıl",
+      "gradeName": "Sınıf Adı",
+      "difficultyLevel": "Zorluk Seviyesi",
+      "achievementTree": "Kazanım Ağacı",
+      "achievements": "Kazanımlar",
+      "domain": "Alan",
+      "subdomain": "Alt Alan",
+      "subject": "Konu",
+      "subTopic": "Alt Konu",
+      "showQuestionResolutions": "Soru Çözümünü Göster",
+      "showQuestionDetails": "Soru Detaylarını Göster",
+      "unlike": "Beğenme",
+      "like": "Beğen",
+      "removeDisLike": "Beğenmeme Kaldır",
+      "disLike": "Beğenme",
+      "removeFav": "Favorilerden Kaldır",
+      "addFav": "Favorilere Ekle",
+      "shareQuestion": "Soruyu Paylaş",
+      "share": "Paylaş",
+      "likes": "Beğeniler"
+    }
   }
+
 }

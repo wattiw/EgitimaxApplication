@@ -59,9 +59,9 @@ class _QuestionOverViewState extends State<QuestionOverView> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Expanded(
+             Expanded(
               child: Text(
-                'View Question',
+                AppLocalization.instance.translate('lib.screen.common.questionOverView','build', 'viewQuestion'),
                 style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
               ),
             ),
@@ -101,7 +101,7 @@ class _QuestionOverViewState extends State<QuestionOverView> {
                         ConnectionState.waiting) {
                       return const CircularProgressIndicator();
                     } else if (innerSnapshot.hasError) {
-                      return Text('Error: ${innerSnapshot.error}');
+                      return Text('${AppLocalization.instance.translate('lib.screen.common.questionOverView','build', 'error')}: ${innerSnapshot.error}');
                     } else if (innerSnapshot.hasData) {
                       return innerSnapshot.data!;
                     } else {
@@ -239,8 +239,8 @@ class _QuestionOverViewState extends State<QuestionOverView> {
     }
 
     String resolutionTitle = AppLocalization.instance.translate(
-        'lib.screen.questionPage.questionPage',
-        'getStepThreeLayout',
+        'lib.screen.common.questionOverView',
+        'build',
         'resolutionTitle');
 
     String fullHtmlStringQQOAS = '''<p>
@@ -297,12 +297,30 @@ class _QuestionOverViewState extends State<QuestionOverView> {
     var rows = qovDataSet.selectDataTable('data');
 
     Map<String, String> columnDisplayNames = {
-      'branch_name': 'Branch Name',
-      'acad_year': 'Academic Year',
-      'grade_name': 'Grade Name',
-      'dif_level': 'Difficulty Level',
-      'learn_data': 'Achievement Tree',
-      'achievements': 'Achievements'
+      'branch_name': AppLocalization.instance.translate(
+          'lib.screen.common.questionOverView',
+          'build',
+          'branchName'),
+      'acad_year': AppLocalization.instance.translate(
+          'lib.screen.common.questionOverView',
+          'build',
+          'academicYear'),
+      'grade_name': AppLocalization.instance.translate(
+          'lib.screen.common.questionOverView',
+          'build',
+          'gradeName'),
+      'dif_level': AppLocalization.instance.translate(
+          'lib.screen.common.questionOverView',
+          'build',
+          'difficultyLevel'),
+      'learn_data': AppLocalization.instance.translate(
+          'lib.screen.common.questionOverView',
+          'build',
+          'achievementTree'),
+      'achievements':  AppLocalization.instance.translate(
+          'lib.screen.common.questionOverView',
+          'build',
+          'achievements')
     };
 
     for (var row in rows) {
@@ -321,7 +339,16 @@ class _QuestionOverViewState extends State<QuestionOverView> {
             String secondPart = achievementTress[1] ?? '';
 
             String formattedSecondPart = '';
-            List<String> titles = ['Domain', 'Subdomain', 'Subject'];
+            List<String> titles = [AppLocalization.instance.translate(
+                'lib.screen.common.questionOverView',
+                'build',
+                'domain'), AppLocalization.instance.translate(
+                'lib.screen.common.questionOverView',
+                'build',
+                'subdomain'), AppLocalization.instance.translate(
+                'lib.screen.common.questionOverView',
+                'build',
+                'subject')];
 
             if (secondPart.isNotEmpty) {
               List<String> outerParts = secondPart.split(';').reversed.toList();
@@ -331,7 +358,10 @@ class _QuestionOverViewState extends State<QuestionOverView> {
                 String title = titles[i]; // Başlık
                 if (achievementTress.length >= 3 &&
                     i < achievementTress[2].length) {
-                  title = 'Sub Topic'; // achievementTress[2][i];
+                  title = AppLocalization.instance.translate(
+                      'lib.screen.common.questionOverView',
+                      'build',
+                      'subTopic'); // achievementTress[2][i];
                 }
                 formattedSecondPart +=
                     '<div><strong>$title:</strong>${outerParts[i]}</div>';
@@ -467,7 +497,10 @@ class _QuestionOverViewState extends State<QuestionOverView> {
             if (snapshot.hasData) {
               return snapshot.data ?? Container();
             } else if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
+              return Text('${AppLocalization.instance.translate(
+                  'lib.screen.common.questionOverView',
+                  'build',
+                  'error')}: ${snapshot.error}');
             } else {
               return const CircularProgressIndicator(); // or any other loading indicator
             }
@@ -484,7 +517,10 @@ class _QuestionOverViewState extends State<QuestionOverView> {
 
     CollapsibleItemData itemData1 = CollapsibleItemData(
       isExpanded: false,
-        header: const Text('Show Question Resolutions'),
+        header: Text(AppLocalization.instance.translate(
+            'lib.screen.common.questionOverView',
+            'build',
+            'showQuestionResolutions')),
         content: WebViewPage(
           htmlContent: questionResolutions,
           textStyle: componentTextStyle,
@@ -494,7 +530,10 @@ class _QuestionOverViewState extends State<QuestionOverView> {
 
     CollapsibleItemData itemData2 = CollapsibleItemData(
         isExpanded: false,
-        header: const Text('Show Question Details'),
+        header:  Text(AppLocalization.instance.translate(
+            'lib.screen.common.questionOverView',
+            'build',
+            'showQuestionDetails')),
         content: WebViewPage(
           htmlContent: questionDetails,
           textStyle: componentTextStyle,
@@ -622,7 +661,13 @@ class _LikeDislikeFavShareButtonsState
                     icon: Icon(
                       isLiked ? Icons.thumb_up : Icons.thumb_up_alt_outlined,
                     ),
-                    tooltip: isLiked ? 'Unlike' : 'Like',
+                    tooltip: isLiked ? AppLocalization.instance.translate(
+                        'lib.screen.common.questionOverView',
+                        'build',
+                        'unlike') : AppLocalization.instance.translate(
+                        'lib.screen.common.questionOverView',
+                        'build',
+                        'like') ,
                   ),
                   IconButton(
                     onPressed: () {
@@ -639,7 +684,13 @@ class _LikeDislikeFavShareButtonsState
                           ? Icons.thumb_down
                           : Icons.thumb_down_alt_outlined,
                     ),
-                    tooltip: isDisLiked ? 'Remove Dislike' : 'Dislike',
+                    tooltip: isDisLiked ?  AppLocalization.instance.translate(
+                        'lib.screen.common.questionOverView',
+                        'build',
+                        'removeDisLike')  :  AppLocalization.instance.translate(
+                        'lib.screen.common.questionOverView',
+                        'build',
+                        'disLike'),
                   ),
                   if (hideText)
                     IconButton(
@@ -653,8 +704,14 @@ class _LikeDislikeFavShareButtonsState
                         isFavorite ? Icons.favorite : Icons.favorite_border,
                       ),
                       tooltip: isFavorite
-                          ? 'Remove from Favorites'
-                          : 'Add to Favorites',
+                          ? AppLocalization.instance.translate(
+                          'lib.screen.common.questionOverView',
+                          'build',
+                          'removeFav')
+                          : AppLocalization.instance.translate(
+                          'lib.screen.common.questionOverView',
+                          'build',
+                          'addFav'),
                     ),
                   if (hideText)
                     IconButton(
@@ -664,13 +721,22 @@ class _LikeDislikeFavShareButtonsState
                         });
                       },
                       icon: const Icon(Icons.ios_share),
-                      tooltip: 'Share Question',
+                      tooltip: AppLocalization.instance.translate(
+                          'lib.screen.common.questionOverView',
+                          'build',
+                          'shareQuestion'),
                     ),
                   if (!hideText)
                     Tooltip(
                       message: isFavorite
-                          ? 'Remove from Favorites'
-                          : 'Add to Favorites',
+                          ? AppLocalization.instance.translate(
+                          'lib.screen.common.questionOverView',
+                          'build',
+                          'removeFav')
+                          : AppLocalization.instance.translate(
+                          'lib.screen.common.questionOverView',
+                          'build',
+                          'addFav'),
                       child: TextButton.icon(
                         onPressed: () {
                           setState(() {
@@ -683,8 +749,14 @@ class _LikeDislikeFavShareButtonsState
                         ),
                         label: Text(
                           isFavorite
-                              ? 'Remove from Favorites'
-                              : 'Add to Favorites',
+                              ? AppLocalization.instance.translate(
+                              'lib.screen.common.questionOverView',
+                              'build',
+                              'removeFav')
+                              : AppLocalization.instance.translate(
+                              'lib.screen.common.questionOverView',
+                              'build',
+                              'addFav'),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -692,7 +764,10 @@ class _LikeDislikeFavShareButtonsState
                     ),
                   if (!hideText)
                     Tooltip(
-                      message: 'Share Question',
+                      message: AppLocalization.instance.translate(
+                          'lib.screen.common.questionOverView',
+                          'build',
+                          'shareQuestion'),
                       child: TextButton.icon(
                         onPressed: () {
                           setState(() {
@@ -700,8 +775,11 @@ class _LikeDislikeFavShareButtonsState
                           });
                         },
                         icon: const Icon(Icons.ios_share),
-                        label: const Text(
-                          'Share',
+                        label: Text(
+                          AppLocalization.instance.translate(
+                              'lib.screen.common.questionOverView',
+                              'build',
+                              'share'),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -712,7 +790,10 @@ class _LikeDislikeFavShareButtonsState
             ],
           );
         } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
+          return Text('${AppLocalization.instance.translate(
+              'lib.screen.common.questionOverView',
+              'build',
+              'error')}: ${snapshot.error}');
         } else {
           return const CircularProgressIndicator(); // or any other loading indicator
         }
@@ -767,7 +848,10 @@ class _LikeCountWidgetState extends State<LikeCountWidget> {
                         Icons.thumb_up,
                         color: Colors.yellow,
                       ),
-                      Text('(${widget.likeCount} Likes)'),
+                      Text('(${widget.likeCount} ${AppLocalization.instance.translate(
+                          'lib.screen.common.questionOverView',
+                          'build',
+                          'likes')})'),
                     ],
                   ),
                 ],
@@ -775,7 +859,10 @@ class _LikeCountWidgetState extends State<LikeCountWidget> {
             ],
           );
         } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
+          return Text('${AppLocalization.instance.translate(
+              'lib.screen.common.questionOverView',
+              'build',
+              'error')}: ${snapshot.error}');
         } else {
           return const CircularProgressIndicator(); // or any other loading indicator
         }

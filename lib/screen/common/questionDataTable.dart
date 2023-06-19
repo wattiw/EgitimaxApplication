@@ -15,6 +15,8 @@ import 'package:egitimaxapplication/utils/widget/message/uIMessage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../../utils/config/language/appLocalizations.dart';
+
 class QuestionDataTable extends StatefulWidget {
   BigInt userId;
   List<BigInt>? selectedQuestionIds;
@@ -43,14 +45,26 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
   bool isFilterActive = false;
 
   Map<String, String> questionSourceList = {
-    'myQuestions': 'My Questions',
-    'myFavoriteQuestions': 'My Favorite Questions',
-    'egitimaxPublicQuestions': 'Search In Eğitimax'
+    'myQuestions': AppLocalization.instance.translate(
+        'lib.screen.common.questionDataTable',
+        '_QuestionDataTableState',
+        'myQuestion'),
+    'myFavoriteQuestions': AppLocalization.instance.translate(
+        'lib.screen.common.questionDataTable',
+        '_QuestionDataTableState',
+        'myFavoriteQuestion'),
+    'egitimaxPublicQuestions': AppLocalization.instance.translate(
+        'lib.screen.common.questionDataTable',
+        '_QuestionDataTableState',
+        'searchInEgitimax')
   };
   Map<int, String> questionSourceListAsKey = {
-    0: 'My Questions',
-    1: 'My Favorite Questions',
-    2: 'Search In Eğitimax'
+    0: AppLocalization.instance.translate('lib.screen.common.questionDataTable',
+        '_QuestionDataTableState', 'myQuestion'),
+    1: AppLocalization.instance.translate('lib.screen.common.questionDataTable',
+        '_QuestionDataTableState', 'myFavoriteQuestion'),
+    2: AppLocalization.instance.translate('lib.screen.common.questionDataTable',
+        '_QuestionDataTableState', 'searchInEgitimax')
   };
   Map<int, String> questionSourceListAsKeyValues = {
     0: 'myQuestions',
@@ -113,8 +127,10 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
   String? dataTableKeyColumnName;
   List<String>? dataTableDisableColumnFilter = List.empty(growable: true);
   List<String>? dataTableHideColumn = List.empty(growable: true);
-  List<Map<Map<String, String>, Widget>>? dataTableRows; // Map Is List<Map<Map<columnName, columnValueAsString>, Widget(Show Your Widget With Cell Value Bind)>>?
-  List<ColumnDataType> columnDataTypes=List.empty(growable: true);
+  List<Map<Map<String, String>, Widget>>?
+      dataTableRows; // Map Is List<Map<Map<columnName, columnValueAsString>, Widget(Show Your Widget With Cell Value Bind)>>?
+  List<ColumnDataType> columnDataTypes = List.empty(growable: true);
+
   @override
   void initState() {
     widget.selectedRowsKeys ??= [];
@@ -144,11 +160,11 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
           children: [
             Expanded(
               child: Text(
-                '${filterTitle == null || filterTitle == '' ? 'Filters :' : ''}${filterTitle ?? 'Please select question source !'}',
-                style:widget.componentTextStyle,
+                '${filterTitle == null || filterTitle == '' ? '${AppLocalization.instance.translate('lib.screen.common.questionDataTable', 'build', 'filters')} :' : ''}${filterTitle ?? AppLocalization.instance.translate('lib.screen.common.questionDataTable', 'build', 'pleaseSelectQuestionSource')}',
+                style: widget.componentTextStyle,
               ),
             ),
-            const Flexible(
+            Flexible(
                 child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -156,7 +172,8 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                   Icons.manage_search,
                 ),
                 SizedBox(width: 5),
-                Text('Filters'),
+                Text(AppLocalization.instance.translate(
+                    'lib.screen.common.questionDataTable', 'build', 'filters')),
               ],
             ))
           ],
@@ -184,21 +201,26 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                                 if (snapshot.hasData) {
                                   return snapshot.data!;
                                 } else if (snapshot.hasError) {
-                                  return Text('Error: ${snapshot.error}');
+                                  return Text(
+                                      '${AppLocalization.instance.translate('lib.screen.common.questionDataTable', 'build', 'error')}: ${snapshot.error}');
                                 } else {
                                   return const CircularProgressIndicator(); // or any other loading indicator
                                 }
                               },
                             ),
-                            const SizedBox( height: 10, ),
+                            const SizedBox(
+                              height: 10,
+                            ),
                             FutureBuilder<CommonDropdownButtonFormField>(
                               future: filterDifficultyLevels(),
                               builder: (BuildContext context,
-                                  AsyncSnapshot<CommonDropdownButtonFormField> snapshot) {
+                                  AsyncSnapshot<CommonDropdownButtonFormField>
+                                      snapshot) {
                                 if (snapshot.hasData) {
                                   return snapshot.data!;
                                 } else if (snapshot.hasError) {
-                                  return Text('Error: ${snapshot.error}');
+                                  return Text(
+                                      '${AppLocalization.instance.translate('lib.screen.common.questionDataTable', 'build', 'error')}: ${snapshot.error}');
                                 } else {
                                   return const CircularProgressIndicator(); // or any other loading indicator
                                 }
@@ -223,23 +245,29 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                                   if (snapshot.hasData) {
                                     return snapshot.data!;
                                   } else if (snapshot.hasError) {
-                                    return Text('Error: ${snapshot.error}');
+                                    return Text(
+                                        '${AppLocalization.instance.translate('lib.screen.common.questionDataTable', 'build', 'error')}: ${snapshot.error}');
                                   } else {
                                     return const CircularProgressIndicator(); // or any other loading indicator
                                   }
                                 },
                               ),
                             ),
-                            const SizedBox(width: 10,),
+                            const SizedBox(
+                              width: 10,
+                            ),
                             Expanded(
-                              child: FutureBuilder<CommonDropdownButtonFormField>(
+                              child:
+                                  FutureBuilder<CommonDropdownButtonFormField>(
                                 future: filterDifficultyLevels(),
                                 builder: (BuildContext context,
-                                    AsyncSnapshot<CommonDropdownButtonFormField> snapshot) {
+                                    AsyncSnapshot<CommonDropdownButtonFormField>
+                                        snapshot) {
                                   if (snapshot.hasData) {
                                     return snapshot.data!;
                                   } else if (snapshot.hasError) {
-                                    return Text('Error: ${snapshot.error}');
+                                    return Text(
+                                        '${AppLocalization.instance.translate('lib.screen.common.questionDataTable', 'build', 'error')}: ${snapshot.error}');
                                   } else {
                                     return const CircularProgressIndicator(); // or any other loading indicator
                                   }
@@ -248,7 +276,9 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                             ),
                           ],
                         ),
-                      const SizedBox(height: 10,),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       if (deviceType == DeviceType.mobileSmall ||
                           deviceType == DeviceType.mobileMedium ||
                           deviceType == DeviceType.mobileLarge)
@@ -257,25 +287,31 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                             FutureBuilder<CommonDropdownButtonFormField>(
                               future: filterGrades(),
                               builder: (BuildContext context,
-                                  AsyncSnapshot<CommonDropdownButtonFormField> snapshot) {
+                                  AsyncSnapshot<CommonDropdownButtonFormField>
+                                      snapshot) {
                                 if (snapshot.hasData) {
                                   return snapshot.data!;
                                 } else if (snapshot.hasError) {
-                                  return Text('Error: ${snapshot.error}');
+                                  return Text(
+                                      '${AppLocalization.instance.translate('lib.screen.common.questionDataTable', 'build', 'error')}: ${snapshot.error}');
                                 } else {
                                   return const CircularProgressIndicator(); // or any other loading indicator
                                 }
                               },
                             ),
-                            const SizedBox(  height: 10, ),
+                            const SizedBox(
+                              height: 10,
+                            ),
                             FutureBuilder<CommonDropdownButtonFormField>(
                               future: filterBranches(),
                               builder: (BuildContext context,
-                                  AsyncSnapshot<CommonDropdownButtonFormField> snapshot) {
+                                  AsyncSnapshot<CommonDropdownButtonFormField>
+                                      snapshot) {
                                 if (snapshot.hasData) {
                                   return snapshot.data!;
                                 } else if (snapshot.hasError) {
-                                  return Text('Error: ${snapshot.error}');
+                                  return Text(
+                                      '${AppLocalization.instance.translate('lib.screen.common.questionDataTable', 'build', 'error')}: ${snapshot.error}');
                                 } else {
                                   return const CircularProgressIndicator(); // or any other loading indicator
                                 }
@@ -291,14 +327,17 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Expanded(
-                              child: FutureBuilder<CommonDropdownButtonFormField>(
+                              child:
+                                  FutureBuilder<CommonDropdownButtonFormField>(
                                 future: filterGrades(),
                                 builder: (BuildContext context,
-                                    AsyncSnapshot<CommonDropdownButtonFormField> snapshot) {
+                                    AsyncSnapshot<CommonDropdownButtonFormField>
+                                        snapshot) {
                                   if (snapshot.hasData) {
                                     return snapshot.data!;
                                   } else if (snapshot.hasError) {
-                                    return Text('Error: ${snapshot.error}');
+                                    return Text(
+                                        '${AppLocalization.instance.translate('lib.screen.common.questionDataTable', 'build', 'error')}: ${snapshot.error}');
                                   } else {
                                     return const CircularProgressIndicator(); // or any other loading indicator
                                   }
@@ -309,14 +348,17 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                               width: 10,
                             ),
                             Expanded(
-                              child: FutureBuilder<CommonDropdownButtonFormField>(
+                              child:
+                                  FutureBuilder<CommonDropdownButtonFormField>(
                                 future: filterBranches(),
                                 builder: (BuildContext context,
-                                    AsyncSnapshot<CommonDropdownButtonFormField> snapshot) {
+                                    AsyncSnapshot<CommonDropdownButtonFormField>
+                                        snapshot) {
                                   if (snapshot.hasData) {
                                     return snapshot.data!;
                                   } else if (snapshot.hasError) {
-                                    return Text('Error: ${snapshot.error}');
+                                    return Text(
+                                        '${AppLocalization.instance.translate('lib.screen.common.questionDataTable', 'build', 'error')}: ${snapshot.error}');
                                   } else {
                                     return const CircularProgressIndicator(); // or any other loading indicator
                                   }
@@ -326,7 +368,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                           ],
                         ),
                       const SizedBox(
-                        height: 5,
+                        height: 10,
                       ),
                       if (branchId != 0 &&
                           gradeId != 0 &&
@@ -387,13 +429,19 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                     onPressed: () async {
                       await clearButtonOnPressed();
                     },
-                    child: const Text('Temizle'),
+                    child: Text(AppLocalization.instance.translate(
+                        'lib.screen.common.questionDataTable',
+                        'build',
+                        'clear')),
                   ),
                   ElevatedButton(
                     onPressed: () async {
                       await searchButtonOnPressed(userId ?? BigInt.parse('0'));
                     },
-                    child: const Text('Ara'),
+                    child: Text(AppLocalization.instance.translate(
+                        'lib.screen.common.questionDataTable',
+                        'build',
+                        'search')),
                   ),
                 ],
               ),
@@ -418,12 +466,13 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
     );
 
     return Scaffold(
-      appBar: const InnerAppBar(
-        title: 'Question Selector',
+      appBar: InnerAppBar(
+        title: AppLocalization.instance.translate(
+            'lib.screen.common.questionDataTable', 'build', 'questionSelector'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
-        child:SingleChildScrollView(
+        child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(5.0),
             child: Column(
@@ -444,11 +493,12 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                           future: questionFavoriteGroups(),
                           builder: (BuildContext context,
                               AsyncSnapshot<CommonDropdownButtonFormField>
-                              snapshot) {
+                                  snapshot) {
                             if (snapshot.hasData) {
                               return snapshot.data!;
                             } else if (snapshot.hasError) {
-                              return Text('Error: ${snapshot.error}');
+                              return Text(
+                                  '${AppLocalization.instance.translate('lib.screen.common.questionDataTable', 'build', 'error')}: ${snapshot.error}');
                             } else {
                               return const CircularProgressIndicator(); // or any other loading indicator
                             }
@@ -462,7 +512,10 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                               await searchButtonOnPressed(
                                   userId ?? BigInt.parse('0'));
                             },
-                            child: const Text('Ara'),
+                            child: Text(AppLocalization.instance.translate(
+                                'lib.screen.common.questionDataTable',
+                                'build',
+                                'search')),
                           ),
                         ),
                     ],
@@ -480,11 +533,12 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                             future: questionFavoriteGroups(),
                             builder: (BuildContext context,
                                 AsyncSnapshot<CommonDropdownButtonFormField>
-                                snapshot) {
+                                    snapshot) {
                               if (snapshot.hasData) {
                                 return snapshot.data!;
                               } else if (snapshot.hasError) {
-                                return Text('Error: ${snapshot.error}');
+                                return Text(
+                                    '${AppLocalization.instance.translate('lib.screen.common.questionDataTable', 'build', 'error')}: ${snapshot.error}');
                               } else {
                                 return const CircularProgressIndicator(); // or any other loading indicator
                               }
@@ -500,67 +554,75 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                               await searchButtonOnPressed(
                                   userId ?? BigInt.parse('0'));
                             },
-                            child: const Text('Ara'),
+                            child: Text(AppLocalization.instance.translate(
+                                'lib.screen.common.questionDataTable',
+                                'build',
+                                'search')),
                           ),
                         ),
                     ],
                   ),
-
+                const SizedBox(
+                  height: 10,
+                ),
                 if (isFilterActive) cIB,
-
                 Wrap(
                   children: [
                     Align(
                         alignment: Alignment.centerLeft,
                         child: dataTableDataRoot != null &&
-                            dataTableRows != null &&
-                            dataTableRows!.isNotEmpty
+                                dataTableRows != null &&
+                                dataTableRows!.isNotEmpty
                             ? CommonDataTable(
-                          columnDataTypes: columnDataTypes,
-                          toolBarButtons: null,
-                          dataTableKeyColumnName: dataTableKeyColumnName,
-                          dataTableSelectedKeys:
-                          widget.selectedQuestionIds,
-                          dataTableColumnAlias: dataTableColumnAlias,
-                          createDataTableColumnAlias:
-                          createDataTableColumnAlias,
-                          dataTableColumnNames: dataTableColumnNames,
-                          dataTableDisableColumnFilter:
-                          dataTableDisableColumnFilter,
-                          onChangedDisabledFilters: (disabledFilters) {
-                            dataTableDisableColumnFilter =
-                                disabledFilters;
-                            setState(() {});
-                          },
-                          dataTableHideColumn: dataTableHideColumn,
-                          dataTableRows: dataTableRows,
-                          showCheckboxColumn: true,
-                          onFilterValueChanged: (
-                              filterText,
-                              index,
-                              filterControllers,
-                              filteredRows,
-                              ) {},
-                          onSelectedRowsChanged:
-                              (selectedRows, selectedKeys) async {
-                            widget.selectedQuestionIds =
-                            await convertToBigIntList(selectedKeys);
+                                columnDataTypes: columnDataTypes,
+                                toolBarButtons: null,
+                                dataTableKeyColumnName: dataTableKeyColumnName,
+                                dataTableSelectedKeys:
+                                    widget.selectedQuestionIds,
+                                dataTableColumnAlias: dataTableColumnAlias,
+                                createDataTableColumnAlias:
+                                    createDataTableColumnAlias,
+                                dataTableColumnNames: dataTableColumnNames,
+                                dataTableDisableColumnFilter:
+                                    dataTableDisableColumnFilter,
+                                onChangedDisabledFilters: (disabledFilters) {
+                                  dataTableDisableColumnFilter =
+                                      disabledFilters;
+                                  setState(() {});
+                                },
+                                dataTableHideColumn: dataTableHideColumn,
+                                dataTableRows: dataTableRows,
+                                showCheckboxColumn: true,
+                                onFilterValueChanged: (
+                                  filterText,
+                                  index,
+                                  filterControllers,
+                                  filteredRows,
+                                ) {},
+                                onSelectedRowsChanged:
+                                    (selectedRows, selectedKeys) async {
+                                  widget.selectedQuestionIds =
+                                      await convertToBigIntList(selectedKeys);
 
-                            widget.selectedRows = selectedRows;
-                            widget.selectedRowsKeys =
-                                widget.selectedQuestionIds;
-                            if (widget.onSelectedRowsChanged != null) {
-                              widget.onSelectedRowsChanged!(selectedRows,
-                                  widget.selectedQuestionIds);
-                            }
-                            if (widget.onSelectedQuestionIdsChanged !=
-                                null) {
-                              widget.onSelectedQuestionIdsChanged!(
-                                  widget.selectedQuestionIds);
-                            }
-                          },
-                        )
-                            : const Center(child: Text('No Data')))
+                                  widget.selectedRows = selectedRows;
+                                  widget.selectedRowsKeys =
+                                      widget.selectedQuestionIds;
+                                  if (widget.onSelectedRowsChanged != null) {
+                                    widget.onSelectedRowsChanged!(selectedRows,
+                                        widget.selectedQuestionIds);
+                                  }
+                                  if (widget.onSelectedQuestionIdsChanged !=
+                                      null) {
+                                    widget.onSelectedQuestionIdsChanged!(
+                                        widget.selectedQuestionIds);
+                                  }
+                                },
+                              )
+                            : Center(
+                                child: Text(AppLocalization.instance.translate(
+                                    'lib.screen.common.questionDataTable',
+                                    'build',
+                                    'noData'))))
                   ],
                 ),
                 Row(
@@ -571,7 +633,10 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                         // İptal butonuna basıldığında yapılacak işlemler
                         Navigator.pop(context);
                       },
-                      child: const Text('Cancel'),
+                      child: Text(AppLocalization.instance.translate(
+                          'lib.screen.common.questionDataTable',
+                          'build',
+                          'cancel')),
                     ),
                     if (dataTableRows != null && dataTableRows!.isNotEmpty)
                       ElevatedButton(
@@ -588,7 +653,10 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
 
                           Navigator.pop(context);
                         },
-                        child: const Text('Save'),
+                        child: Text(AppLocalization.instance.translate(
+                            'lib.screen.common.questionDataTable',
+                            'build',
+                            'save')),
                       ),
                   ],
                 ),
@@ -736,19 +804,43 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
               dataTableData.columns.isNotEmpty &&
               dataTableData.rowsAsWidget != null &&
               dataTableData.rowsAsWidget.isNotEmpty) {}
-          columnDataTypes=dataTableData.columnDataTypes;
+          columnDataTypes = dataTableData.columnDataTypes;
           createDataTableColumnAlias = false;
           dataTableRoot = dataTable;
           dataTableDataRoot = dataTableData;
           dataTableColumnAlias = [
-            'Id',
-            'Academic Year',
-            'Question',
-            'Difficulty Level',
-            'Branch Name',
-            'Achievement Tree',
-            'Created On',
-            'Favorite'
+            AppLocalization.instance.translate(
+                'lib.screen.common.questionDataTable',
+                'searchButtonOnPressed',
+                'id'),
+            AppLocalization.instance.translate(
+                'lib.screen.common.questionDataTable',
+                'searchButtonOnPressed',
+                'academicYear'),
+            AppLocalization.instance.translate(
+                'lib.screen.common.questionDataTable',
+                'searchButtonOnPressed',
+                'question'),
+            AppLocalization.instance.translate(
+                'lib.screen.common.questionDataTable',
+                'searchButtonOnPressed',
+                'difficultyLevel'),
+            AppLocalization.instance.translate(
+                'lib.screen.common.questionDataTable',
+                'searchButtonOnPressed',
+                'branchName'),
+            AppLocalization.instance.translate(
+                'lib.screen.common.questionDataTable',
+                'searchButtonOnPressed',
+                'achievementTree'),
+            AppLocalization.instance.translate(
+                'lib.screen.common.questionDataTable',
+                'searchButtonOnPressed',
+                'createdOn'),
+            AppLocalization.instance.translate(
+                'lib.screen.common.questionDataTable',
+                'searchButtonOnPressed',
+                'favorite'),
           ];
           dataTableColumnNames = [
             'id',
@@ -774,7 +866,11 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
       }
       setState(() {});
     } else {
-      UIMessage.showError('Please question source type !',
+      UIMessage.showError(
+          AppLocalization.instance.translate(
+              'lib.screen.common.questionDataTable',
+              'searchButtonOnPressed',
+              'pleaseSelectSourceType'),
           gravity: ToastGravity.CENTER);
     }
   }
@@ -806,7 +902,8 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
         academicYearsDataSet.toKeyValuePairsWithTypes<int, String>('data', 'id',
             valueColumn: 'acad_year');
     //Add NotSelectableItem
-    academicYears[0] = 'All';
+    academicYears[0] = AppLocalization.instance.translate(
+        'lib.screen.common.questionDataTable', 'filterAcademicYears', 'all');
 
     academicYearsRoot ??= academicYears;
 
@@ -824,13 +921,21 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
       isExpandedObject: true,
       isSearchEnable: true,
       items: academicYears,
-      label:'Academic Year',
+      label: AppLocalization.instance.translate(
+          'lib.screen.common.questionDataTable',
+          'filterAcademicYears',
+          'academicYear'),
       dropdownDecoratorProps: DropDownDecoratorProps(
-        dropdownSearchDecoration:
-        InputDecoration(
-          labelText: 'Academic Year',
-          hintText: 'Please select academic year !',
-          contentPadding:  const EdgeInsets.fromLTRB(16, 16, 16, 16),
+        dropdownSearchDecoration: InputDecoration(
+          labelText: AppLocalization.instance.translate(
+              'lib.screen.common.questionDataTable',
+              'filterAcademicYears',
+              'academicYear'),
+          hintText: AppLocalization.instance.translate(
+              'lib.screen.common.questionDataTable',
+              'filterAcademicYears',
+              'pleaseSelectAcademicYear'),
+          contentPadding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
           isDense: true,
           enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.grey),
@@ -841,8 +946,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
             borderRadius: BorderRadius.circular(8),
           ),
         ),
-        baseStyle:
-        widget.componentTextStyle ?? const TextStyle(fontSize: 10),
+        baseStyle: widget.componentTextStyle ?? const TextStyle(fontSize: 10),
       ),
       onSelectedItemChanged: (selectedItem) {
         academicYearId = academicYears.entries
@@ -866,7 +970,8 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
         gradesDataSet.toKeyValuePairsWithTypes<int, String>('data', 'id',
             valueColumn: 'grade_name');
     //Add NotSelectableItem
-    grades[0] = 'All';
+    grades[0] = AppLocalization.instance.translate(
+        'lib.screen.common.questionDataTable', 'filterGrades', 'all');
 
     gradesRoot ??= grades;
 
@@ -885,15 +990,21 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
 
     return CommonDropdownButtonFormField(
       isExpandedObject: true,
-     isSearchEnable: true,
-      label: 'Grade',
+      isSearchEnable: true,
+      label: AppLocalization.instance.translate(
+          'lib.screen.common.questionDataTable', 'filterGrades', 'gradeName'),
       items: grades,
       dropdownDecoratorProps: DropDownDecoratorProps(
-        dropdownSearchDecoration:
-        InputDecoration(
-          labelText: 'Grade',
-          hintText: 'Please select grade !',
-          contentPadding:  const EdgeInsets.fromLTRB(16, 16, 16, 16),
+        dropdownSearchDecoration: InputDecoration(
+          labelText: AppLocalization.instance.translate(
+              'lib.screen.common.questionDataTable',
+              'filterGrades',
+              'gradeName'),
+          hintText: AppLocalization.instance.translate(
+              'lib.screen.common.questionDataTable',
+              'filterGrades',
+              'pleaseSelectGradeName'),
+          contentPadding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
           isDense: true,
           enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.grey),
@@ -904,8 +1015,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
             borderRadius: BorderRadius.circular(8),
           ),
         ),
-        baseStyle:
-        widget.componentTextStyle ?? const TextStyle(fontSize: 10),
+        baseStyle: widget.componentTextStyle ?? const TextStyle(fontSize: 10),
       ),
       onSelectedItemChanged: (selectedItem) {
         gradeId = grades.entries
@@ -917,7 +1027,8 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
         branchId = null;
         setState(() {});
       },
-      selectedItem: gradeId, componentTextStyle: widget.componentTextStyle,
+      selectedItem: gradeId,
+      componentTextStyle: widget.componentTextStyle,
     );
   }
 
@@ -931,7 +1042,8 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
         branchesDataSet.toKeyValuePairsWithTypes<int, String>('data', 'id',
             valueColumn: 'branch_name');
     //Add NotSelectableItem
-    branches[0] = 'All';
+    branches[0] = AppLocalization.instance.translate(
+        'lib.screen.common.questionDataTable', 'filterBranches', 'all');
     branchesRoot = branches;
 
     var branchesMapDataSet = await appRepositories.tblTheaBranMap(
@@ -948,13 +1060,21 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
       isExpandedObject: true,
       isSearchEnable: true,
       items: branches,
-      label: 'Branch',
+      label: AppLocalization.instance.translate(
+          'lib.screen.common.questionDataTable',
+          'filterBranches',
+          'branchName'),
       dropdownDecoratorProps: DropDownDecoratorProps(
-        dropdownSearchDecoration:
-        InputDecoration(
-          labelText: 'Branch',
-          hintText: 'Please select branch !',
-          contentPadding:  const EdgeInsets.fromLTRB(16, 16, 16, 16),
+        dropdownSearchDecoration: InputDecoration(
+          labelText: AppLocalization.instance.translate(
+              'lib.screen.common.questionDataTable',
+              'filterBranches',
+              'branchName'),
+          hintText: AppLocalization.instance.translate(
+              'lib.screen.common.questionDataTable',
+              'filterBranches',
+              'pleaseSelectBranchName'),
+          contentPadding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
           isDense: true,
           enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.grey),
@@ -965,8 +1085,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
             borderRadius: BorderRadius.circular(8),
           ),
         ),
-        baseStyle:
-        widget.componentTextStyle ?? const TextStyle(fontSize: 10),
+        baseStyle: widget.componentTextStyle ?? const TextStyle(fontSize: 10),
       ),
       onSelectedItemChanged: (selectedItem) async {
         branchId = branches.entries
@@ -1013,7 +1132,8 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
         difficultyDataSet.toKeyValuePairsWithTypes<int, String>('data', 'id',
             valueColumn: 'dif_level');
     //Add NotSelectableItem
-    difficulties[0] = 'All';
+    difficulties[0] = AppLocalization.instance.translate(
+        'lib.screen.common.questionDataTable', 'filterDifficultyLevels', 'all');
 
     difficultiesRoot ??= difficulties;
 
@@ -1026,18 +1146,25 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                 insteadOfNull: difficulties.entries.first.key);
     difficultyId ??= defaultDifficulty;
 
-
     return CommonDropdownButtonFormField(
       isExpandedObject: true,
       isSearchEnable: true,
       items: difficulties,
-      label:  'Difficulty Level',
+      label: AppLocalization.instance.translate(
+          'lib.screen.common.questionDataTable',
+          'filterDifficultyLevels',
+          'difficultyLevel'),
       dropdownDecoratorProps: DropDownDecoratorProps(
-        dropdownSearchDecoration:
-        InputDecoration(
-          labelText: 'Difficulty Level',
-          hintText: 'Please select difficulty level !',
-          contentPadding:  const EdgeInsets.fromLTRB(16, 16, 16, 16),
+        dropdownSearchDecoration: InputDecoration(
+          labelText: AppLocalization.instance.translate(
+              'lib.screen.common.questionDataTable',
+              'filterDifficultyLevels',
+              'difficultyLevel'),
+          hintText: AppLocalization.instance.translate(
+              'lib.screen.common.questionDataTable',
+              'filterDifficultyLevels',
+              'pleaseSelectDifficultyLevel'),
+          contentPadding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
           isDense: true,
           enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.grey),
@@ -1048,8 +1175,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
             borderRadius: BorderRadius.circular(8),
           ),
         ),
-        baseStyle:
-        widget.componentTextStyle ?? const TextStyle(fontSize: 10),
+        baseStyle: widget.componentTextStyle ?? const TextStyle(fontSize: 10),
       ),
       onSelectedItemChanged: (selectedItem) {
         difficultyId = difficulties.entries
@@ -1075,9 +1201,8 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
         // showSelectedItems: true, // Commented out this line
       ),
       dropdownDecoratorProps: DropDownDecoratorProps(
-        dropdownSearchDecoration:
-        InputDecoration(
-          contentPadding:  const EdgeInsets.fromLTRB(16, 16, 16, 16),
+        dropdownSearchDecoration: InputDecoration(
+          contentPadding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
           isDense: true,
           enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.grey),
@@ -1088,15 +1213,18 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
             borderRadius: BorderRadius.circular(8),
           ),
         ),
-        baseStyle:
-        widget.componentTextStyle ?? const TextStyle(fontSize: 10),
+        baseStyle: widget.componentTextStyle ?? const TextStyle(fontSize: 10),
       ),
     );
   }
 
   StatefulWidget filterQuestionText() {
-
-    return CommonTextFormField(controller: filterQuestionTextController, labelText: 'Question key words',);
+    return CommonTextFormField(
+        controller: filterQuestionTextController,
+        labelText: AppLocalization.instance.translate(
+            'lib.screen.common.questionDataTable',
+            'filterQuestionText',
+            'questionKeyWords'));
   }
 
   Future<CommonDropdownButtonFormField> questionFavoriteGroups() async {
@@ -1110,7 +1238,8 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
         userFavoriteGroupsDataSet.toKeyValuePairsWithTypes<int, String>(
             'data', 'id',
             valueColumn: 'group_name');
-    favoriteGroups[0] = 'All';
+    favoriteGroups[0] = AppLocalization.instance.translate(
+        'lib.screen.common.questionDataTable', 'questionFavoriteGroups', 'all');
 
     favoriteGroupsRoot ??= favoriteGroups;
 
@@ -1119,7 +1248,10 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
     return CommonDropdownButtonFormField(
       isExpandedObject: true,
       isSearchEnable: true,
-      label:'Favorite Group',
+      label: AppLocalization.instance.translate(
+          'lib.screen.common.questionDataTable',
+          'questionFavoriteGroups',
+          'favGroup'),
       selectedItem: favoriteGroupId,
       items: favoriteGroups,
       onSelectedItemChanged: (value) {
@@ -1132,14 +1264,16 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
   CommonDropdownButtonFormField questionSources() {
     return CommonDropdownButtonFormField(
       isExpandedObject: true,
-      label: 'Question Source',
+      label: AppLocalization.instance.translate(
+          'lib.screen.common.questionDataTable',
+          'questionSources',
+          'questionResource'),
       isSearchEnable: true,
       selectedItem: questionSourceId,
       items: questionSourceListAsKey,
       onSelectedItemChanged: (questionSourceId) {
-
-        var value=questionSourceListAsKeyValues[questionSourceId];
-        questionSourceName=value;
+        var value = questionSourceListAsKeyValues[questionSourceId];
+        questionSourceName = value;
 
         setState(() {
           filterTitle = questionSourceList[value];
@@ -1160,7 +1294,6 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
             isFilterExpanded = true;
           } else {
             isFilterExpanded = false;
-
           }
         });
       },

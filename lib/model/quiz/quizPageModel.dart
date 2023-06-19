@@ -5,6 +5,7 @@ import 'package:egitimaxapplication/repository/appRepositories.dart';
 import 'package:egitimaxapplication/screen/common/collapsibleItemBuilder.dart';
 import 'package:egitimaxapplication/screen/common/keyValuePairs.dart';
 import 'package:egitimaxapplication/screen/common/questionOverView.dart';
+import 'package:egitimaxapplication/utils/config/language/appLocalizations.dart';
 import 'package:egitimaxapplication/utils/extension/apiDataSetExtension.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +32,7 @@ class QuizPageModel {
   Map<int, String> grades = {};
   Map<int, String> branches = {};
 
-  Future<Widget> generateHtmlDocument(
+  Future<Widget> generateSummary(
       QuizMain quizMain, BuildContext context) async {
     final theme = Theme.of(context);
     AppRepositories appRepositories = AppRepositories();
@@ -47,7 +48,10 @@ class QuizPageModel {
 
     if (quizMain.country != 0 && quizMain.country != null) {
       keyValuePairsOfQuizMain.add(KeyValuePairs(
-          keyText: 'Country',
+          keyText: AppLocalization.instance.translate(
+              'lib.model.quiz.quizPageModel',
+              'generateSummary',
+              'country'),
           valueText: countries.entries
               .where((o) => o.key == quizMain.country)
               .first
@@ -55,7 +59,10 @@ class QuizPageModel {
     }
     if (quizMain.academicYear != 0 && quizMain.academicYear != null) {
       keyValuePairsOfQuizMain.add(KeyValuePairs(
-          keyText: 'Academic Year',
+          keyText:AppLocalization.instance.translate(
+              'lib.model.quiz.quizPageModel',
+              'generateSummary',
+              'academicYear'),
           valueText: academicYears.entries
               .where((o) => o.key == quizMain.academicYear)
               .first
@@ -63,7 +70,10 @@ class QuizPageModel {
     }
     if (quizMain.gradeId != 0 && quizMain.gradeId != null) {
       keyValuePairsOfQuizMain.add(KeyValuePairs(
-          keyText: 'Grade',
+          keyText: AppLocalization.instance.translate(
+              'lib.model.quiz.quizPageModel',
+              'generateSummary',
+              'grade'),
           valueText: grades.entries
               .where((o) => o.key == quizMain.gradeId)
               .first
@@ -71,23 +81,50 @@ class QuizPageModel {
     }
 
     keyValuePairsOfQuizMain
-        .add(KeyValuePairs(keyText: 'Title', valueText: quizMain.title ?? ''));
+        .add(KeyValuePairs(keyText: AppLocalization.instance.translate(
+        'lib.model.quiz.quizPageModel',
+        'generateSummary',
+        'title'), valueText: quizMain.title ?? ''));
     keyValuePairsOfQuizMain.add(KeyValuePairs(
-        keyText: 'Description', valueText: quizMain.description ?? ''));
+        keyText:AppLocalization.instance.translate(
+            'lib.model.quiz.quizPageModel',
+            'generateSummary',
+            'description'), valueText: quizMain.description ?? ''));
     keyValuePairsOfQuizMain.add(KeyValuePairs(
-        keyText: 'Duration', valueText: quizMain.duration.toString() ?? ''));
+        keyText:AppLocalization.instance.translate(
+            'lib.model.quiz.quizPageModel',
+            'generateSummary',
+            'duration') , valueText: quizMain.duration.toString() ?? ''));
     keyValuePairsOfQuizMain.add(KeyValuePairs(
-        keyText: 'Header Text', valueText: quizMain.headerText ?? ''));
+        keyText: AppLocalization.instance.translate(
+            'lib.model.quiz.quizPageModel',
+            'generateSummary',
+            'headerText'), valueText: quizMain.headerText ?? ''));
     keyValuePairsOfQuizMain.add(KeyValuePairs(
-        keyText: 'Footer Text', valueText: quizMain.footerText ?? ''));
+        keyText: AppLocalization.instance.translate(
+            'lib.model.quiz.quizPageModel',
+            'generateSummary',
+            'footerText'), valueText: quizMain.footerText ?? ''));
     if (quizMain.isPublic != 0 && quizMain.isPublic != null) {
       keyValuePairsOfQuizMain.add(KeyValuePairs(
-          keyText: 'Is Public',
-          valueText: quizMain.isPublic == 1 ? 'Yes' : 'No'));
+          keyText: AppLocalization.instance.translate(
+              'lib.model.quiz.quizPageModel',
+              'generateSummary',
+              'isPublic'),
+          valueText: quizMain.isPublic == 1 ? AppLocalization.instance.translate(
+              'lib.model.quiz.quizPageModel',
+              'generateSummary',
+              'yes') : AppLocalization.instance.translate(
+              'lib.model.quiz.quizPageModel',
+              'generateSummary',
+              'no')));
     }
     if (quizMain.aggRating != 0 && quizMain.aggRating != null) {
       keyValuePairsOfQuizMain.add(KeyValuePairs(
-          keyText: 'Aggregating Rating',
+          keyText:  AppLocalization.instance.translate(
+              'lib.model.quiz.quizPageModel',
+              'generateSummary',
+              'aggregatingRating'),
           valueText: quizMain.aggRating.toString()));
     }
 
@@ -100,16 +137,25 @@ class QuizPageModel {
       if (quizSection.quizSectionQuestionMaps != null &&
           quizSection.quizSectionQuestionMaps!.isNotEmpty) {
         keyValuePairsOfSectionHeader.add(KeyValuePairs(
-            keyText: 'Question Quantity',
+            keyText:  AppLocalization.instance.translate(
+                'lib.model.quiz.quizPageModel',
+                'generateSummary',
+                'questionQuantity'),
             valueText: quizSection.quizSectionQuestionMaps!.length.toString()));
       } else {
         keyValuePairsOfSectionHeader.add(
-            const KeyValuePairs(keyText: 'Question Quantity', valueText: '0'));
+             KeyValuePairs(keyText:  AppLocalization.instance.translate(
+                'lib.model.quiz.quizPageModel',
+                'generateSummary',
+                'questionQuantity'), valueText: '0'));
       }
 
       if (quizSection.branchId != 0 && quizSection.branchId != null) {
         keyValuePairsOfSectionHeader.add(KeyValuePairs(
-            keyText: 'Branch',
+            keyText:  AppLocalization.instance.translate(
+                'lib.model.quiz.quizPageModel',
+                'generateSummary',
+                'branch'),
             valueText: branches.entries
                 .where((o) => o.key == quizSection.branchId)
                 .first
@@ -117,11 +163,17 @@ class QuizPageModel {
       }
       if (quizSection.orderNo != 0 && quizSection.orderNo != null) {
         keyValuePairsOfSectionHeader.add(KeyValuePairs(
-            keyText: 'Order No', valueText: quizSection.orderNo.toString()));
+            keyText:  AppLocalization.instance.translate(
+                'lib.model.quiz.quizPageModel',
+                'generateSummary',
+                'orderNo'), valueText: quizSection.orderNo.toString()));
       }
 
       keyValuePairsOfSectionHeader.add(KeyValuePairs(
-          keyText: 'Section Description',
+          keyText:  AppLocalization.instance.translate(
+              'lib.model.quiz.quizPageModel',
+              'generateSummary',
+              'sectionDescription'),
           valueText: quizSection.sectionDesc ?? ''));
 
       List<TextButton> sectionQuestions = List.empty(growable: true);
@@ -163,7 +215,13 @@ class QuizPageModel {
               children: [
                 KeyValuePairs(
                   keyText:
-                      'Question Order No: ${quizSectionQuestionMap.orderNo.toString()} | Question',
+                      '${AppLocalization.instance.translate(
+                          'lib.model.quiz.quizPageModel',
+                          'generateSummary',
+                          'questionOrderNo')} : ${quizSectionQuestionMap.orderNo.toString()} | ${AppLocalization.instance.translate(
+                          'lib.model.quiz.quizPageModel',
+                          'generateSummary',
+                          'question')}',
                   valueText: questions.entries.first.value != null &&
                           questions.entries.first.value.length > 20
                       ? "${questions.entries.first.value.substring(0, 20)}..."
@@ -177,7 +235,10 @@ class QuizPageModel {
         if (quizSectionQuestionMap.orderNo != 0 &&
             quizSectionQuestionMap.orderNo != null) {
           qON = KeyValuePairs(
-              keyText: 'Question Order No',
+              keyText:AppLocalization.instance.translate(
+                  'lib.model.quiz.quizPageModel',
+                  'generateSummary',
+                  'questionOrderNo'),
               valueText: quizSectionQuestionMap.orderNo.toString());
         }
 

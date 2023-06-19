@@ -8,6 +8,7 @@ import 'package:egitimaxapplication/model/quiz/setQuizObjects.dart';
 import 'package:egitimaxapplication/repository/appRepositories.dart';
 import 'package:egitimaxapplication/repository/question/questionRepository.dart';
 import 'package:egitimaxapplication/repository/quiz/quizRepository.dart';
+import 'package:egitimaxapplication/utils/config/language/appLocalizations.dart';
 import 'package:egitimaxapplication/utils/extension/apiDataSetExtension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -300,7 +301,10 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
           qs.quizId = event.quizPageModel.quizId;
           qs.branchId = userBranchId;
           qs.orderNo = 1;
-          qs.sectionDesc = 'Main Section';
+          qs.sectionDesc =AppLocalization.instance.translate(
+              'lib.bloc.bloc.quiz.quizBloc',
+              'initEvent',
+              'mainSection');
           qs.isActive = 0;
           qs.quizSectionQuestionMaps = List.empty(growable: true);
 

@@ -1,9 +1,8 @@
 import 'dart:math';
 
 import 'package:egitimaxapplication/model/common/dataTableData.dart';
-import 'package:egitimaxapplication/utils/extension/apiDataSetExtension.dart';
+import 'package:egitimaxapplication/utils/config/language/appLocalizations.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 
 class CommonDataTable extends StatefulWidget {
   List<ColumnDataType>? columnDataTypes;
@@ -403,7 +402,7 @@ class _CommonDataTableState extends State<CommonDataTable> {
                 },
                 style: theme.dataTableTheme.dataTextStyle,
                 decoration: InputDecoration(
-                  hintText: 'Search',
+                  hintText: AppLocalization.instance.translate('lib.screen.common.commonDataTable','filters', 'search'),
                   prefixIcon: IconButton(
                     onPressed: () {
                       setState(() {
@@ -1134,7 +1133,7 @@ class _ColumnChooserButtonState extends State<ColumnChooserButton> {
             Padding(
               padding: const EdgeInsets.only(left: 5),
               child: PopupMenuButton<String>(
-                tooltip: 'Column Chooser',
+                tooltip: AppLocalization.instance.translate('lib.screen.common.commonDataTable','columnChooserButton', 'choseColumn'),
                 icon: Row(
                   children: [
                     Icon(
@@ -1143,7 +1142,7 @@ class _ColumnChooserButtonState extends State<ColumnChooserButton> {
                     ),
                     const SizedBox(width: 3),
                     Text(
-                      'Choose Column',
+                      AppLocalization.instance.translate('lib.screen.common.commonDataTable','columnChooserButton', 'choseColumn'),
                       style: TextStyle(
                         color: textColor.resolve({}),
                       ),
@@ -1244,7 +1243,7 @@ class _ColumnFilterChooserButton extends State<ColumnFilterChooserButton> {
             Padding(
               padding: const EdgeInsets.only(left: 5),
               child: PopupMenuButton<String>(
-                tooltip: 'Filter Chooser',
+                tooltip: AppLocalization.instance.translate('lib.screen.common.commonDataTable','columnFilterChooserButton', 'choseFilterColumn'),
                 icon: Row(
                   children: [
                     Icon(
@@ -1253,7 +1252,7 @@ class _ColumnFilterChooserButton extends State<ColumnFilterChooserButton> {
                     ),
                     const SizedBox(width: 3),
                     Text(
-                      'Filter Column',
+                      AppLocalization.instance.translate('lib.screen.common.commonDataTable','columnFilterChooserButton', 'choseFilterColumn'),
                       style: TextStyle(
                         color: textColor.resolve({}),
                       ),
@@ -1318,7 +1317,7 @@ class EditButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return CommonButton(
       icon: Icons.edit,
-      text: 'Edit',
+      text:  AppLocalization.instance.translate('lib.screen.common.commonDataTable','editButton', 'edit'),
       onPressed: onPressed,
     );
   }
@@ -1333,7 +1332,7 @@ class DeleteButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return CommonButton(
       icon: Icons.delete,
-      text: 'Delete',
+      text: AppLocalization.instance.translate('lib.screen.common.commonDataTable','deleteButton', 'delete'),
       onPressed: onPressed,
     );
   }
@@ -1348,7 +1347,7 @@ class SaveButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return CommonButton(
       icon: Icons.save,
-      text: 'Save',
+      text: AppLocalization.instance.translate('lib.screen.common.commonDataTable','saveButton', 'save'),
       onPressed: onPressed,
     );
   }
@@ -1363,7 +1362,7 @@ class ExportButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return CommonButton(
       icon: Icons.output,
-      text: 'Export',
+      text:  AppLocalization.instance.translate('lib.screen.common.commonDataTable','exportButton', 'export'),
       onPressed: onPressed,
     );
   }
