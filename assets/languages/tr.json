@@ -487,6 +487,9 @@
       "ct_subdom": "Alt Alan",
       "ct_achv": "Kazanımlar",
       "ct_subject":"Konu"
+    },
+    "getLearnHierarchies": {
+      "pleaseSelect": "Lütfen Seçiniz"
     }
   },
   "lib.screen.quizPage.quizPage": {
@@ -774,6 +777,86 @@
       "shareQuestion": "Soruyu Paylaş",
       "share": "Paylaş",
       "likes": "Beğeniler"
+    }
+  },
+
+
+
+  "lib.screen.lecturePage.lecturePage": {
+    "build": {
+      "title": "Ders İşlemleri"
+    },
+    "LectureOperationsSteps": {
+      "lectureCreate": "Ders Oluştur",
+      "createFlow": "Ders Akışı Oluştur",
+      "summaryAndSubmit": "Özet ve Gönder"
+    },
+    "getStepOneLayout": {
+      "academicYear": "Akademik Yıl",
+      "title": "Başlık",
+      "descriptions": "Açıklamalar",
+      "grade": "Sınıf",
+      "branch": "Branş",
+      "clickWelcomeMsg": "Hoş geldin mesajı eklemek için tıkla",
+      "welcomeMsg": "Hoş Geldin Mesajı",
+      "clickGoodbyeMsg": "Güle güle mesajı eklemek için tıkla",
+      "goodbyeMsg": "Güle Güle Mesajı",
+      "canEveryoneSeeTheLecture": "Herkes bu dersi görebilir mi?"
+    },
+    "_buildStepper": {
+      "next": "İleri",
+      "back": "Geri",
+      "submit": "Gönder"
+    },
+    "_buildInit": {
+      "initializing": "Başlatılıyor..."
+    },
+    "_buildLoading": {
+      "loading": "Yükleniyor..."
+    },
+    "_buildError": {
+      "unknownError": "Bilinmeyen Hata"
+    },
+    "_buildLoadingStep1": {
+      "firstStepLoading": "Birinci Adım Yükleniyor..."
+    },
+    "_buildErrorStep1": {
+      "unknownError": "Bilinmeyen Hata"
+    },
+    "_buildLoadingStep2": {
+      "secondStepLoading": "İkinci Adım Yükleniyor..."
+    },
+    "_buildErrorStep2": {
+      "unknownError": "Bilinmeyen Hata"
+    },
+    "_buildLoadingStep3": {
+      "thirdStepLoading": "Üçüncü Adım Yükleniyor..."
+    },
+    "_buildErrorStep3": {
+      "unknownError": "Bilinmeyen Hata"
+    },
+    "_buildLoadingPm": {
+      "pageModelLoading": "Sayfa Modeli Yükleniyor"
+    },
+    "_buildDeletingPm": {
+      "pageModelDeleting": "Sayfa Modeli Siliniyor"
+    },
+    "_buildRemovingPm": {
+      "pageModelRemoving": "Sayfa Modeli Kaldırılıyor"
+    },
+    "_buildSavingPm": {
+      "pageModelSaving": "Sayfa Modeli Kaydediliyor"
+    },
+    "_buildSavedPm": {
+      "pageModelSaved": "Sayfa Modeli Kaydedildi"
+    },
+    "_buildErrorPm": {
+      "pageModelNotSaved": "Sayfa Modeli Kaydedilemedi"
+    }
+  },
+  "lib.bloc.bloc.lecture.lectureBloc": {
+    "initEvent": {
+      "pleaseSelect": "Lütfen Seçiniz"
     }
   }
 

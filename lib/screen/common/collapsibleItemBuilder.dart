@@ -58,9 +58,6 @@ class _CollapsibleItemBuilderState extends State<CollapsibleItemBuilder> {
               },
               isExpanded: _expandedStates[index],
             ),
-            const SizedBox(
-              height: 5,
-            )
           ],
         );
       }),
@@ -116,7 +113,7 @@ class _CollapsibleItemState extends State<CollapsibleItem> {
           isThreeLine: false,
         ),
         const SizedBox(
-          height: 5,
+          height: 1,
         ),
         if (isExpanded)
           Padding(

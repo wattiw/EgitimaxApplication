@@ -100,11 +100,13 @@ class _LearnLevelsState extends State<LearnLevels> {
         valueColumn: 'name',
       );
 
+      items[0]=AppLocalization.instance.translate('lib.screen.common.learnLevels','getLearnHierarchies','pleaseSelect');
+
       if (items.isNotEmpty) {
         var id = tblLearnMainDataSet.firstValue('data', 'id', insteadOfNull: 0);
         var parent_id = tblLearnMainDataSet.firstValue('data', 'parent_id');
         var type = tblLearnMainDataSet.firstValue('data', 'type');
-        defaultLevel['selectedId'] = id;
+        defaultLevel['selectedId'] = 0;// id can be here dont forget
         defaultLevel['parentId'] = parent_id;
         defaultLevel['type'] = type;
         defaultLevel['items'] = items;
@@ -169,7 +171,9 @@ class _LearnLevelsState extends State<LearnLevels> {
             var typeLast = tblLearnMainLastDataSet.firstValue('data', 'type');
 
             if (lastItems.isNotEmpty) {
-              levelLast['selectedId'] = lastItems.entries.first.key;
+              lastItems[0]=AppLocalization.instance.translate('lib.screen.common.learnLevels','getLearnHierarchies','pleaseSelect');
+
+              levelLast['selectedId'] = 0;//lastItems.entries.first.key;
               levelLast['parentId'] = parent_id;
               levelLast['type'] = typeLast;
               levelLast['items'] = lastItems;
@@ -230,8 +234,10 @@ class _LearnLevelsState extends State<LearnLevels> {
           selectedItem: item['selectedId'],
           onSelectedItemChanged: (value) {
             widget.onChangedLearnId(value);
-            debugPrint(
-                "****************SELECTED VALUE : $value ********************");
+            debugPrint( "****************SELECTED VALUE : $value ********************");
+            setState(() {
+
+            });
           },
           label:AppLocalization.instance.translate('lib.screen.common.learnLevels','createDropDownBoxesOfLearns',item['type']) ,
           isSearchEnable: true,

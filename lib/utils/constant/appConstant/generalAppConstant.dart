@@ -6,5 +6,6 @@ class GeneralAppConstant {
   static String Slogan = "<h1>Eğitimax</h1>Sınırları kaldır - keşfet, öğren, ilerle!";
   static int HttpRequestReTryCount = 3;
   static int HttpRequesTimeOut = 10;
-  static String? TempIdSilSonra = '0';
+  static String? TempRecordIdSilSonra = '0';
+  static String? TempUserIdSilSonra = '2';
 }

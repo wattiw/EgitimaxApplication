@@ -1,5 +1,6 @@
 import 'package:egitimaxapplication/screen/MyHomePage/MyHomePage.dart';
 import 'package:egitimaxapplication/screen/common/questionDataTable.dart';
+import 'package:egitimaxapplication/screen/lecture/lecturePage.dart';
 import 'package:egitimaxapplication/screen/questionPage/questionPage.dart';
 import 'package:egitimaxapplication/screen/quizPage/quizPage.dart';
 import 'package:egitimaxapplication/screen/videoPage/videoPage.dart';
@@ -21,27 +22,34 @@ class AppRouter {
         );
       case AppRouterConstant.question:
         return MaterialPageRoute(
-          builder: (_) => MainLayout(context: context, loadedStateContainer: QuestionPage(userId: BigInt.parse('2'),isEditorMode: true,questionId:  BigInt.parse(GeneralAppConstant.TempIdSilSonra ?? '0'),)),
+          builder: (_) => MainLayout(context: context, loadedStateContainer: QuestionPage(userId: BigInt.parse(GeneralAppConstant.TempUserIdSilSonra!),isEditorMode: true,questionId:  BigInt.parse(GeneralAppConstant.TempRecordIdSilSonra ?? '0'),)),
           settings: const RouteSettings(
               name: HeroTagConstant.question), // use the route name as the Hero tag
         );
       case AppRouterConstant.video:
         return MaterialPageRoute(
-          builder: (_) => MainLayout(context: context, loadedStateContainer: VideoPage(userId: BigInt.parse('2'),isEditorMode: true,videoId:  BigInt.parse(GeneralAppConstant.TempIdSilSonra ?? '0'),)),
+          builder: (_) => MainLayout(context: context, loadedStateContainer: VideoPage(userId: BigInt.parse(GeneralAppConstant.TempUserIdSilSonra!),isEditorMode: true,videoId:  BigInt.parse(GeneralAppConstant.TempRecordIdSilSonra ?? '0'),)),
           settings: const RouteSettings(
               name: HeroTagConstant.video), // use the route name as the Hero tag
         );
       case AppRouterConstant.quiz:
         return MaterialPageRoute(
-          builder: (_) => MainLayout(context: context, loadedStateContainer: QuizPage(userId: BigInt.parse('2'),isEditorMode: true,quizId:  BigInt.parse(GeneralAppConstant.TempIdSilSonra ?? '0'),)),
+          builder: (_) => MainLayout(context: context, loadedStateContainer: QuizPage(userId: BigInt.parse(GeneralAppConstant.TempUserIdSilSonra!),isEditorMode: true,quizId:  BigInt.parse(GeneralAppConstant.TempRecordIdSilSonra ?? '0'),)),
           settings: const RouteSettings(
               name: HeroTagConstant.quiz), // use the route name as the Hero tag
         );
       case AppRouterConstant.questionSelector:
         return MaterialPageRoute(
-          builder: (_) => MainLayout(context: context, loadedStateContainer: QuestionDataTable(userId: BigInt.parse('2'),componentTextStyle: const TextStyle(), onSelectedQuestionIdsChanged: (List<BigInt>? selectedQuestionIds) {  },)),
+          builder: (_) => MainLayout(context: context, loadedStateContainer: QuestionDataTable(userId: BigInt.parse(GeneralAppConstant.TempUserIdSilSonra!),componentTextStyle: const TextStyle(), onSelectedQuestionIdsChanged: (List<BigInt>? selectedQuestionIds) {  },)),
           settings: const RouteSettings(
               name: HeroTagConstant.questionSelector), // use the route name as the Hero tag
+        );
+
+      case AppRouterConstant.lecture:
+        return MaterialPageRoute(
+          builder: (_) => MainLayout(context: context, loadedStateContainer: LecturePage(userId: BigInt.parse(GeneralAppConstant.TempUserIdSilSonra!),isEditorMode: true,lectureId:  BigInt.parse(GeneralAppConstant.TempRecordIdSilSonra ?? '0'),)),
+          settings: const RouteSettings(
+              name: HeroTagConstant.lecture), // use the route name as the Hero tag
         );
 
 

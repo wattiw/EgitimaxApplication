@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:egitimaxapplication/model/common/getDataSet.dart';
+import 'package:egitimaxapplication/repository/lecture/lectureRepository.dart';
 import 'package:egitimaxapplication/repository/mainLayout/mainLayoutRepository.dart';
 import 'package:egitimaxapplication/repository/myHomePage/myHomePageRepository.dart';
 import 'package:egitimaxapplication/repository/question/questionRepository.dart';
@@ -21,6 +22,8 @@ abstract class AppRepositoriesBase {
   Future<VideoRepository> videoRepository();
 
   Future<QuizRepository> quizRepository();
+
+  Future<LectureRepository> lectureRepository();
 }
 
 class AppRepositories implements AppRepositoriesBase {
@@ -50,6 +53,11 @@ class AppRepositories implements AppRepositoriesBase {
   @override
   Future<QuizRepository> quizRepository() async {
     return QuizRepository();
+  }
+
+  @override
+  Future<LectureRepository> lectureRepository() async {
+    return LectureRepository();
   }
 
   Future<Map<String, dynamic>> getDataSet(String controllerAndAction,
@@ -105,10 +113,9 @@ class AppRepositories implements AppRepositoriesBase {
 }
 
 extension AppRepositoriesExtension on AppRepositories {
-
   Future<Map<String, dynamic>> questionOverView(
-      String controllerAndAction, List<String> columns,BigInt question_id,
-      {BigInt? user_id,int? getNoSqlData }) async {
+      String controllerAndAction, List<String> columns, BigInt question_id,
+      {BigInt? user_id, int? getNoSqlData}) async {
     String query = '''
                 SELECT
                 L1.*,
@@ -135,8 +142,7 @@ extension AppRepositoriesExtension on AppRepositories {
                 left join tbl_learn_branch branch on branch.id=L1.branch_id''';
 
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
-    query =
-        "select $columnJoinedString from ( $query ) rt";
+    query = "select $columnJoinedString from ( $query ) rt";
 
     List<SqlParameter> parameters = List.empty(growable: true);
 
@@ -148,12 +154,15 @@ extension AppRepositoriesExtension on AppRepositories {
     }
 
     return getDataSet(controllerAndAction,
-        query: query, parameters: parameters, isProcedure: false,getNoSqlData: getNoSqlData);
+        query: query,
+        parameters: parameters,
+        isProcedure: false,
+        getNoSqlData: getNoSqlData);
   }
 
   Future<Map<String, dynamic>> tblLearnMainHierarchies(
       String controllerAndAction, int id,
-      {int? branch_id, int? grade_id,int? getNoSqlData }) async {
+      {int? branch_id, int? grade_id, int? getNoSqlData}) async {
     String queryPart = 'proc_learn_main_hierarchies';
 
     List<String> queryParts = queryPart.split('\n');
@@ -185,7 +194,8 @@ extension AppRepositoriesExtension on AppRepositories {
       int? order_no,
       bool? parent_id_null_is_active,
       int? parent_id,
-      String? type,int? getNoSqlData }) async {
+      String? type,
+      int? getNoSqlData}) async {
     String? isParentNull =
         parent_id_null_is_active == true ? ' where parent_id is null ' : '';
 
@@ -234,7 +244,7 @@ extension AppRepositoriesExtension on AppRepositories {
   //Below Generated Codes From Sql
   Future<Map<String, dynamic>> dartMethods(
       String controllerAndAction, List<String> columns,
-      {String? code, String? table_name,int? getNoSqlData }) async {
+      {String? code, String? table_name, int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from dart_methods ) rt";
@@ -252,7 +262,10 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblAnnounceClassMap(
       String controllerAndAction, List<String> columns,
-      {BigInt? announce_id, BigInt? class_id, BigInt? id,int? getNoSqlData }) async {
+      {BigInt? announce_id,
+      BigInt? class_id,
+      BigInt? id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_announce_class_map ) rt";
@@ -276,7 +289,8 @@ extension AppRepositoriesExtension on AppRepositories {
       {BigInt? announce_id,
       String? description,
       String? doc_path,
-      BigInt? id,int? getNoSqlData }) async {
+      BigInt? id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_announce_doc ) rt";
@@ -310,7 +324,8 @@ extension AppRepositoriesExtension on AppRepositories {
       DateTime? start_date,
       String? title,
       BigInt? updated_by,
-      DateTime? updated_on,int? getNoSqlData }) async {
+      DateTime? updated_on,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_announce_main ) rt";
@@ -355,7 +370,10 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblAssignmentClassMap(
       String controllerAndAction, List<String> columns,
-      {BigInt? asgn_id, BigInt? class_id, BigInt? id,int? getNoSqlData }) async {
+      {BigInt? asgn_id,
+      BigInt? class_id,
+      BigInt? id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_assignment_class_map ) rt";
@@ -376,7 +394,7 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblAssignmentCompType(
       String controllerAndAction, List<String> columns,
-      {String? comp_type, int? id,int? getNoSqlData }) async {
+      {String? comp_type, int? id, int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_assignment_comp_type ) rt";
@@ -401,7 +419,8 @@ extension AppRepositoriesExtension on AppRepositories {
       BigInt? homework_id,
       BigInt? id,
       int? order_no,
-      BigInt? quiz_id,int? getNoSqlData }) async {
+      BigInt? quiz_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_assignment_component ) rt";
@@ -437,7 +456,10 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblAssignmentHomework(
       String controllerAndAction, List<String> columns,
-      {BigInt? asgn_comp_id, String? hw_note, BigInt? id,int? getNoSqlData }) async {
+      {BigInt? asgn_comp_id,
+      String? hw_note,
+      BigInt? id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_assignment_homework ) rt";
@@ -458,7 +480,10 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblAssignmentHomeworkDoc(
       String controllerAndAction, List<String> columns,
-      {BigInt? asgn_hw_id, String? doc_path, BigInt? id,int? getNoSqlData }) async {
+      {BigInt? asgn_hw_id,
+      String? doc_path,
+      BigInt? id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select * from (select * from tbl_assignment_homework_doc ) rt";
@@ -487,7 +512,8 @@ extension AppRepositoriesExtension on AppRepositories {
       DateTime? last_resp_date,
       String? title,
       DateTime? updated_on,
-      BigInt? user_id,int? getNoSqlData }) async {
+      BigInt? user_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_assignment_main ) rt";
@@ -526,7 +552,7 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblAssignmentStuMap(
       String controllerAndAction, List<String> columns,
-      {BigInt? asgn_id, BigInt? id, BigInt? user_id,int? getNoSqlData }) async {
+      {BigInt? asgn_id, BigInt? id, BigInt? user_id, int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_assignment_stu_map ) rt";
@@ -554,7 +580,8 @@ extension AppRepositoriesExtension on AppRepositories {
       int? is_active,
       BigInt? updated_by,
       DateTime? updated_on,
-      BigInt? user_id,int? getNoSqlData }) async {
+      BigInt? user_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_class_admin ) rt";
@@ -595,7 +622,8 @@ extension AppRepositoriesExtension on AppRepositories {
       int? grade_num,
       int? id,
       int? is_active,
-      int? school_type,int? getNoSqlData }) async {
+      int? school_type,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_class_grade ) rt";
@@ -653,7 +681,8 @@ extension AppRepositoriesExtension on AppRepositories {
       int? is_active,
       int? is_public,
       BigInt? updated_by,
-      DateTime? updated_on,int? getNoSqlData }) async {
+      DateTime? updated_on,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_class_main ) rt";
@@ -733,7 +762,8 @@ extension AppRepositoriesExtension on AppRepositories {
       int? stu_status,
       BigInt? updated_by,
       DateTime? updated_on,
-      BigInt? user_id,int? getNoSqlData }) async {
+      BigInt? user_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_class_stu_map ) rt";
@@ -817,7 +847,7 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblClassStuStatus(
       String controllerAndAction, List<String> columns,
-      {int? id, int? is_active, String? status,int? getNoSqlData }) async {
+      {int? id, int? is_active, String? status, int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_class_stu_status ) rt";
@@ -857,7 +887,8 @@ extension AppRepositoriesExtension on AppRepositories {
       int? stu_status,
       BigInt? updated_by,
       DateTime? updated_on,
-      BigInt? user_id,int? getNoSqlData }) async {
+      BigInt? user_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_class_teac_map ) rt";
@@ -940,7 +971,8 @@ extension AppRepositoriesExtension on AppRepositories {
       String? document_path,
       BigInt? id,
       int? is_active,
-      int? is_approved,int? getNoSqlData }) async {
+      int? is_approved,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_crs_course_doc ) rt";
@@ -1005,17 +1037,16 @@ extension AppRepositoriesExtension on AppRepositories {
   }
 
   Future<Map<String, dynamic>> tblCrsCourseFlow(
-    String controllerAndAction,
-    List<String> columns, {
-    BigInt? course_id,
-    BigInt? doc_id,
-    BigInt? id,
-    int? is_active,
-    int? order_no,
-    BigInt? quest_id,
-    BigInt? quiz_id,
-    BigInt? video_id,
-    int? getNoSqlData }) async {
+      String controllerAndAction, List<String> columns,
+      {BigInt? course_id,
+      BigInt? doc_id,
+      BigInt? id,
+      int? is_active,
+      int? order_no,
+      BigInt? quest_id,
+      BigInt? quiz_id,
+      BigInt? video_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_crs_course_flow ) rt";
@@ -1077,7 +1108,8 @@ extension AppRepositoriesExtension on AppRepositories {
       int? flow_status,
       BigInt? id,
       DateTime? started_on,
-      BigInt? user_id,int? getNoSqlData }) async {
+      BigInt? user_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_crs_course_flow_stu ) rt";
@@ -1105,26 +1137,27 @@ extension AppRepositoriesExtension on AppRepositories {
         query: query, parameters: parameters);
   }
 
-  Future<Map<String, dynamic>> tblCrsCourseMain(
-      String controllerAndAction, List<String> columns,
+  Future<Map<String, dynamic>> tblCrsCourseMain( String controllerAndAction, List<String> columns,
       {int? academic_year,
       double? agg_rating,
+      int? branch_id,
       int? country,
       BigInt? created_by,
       DateTime? created_on,
       String? description,
-      int? domain_id,
       String? goodbye_msg,
       int? grade_id,
       BigInt? id,
       int? is_active,
       int? is_approved,
       int? is_public,
+      int? learn_id,
       String? title,
       BigInt? updated_by,
       DateTime? updated_on,
       BigInt? user_id,
-      String? welcome_msg,int? getNoSqlData }) async {
+      String? welcome_msg,int? getNoSqlData}) async {
+
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_crs_course_main ) rt";
@@ -1135,6 +1168,9 @@ extension AppRepositoriesExtension on AppRepositories {
     }
     if (agg_rating != null) {
       parameters.add(SqlParameter('@agg_rating', agg_rating));
+    }
+    if (branch_id != null) {
+      parameters.add(SqlParameter('@branch_id', branch_id));
     }
     if (country != null) {
       parameters.add(SqlParameter('@country', country));
@@ -1147,9 +1183,6 @@ extension AppRepositoriesExtension on AppRepositories {
     }
     if (description != null) {
       parameters.add(SqlParameter('@description', description));
-    }
-    if (domain_id != null) {
-      parameters.add(SqlParameter('@domain_id', domain_id));
     }
     if (goodbye_msg != null) {
       parameters.add(SqlParameter('@goodbye_msg', goodbye_msg));
@@ -1169,53 +1202,8 @@ extension AppRepositoriesExtension on AppRepositories {
     if (is_public != null) {
       parameters.add(SqlParameter('@is_public', is_public));
     }
-    if (title != null) {
-      parameters.add(SqlParameter('@title', title));
-    }
-    if (updated_by != null) {
-      parameters.add(SqlParameter('@updated_by', updated_by));
-    }
-    if (updated_on != null) {
-      parameters.add(SqlParameter('@updated_on', updated_on));
-    }
-    if (user_id != null) {
-      parameters.add(SqlParameter('@user_id', user_id));
-    }
-    if (welcome_msg != null) {
-      parameters.add(SqlParameter('@welcome_msg', welcome_msg));
-    }
-    if (academic_year != null) {
-      parameters.add(SqlParameter('@academic_year', academic_year));
-    }
-    if (agg_rating != null) {
-      parameters.add(SqlParameter('@agg_rating', agg_rating));
-    }
-    if (country != null) {
-      parameters.add(SqlParameter('@country', country));
-    }
-    if (created_by != null) {
-      parameters.add(SqlParameter('@created_by', created_by));
-    }
-    if (created_on != null) {
-      parameters.add(SqlParameter('@created_on', created_on));
-    }
-    if (description != null) {
-      parameters.add(SqlParameter('@description', description));
-    }
-    if (goodbye_msg != null) {
-      parameters.add(SqlParameter('@goodbye_msg', goodbye_msg));
-    }
-    if (id != null) {
-      parameters.add(SqlParameter('@id', id));
-    }
-    if (is_active != null) {
-      parameters.add(SqlParameter('@is_active', is_active));
-    }
-    if (is_approved != null) {
-      parameters.add(SqlParameter('@is_approved', is_approved));
-    }
-    if (is_public != null) {
-      parameters.add(SqlParameter('@is_public', is_public));
+    if (learn_id != null) {
+      parameters.add(SqlParameter('@learn_id', learn_id));
     }
     if (title != null) {
       parameters.add(SqlParameter('@title', title));
@@ -1232,6 +1220,7 @@ extension AppRepositoriesExtension on AppRepositories {
     if (welcome_msg != null) {
       parameters.add(SqlParameter('@welcome_msg', welcome_msg));
     }
+
     return getDataSet(controllerAndAction,
         query: query, parameters: parameters);
   }
@@ -1244,7 +1233,8 @@ extension AppRepositoriesExtension on AppRepositories {
       int? is_active,
       int? rating,
       String? user_comment,
-      BigInt? user_id,int? getNoSqlData }) async {
+      BigInt? user_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_crs_course_rate ) rt";
@@ -1303,7 +1293,8 @@ extension AppRepositoriesExtension on AppRepositories {
       DateTime? finished_on,
       BigInt? id,
       DateTime? started_on,
-      BigInt? user_id,int? getNoSqlData }) async {
+      BigInt? user_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_crs_course_student ) rt";
@@ -1333,7 +1324,11 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblCrsCourseSubdomMap(
       String controllerAndAction, List<String> columns,
-      {BigInt? course_id, BigInt? id, int? is_active, int? subdom_id,int? getNoSqlData }) async {
+      {BigInt? course_id,
+      BigInt? id,
+      int? is_active,
+      int? subdom_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select * from (select * from tbl_crs_course_subdom_map ) rt";
@@ -1361,7 +1356,8 @@ extension AppRepositoriesExtension on AppRepositories {
       BigInt? curr_id,
       BigInt? id,
       int? is_active,
-      int? order_no,int? getNoSqlData }) async {
+      int? order_no,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_crs_curr_course_map ) rt";
@@ -1419,7 +1415,8 @@ extension AppRepositoriesExtension on AppRepositories {
       BigInt? updated_by,
       DateTime? updated_on,
       BigInt? user_id,
-      String? welcome_msg,int? getNoSqlData }) async {
+      String? welcome_msg,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_crs_curriculum ) rt";
@@ -1530,7 +1527,8 @@ extension AppRepositoriesExtension on AppRepositories {
       int? is_active,
       int? rating,
       String? user_comment,
-      BigInt? user_id,int? getNoSqlData }) async {
+      BigInt? user_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_crs_curriculum_rate ) rt";
@@ -1587,7 +1585,8 @@ extension AppRepositoriesExtension on AppRepositories {
       {BigInt? ach_gap_id,
       DateTime? created_on,
       BigInt? id,
-      BigInt? stu_quest_id,int? getNoSqlData }) async {
+      BigInt? stu_quest_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select * from (select * from tbl_crs_stu_ach_gap_quest ) rt";
@@ -1614,7 +1613,8 @@ extension AppRepositoriesExtension on AppRepositories {
       {BigInt? ach_gap_id,
       DateTime? created_on,
       BigInt? id,
-      BigInt? stu_vid_id,int? getNoSqlData }) async {
+      BigInt? stu_vid_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select * from (select * from tbl_crs_stu_ach_gap_video ) rt";
@@ -1646,7 +1646,8 @@ extension AppRepositoriesExtension on AppRepositories {
       BigInt? quest_id,
       BigInt? selected_opt,
       DateTime? updated_on,
-      BigInt? user_id,int? getNoSqlData }) async {
+      BigInt? user_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_crs_student_quest ) rt";
@@ -1685,7 +1686,10 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblCrsStudentQuestText(
       String controllerAndAction, List<String> columns,
-      {BigInt? id, String? resp_text, BigInt? stu_quest_id,int? getNoSqlData }) async {
+      {BigInt? id,
+      String? resp_text,
+      BigInt? stu_quest_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select * from (select * from tbl_crs_student_quest_text ) rt";
@@ -1713,7 +1717,8 @@ extension AppRepositoriesExtension on AppRepositories {
       BigInt? quiz_id,
       int? quiz_status,
       DateTime? started_on,
-      BigInt? user_id,int? getNoSqlData }) async {
+      BigInt? user_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_crs_student_quiz ) rt";
@@ -1754,7 +1759,8 @@ extension AppRepositoriesExtension on AppRepositories {
       BigInt? id,
       DateTime? started_on,
       BigInt? user_id,
-      BigInt? video_id,int? getNoSqlData }) async {
+      BigInt? video_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_crs_student_video ) rt";
@@ -1787,7 +1793,8 @@ extension AppRepositoriesExtension on AppRepositories {
       {BigInt? course_id,
       DateTime? created_on,
       int? id,
-      BigInt? user_id,int? getNoSqlData }) async {
+      BigInt? user_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_fav_course ) rt";
@@ -1811,7 +1818,7 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblFavGroupCourse(
       String controllerAndAction, List<String> columns,
-      {String? group_name, int? id, BigInt? user_id,int? getNoSqlData }) async {
+      {String? group_name, int? id, BigInt? user_id, int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_fav_group_course ) rt";
@@ -1832,7 +1839,7 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblFavGroupCourseMap(
       String controllerAndAction, List<String> columns,
-      {int? fav_course_id, int? group_id, int? id,int? getNoSqlData }) async {
+      {int? fav_course_id, int? group_id, int? id, int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_fav_group_course_map ) rt";
@@ -1853,7 +1860,7 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblFavGroupQuest(
       String controllerAndAction, List<String> columns,
-      {String? group_name, int? id, BigInt? user_id,int? getNoSqlData }) async {
+      {String? group_name, int? id, BigInt? user_id, int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_fav_group_quest ) rt";
@@ -1874,7 +1881,7 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblFavGroupQuestMap(
       String controllerAndAction, List<String> columns,
-      {int? fav_quest_id, int? group_id, int? id,int? getNoSqlData }) async {
+      {int? fav_quest_id, int? group_id, int? id, int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_fav_group_quest_map ) rt";
@@ -1895,7 +1902,7 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblFavGroupQuiz(
       String controllerAndAction, List<String> columns,
-      {String? group_name, int? id, BigInt? user_id,int? getNoSqlData }) async {
+      {String? group_name, int? id, BigInt? user_id, int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_fav_group_quiz ) rt";
@@ -1916,7 +1923,7 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblFavGroupQuizMap(
       String controllerAndAction, List<String> columns,
-      {int? fav_quiz_id, int? group_id, int? id,int? getNoSqlData }) async {
+      {int? fav_quiz_id, int? group_id, int? id, int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_fav_group_quiz_map ) rt";
@@ -1937,7 +1944,7 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblFavGroupVid(
       String controllerAndAction, List<String> columns,
-      {String? group_name, int? id, BigInt? user_id,int? getNoSqlData }) async {
+      {String? group_name, int? id, BigInt? user_id, int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_fav_group_vid ) rt";
@@ -1958,7 +1965,7 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblFavGroupVidMap(
       String controllerAndAction, List<String> columns,
-      {int? fav_video_id, int? group_id, int? id,int? getNoSqlData }) async {
+      {int? fav_video_id, int? group_id, int? id, int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_fav_group_vid_map ) rt";
@@ -1982,7 +1989,8 @@ extension AppRepositoriesExtension on AppRepositories {
       {DateTime? created_on,
       int? id,
       BigInt? question_id,
-      BigInt? user_id,int? getNoSqlData }) async {
+      BigInt? user_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_fav_question ) rt";
@@ -2006,7 +2014,11 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblFavQuiz(
       String controllerAndAction, List<String> columns,
-      {DateTime? created_on, int? id, BigInt? quiz_id, BigInt? user_id,int? getNoSqlData }) async {
+      {DateTime? created_on,
+      int? id,
+      BigInt? quiz_id,
+      BigInt? user_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_fav_quiz ) rt";
@@ -2033,7 +2045,8 @@ extension AppRepositoriesExtension on AppRepositories {
       {DateTime? created_on,
       int? id,
       BigInt? user_id,
-      BigInt? video_id,int? getNoSqlData }) async {
+      BigInt? video_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_fav_video ) rt";
@@ -2064,7 +2077,8 @@ extension AppRepositoriesExtension on AppRepositories {
       int? grade_id,
       int? id,
       int? is_active,
-      int? lang_id,int? getNoSqlData }) async {
+      int? lang_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_learn_achivement ) rt";
@@ -2120,15 +2134,14 @@ extension AppRepositoriesExtension on AppRepositories {
   }
 
   Future<Map<String, dynamic>> tblLearnBranch(
-    String controllerAndAction,
-    List<String> columns, {
-    String? branch_name,
-    int? country_id,
-    int? id,
-    int? is_active,
-    String? short_form,
-    int? lang_id,
-    int? getNoSqlData }) async {
+      String controllerAndAction, List<String> columns,
+      {String? branch_name,
+      int? country_id,
+      int? id,
+      int? is_active,
+      String? short_form,
+      int? lang_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_learn_branch ) rt";
@@ -2179,7 +2192,8 @@ extension AppRepositoriesExtension on AppRepositories {
       BigInt? updated_by,
       DateTime? updated_on,
       int? country,
-      int? lang_id,int? getNoSqlData }) async {
+      int? lang_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_learn_domain ) rt";
@@ -2242,7 +2256,11 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblLearnSubdomAchMap(
       String controllerAndAction, List<String> columns,
-      {int? achv_id, int? id, int? is_active, int? subdom_id,int? getNoSqlData }) async {
+      {int? achv_id,
+      int? id,
+      int? is_active,
+      int? subdom_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_learn_subdom_ach_map ) rt";
@@ -2278,7 +2296,11 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblLearnSubdomGradeMap(
       String controllerAndAction, List<String> columns,
-      {int? grade_id, int? id, int? is_active, int? subdom_id,int? getNoSqlData }) async {
+      {int? grade_id,
+      int? id,
+      int? is_active,
+      int? subdom_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select * from (select * from tbl_learn_subdom_grade_map ) rt";
@@ -2320,7 +2342,8 @@ extension AppRepositoriesExtension on AppRepositories {
       int? is_active,
       int? order_no,
       String? subdom_name,
-      int? lang_id,int? getNoSqlData }) async {
+      int? lang_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_learn_subdomain ) rt";
@@ -2373,7 +2396,8 @@ extension AppRepositoriesExtension on AppRepositories {
       int? id,
       int? is_active,
       int? lang,
-      String? country_name,int? getNoSqlData }) async {
+      String? country_name,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_loc_l1_country ) rt";
@@ -2420,7 +2444,8 @@ extension AppRepositoriesExtension on AppRepositories {
       int? id,
       int? is_active,
       int? is_default,
-      int? lang_id,int? getNoSqlData }) async {
+      int? lang_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_loc_l1_country_trans ) rt";
@@ -2472,7 +2497,8 @@ extension AppRepositoriesExtension on AppRepositories {
       int? id,
       int? is_active,
       String? state_name_tr,
-      String? statecode,int? getNoSqlData }) async {
+      String? statecode,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_loc_l2_state ) rt";
@@ -2519,7 +2545,8 @@ extension AppRepositoriesExtension on AppRepositories {
       int? is_default,
       int? lang_id,
       int? state_id,
-      String? state_name,int? getNoSqlData }) async {
+      String? state_name,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_loc_l2_state_trans ) rt";
@@ -2572,7 +2599,8 @@ extension AppRepositoriesExtension on AppRepositories {
       int? country_id,
       int? id,
       int? is_active,
-      int? state_id,int? getNoSqlData }) async {
+      int? state_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_loc_l3_city ) rt";
@@ -2625,7 +2653,8 @@ extension AppRepositoriesExtension on AppRepositories {
       int? id,
       int? is_active,
       int? is_default,
-      int? lang_id,int? getNoSqlData }) async {
+      int? lang_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_loc_l3_city_trans ) rt";
@@ -2673,7 +2702,11 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblPermPermissionMain(
       String controllerAndAction, List<String> columns,
-      {int? id, int? is_active, String? perm_desc, String? perm_name,int? getNoSqlData }) async {
+      {int? id,
+      int? is_active,
+      String? perm_desc,
+      String? perm_name,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_perm_permission_main ) rt";
@@ -2709,7 +2742,11 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblPermRolePermMap(
       String controllerAndAction, List<String> columns,
-      {int? id, int? is_active, int? perm_id, int? role_id,int? getNoSqlData }) async {
+      {int? id,
+      int? is_active,
+      int? perm_id,
+      int? role_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_perm_role_perm_map ) rt";
@@ -2745,7 +2782,7 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblPermUserRole(
       String controllerAndAction, List<String> columns,
-      {int? id, int? is_active, String? role_name,int? getNoSqlData }) async {
+      {int? id, int? is_active, String? role_name, int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_perm_user_role ) rt";
@@ -2775,7 +2812,11 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblPermUserRoleMap(
       String controllerAndAction, List<String> columns,
-      {int? id, int? is_active, int? role_id, BigInt? user_id,int? getNoSqlData }) async {
+      {int? id,
+      int? is_active,
+      int? role_id,
+      BigInt? user_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_perm_user_role_map ) rt";
@@ -2819,7 +2860,8 @@ extension AppRepositoriesExtension on AppRepositories {
       BigInt? parent_comment_id,
       BigInt? post_id,
       DateTime? updated_on,
-      BigInt? user_id,int? getNoSqlData }) async {
+      BigInt? user_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_post_comment ) rt";
@@ -2862,7 +2904,8 @@ extension AppRepositoriesExtension on AppRepositories {
       BigInt? id,
       int? like_type,
       BigInt? post_id,
-      BigInt? user_id,int? getNoSqlData }) async {
+      BigInt? user_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_post_like ) rt";
@@ -2895,7 +2938,8 @@ extension AppRepositoriesExtension on AppRepositories {
       String? post_content,
       String? post_title,
       DateTime? updated_on,
-      BigInt? user_id,int? getNoSqlData }) async {
+      BigInt? user_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_post_main ) rt";
@@ -2928,7 +2972,11 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblQueQuestAchvMap(
       String controllerAndAction, List<String> columns,
-      {int? achv_id, BigInt? id, int? is_active, BigInt? quest_id,int? getNoSqlData }) async {
+      {int? achv_id,
+      BigInt? id,
+      int? is_active,
+      BigInt? quest_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_que_quest_achv_map ) rt";
@@ -2969,7 +3017,8 @@ extension AppRepositoriesExtension on AppRepositories {
       int? is_correct,
       String? opt_identifier,
       String? opt_text,
-      BigInt? quest_id,int? getNoSqlData }) async {
+      BigInt? quest_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_que_quest_option ) rt";
@@ -3017,7 +3066,7 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblQueQuestType(
       String controllerAndAction, List<String> columns,
-      {int? id, int? is_active, String? quest_type,int? getNoSqlData }) async {
+      {int? id, int? is_active, String? quest_type, int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_que_quest_type ) rt";
@@ -3052,7 +3101,8 @@ extension AppRepositoriesExtension on AppRepositories {
       int? is_active,
       int? like_type,
       BigInt? quest_id,
-      BigInt? user_id,int? getNoSqlData }) async {
+      BigInt? user_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_que_question_like ) rt";
@@ -3099,7 +3149,8 @@ extension AppRepositoriesExtension on AppRepositories {
       int? subdom_id,
       BigInt? updated_by,
       DateTime? updated_on,
-      BigInt? user_id,int? getNoSqlData }) async {
+      BigInt? user_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_que_question_main ) rt";
@@ -3232,7 +3283,7 @@ extension AppRepositoriesExtension on AppRepositories {
       BigInt? updated_by,
       DateTime? updated_on,
       BigInt? user_id,
-      int? getNoSqlData }) async {
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_quiz_main ) rt";
@@ -3337,7 +3388,8 @@ extension AppRepositoriesExtension on AppRepositories {
       BigInt? quiz_id,
       int? rating,
       String? user_comment,
-      BigInt? user_id,int? getNoSqlData }) async {
+      BigInt? user_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_quiz_rate ) rt";
@@ -3395,7 +3447,8 @@ extension AppRepositoriesExtension on AppRepositories {
       int? is_active,
       int? order_no,
       BigInt? question_id,
-      BigInt? section_id,int? getNoSqlData }) async {
+      BigInt? section_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_quiz_sect_quest_map ) rt";
@@ -3442,7 +3495,8 @@ extension AppRepositoriesExtension on AppRepositories {
       int? is_active,
       int? order_no,
       BigInt? quiz_id,
-      String? section_desc,int? getNoSqlData }) async {
+      String? section_desc,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_quiz_section ) rt";
@@ -3497,7 +3551,8 @@ extension AppRepositoriesExtension on AppRepositories {
       BigInt? school_id,
       BigInt? updated_by,
       DateTime? updated_on,
-      BigInt? user_id,int? getNoSqlData }) async {
+      BigInt? user_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_sch_admin ) rt";
@@ -3540,7 +3595,8 @@ extension AppRepositoriesExtension on AppRepositories {
       int? is_active,
       BigInt? school_id,
       BigInt? updated_by,
-      DateTime? updated_on,int? getNoSqlData }) async {
+      DateTime? updated_on,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_sch_class_map ) rt";
@@ -3614,7 +3670,8 @@ extension AppRepositoriesExtension on AppRepositories {
       int? state,
       String? telephone,
       BigInt? updated_by,
-      DateTime? updated_on,int? getNoSqlData }) async {
+      DateTime? updated_on,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_sch_school_main ) rt";
@@ -3716,7 +3773,11 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblSchSchoolType(
       String controllerAndAction, List<String> columns,
-      {int? country_id, int? id, int? is_active, String? type_name,int? getNoSqlData }) async {
+      {int? country_id,
+      int? id,
+      int? is_active,
+      String? type_name,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_sch_school_type ) rt";
@@ -3752,7 +3813,11 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblSchSubschool(
       String controllerAndAction, List<String> columns,
-      {BigInt? id, int? is_active, BigInt? main_id, BigInt? sub_id,int? getNoSqlData }) async {
+      {BigInt? id,
+      int? is_active,
+      BigInt? main_id,
+      BigInt? sub_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_sch_subschool ) rt";
@@ -3796,7 +3861,8 @@ extension AppRepositoriesExtension on AppRepositories {
       BigInt? school_id,
       BigInt? updated_by,
       DateTime? updated_on,
-      BigInt? user_id,int? getNoSqlData }) async {
+      BigInt? user_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_sch_teac_map ) rt";
@@ -3869,7 +3935,8 @@ extension AppRepositoriesExtension on AppRepositories {
       int? is_active,
       BigInt? updated_by,
       DateTime? updated_on,
-      BigInt? user_id,int? getNoSqlData }) async {
+      BigInt? user_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_thea_bran_map ) rt";
@@ -3932,7 +3999,8 @@ extension AppRepositoriesExtension on AppRepositories {
       {DateTime? access_timestamp,
       String? access_url,
       BigInt? id,
-      BigInt? user_id,int? getNoSqlData }) async {
+      BigInt? user_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_user_activity ) rt";
@@ -3974,7 +4042,8 @@ extension AppRepositoriesExtension on AppRepositories {
       String? gdpr_ver,
       BigInt? id,
       int? is_active,
-      BigInt? user_id,int? getNoSqlData }) async {
+      BigInt? user_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_user_contract_gdpr ) rt";
@@ -4033,7 +4102,8 @@ extension AppRepositoriesExtension on AppRepositories {
       BigInt? following,
       int? id,
       DateTime? reqested_on,
-      int? status,int? getNoSqlData }) async {
+      int? status,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_user_follow ) rt";
@@ -4063,7 +4133,7 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblUserFollowStatus(
       String controllerAndAction, List<String> columns,
-      {int? id, String? status_name,int? getNoSqlData }) async {
+      {int? id, String? status_name, int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_user_follow_status ) rt";
@@ -4106,7 +4176,8 @@ extension AppRepositoriesExtension on AppRepositories {
       DateTime? updated_on,
       String? user_name,
       String? user_password,
-      int? user_type,int? getNoSqlData }) async {
+      int? user_type,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_user_main ) rt";
@@ -4281,7 +4352,8 @@ extension AppRepositoriesExtension on AppRepositories {
       BigInt? updated_by,
       DateTime? updated_on,
       BigInt? approved_by,
-      DateTime? approved_on,int? getNoSqlData }) async {
+      DateTime? approved_on,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_user_subuser ) rt";
@@ -4326,7 +4398,7 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblUserType(
       String controllerAndAction, List<String> columns,
-      {int? id, int? is_active, String? type_name,int? getNoSqlData }) async {
+      {int? id, int? is_active, String? type_name, int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_user_type ) rt";
@@ -4362,7 +4434,8 @@ extension AppRepositoriesExtension on AppRepositories {
       String? loginip,
       String? loginport,
       DateTime? logoffdatetime,
-      BigInt? user_id,int? getNoSqlData }) async {
+      BigInt? user_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_users_login ) rt";
@@ -4395,7 +4468,11 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblUtilAcademicYear(
       String controllerAndAction, List<String> columns,
-      {String? acad_year, int? id, int? is_active, bool? is_default,int? getNoSqlData }) async {
+      {String? acad_year,
+      int? id,
+      int? is_active,
+      bool? is_default,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_util_academic_year ) rt";
@@ -4428,7 +4505,7 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblUtilCurrency(
       String controllerAndAction, List<String> columns,
-      {int? id, int? is_active, String? short_form,int? getNoSqlData }) async {
+      {int? id, int? is_active, String? short_form, int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_util_currency ) rt";
@@ -4458,7 +4535,7 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblUtilDifficulty(
       String controllerAndAction, List<String> columns,
-      {String? dif_level, int? id, int? is_active,int? getNoSqlData }) async {
+      {String? dif_level, int? id, int? is_active, int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_util_difficulty ) rt";
@@ -4488,7 +4565,11 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblUtilLanguage(
       String controllerAndAction, List<String> columns,
-      {int? id, int? is_active, String? language, String? short_form,int? getNoSqlData }) async {
+      {int? id,
+      int? is_active,
+      String? language,
+      String? short_form,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_util_language ) rt";
@@ -4524,7 +4605,7 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblUtilLikeType(
       String controllerAndAction, List<String> columns,
-      {int? id, int? is_active, String? like_type,int? getNoSqlData }) async {
+      {int? id, int? is_active, String? like_type, int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_util_like_type ) rt";
@@ -4554,7 +4635,11 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> tblVidVideoAchvMap(
       String controllerAndAction, List<String> columns,
-      {int? achv_id, BigInt? id, int? is_active, BigInt? video_id,int? getNoSqlData }) async {
+      {int? achv_id,
+      BigInt? id,
+      int? is_active,
+      BigInt? video_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_vid_video_achv_map ) rt";
@@ -4607,7 +4692,8 @@ extension AppRepositoriesExtension on AppRepositories {
       BigInt? updated_by,
       DateTime? updated_on,
       BigInt? user_id,
-      String? video_path,int? getNoSqlData }) async {
+      String? video_path,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_vid_video_main ) rt";
@@ -4727,7 +4813,8 @@ extension AppRepositoriesExtension on AppRepositories {
       int? rating,
       String? user_comment,
       BigInt? user_id,
-      BigInt? video_id,int? getNoSqlData }) async {
+      BigInt? video_id,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_vid_video_rate ) rt";
@@ -4781,7 +4868,7 @@ extension AppRepositoriesExtension on AppRepositories {
 
   Future<Map<String, dynamic>> viewCrsStuAchGap(
       String controllerAndAction, List<String> columns,
-      {int? achv_id, int? id, int? user_id,int? getNoSqlData }) async {
+      {int? achv_id, int? id, int? user_id, int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from view_crs_stu_ach_gap ) rt";

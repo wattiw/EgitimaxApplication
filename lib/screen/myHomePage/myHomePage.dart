@@ -17,7 +17,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-  TextEditingController questionIdController = TextEditingController();
+  TextEditingController recordIdController = TextEditingController(text: '0');
+  TextEditingController userIdController = TextEditingController(text: '2');
   void _incrementCounter() {
     setState(() {
       _counter++;
@@ -39,29 +40,53 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: [
-            Column(
+            Wrap(
+              runSpacing: 10,
+              spacing: 10,
+              alignment: WrapAlignment.center,
               children: [
                 SizedBox(
                   width: 250,
                   child: TextField(
                     maxLines: 1,
                     cursorHeight: 10,
-                    controller: questionIdController,
+                    controller: recordIdController,
                     decoration: const InputDecoration(
                       contentPadding: EdgeInsets.all(10),
-                      labelText: 'To Be Loaded Id',
+                      labelText: 'Test Record Id',
                     ),
                     textInputAction: TextInputAction.done,
                     onChanged: (qId){
-                      GeneralAppConstant.TempIdSilSonra=qId;
+                      GeneralAppConstant.TempRecordIdSilSonra=qId;
                     },
                     onSubmitted: (value) {
-                      GeneralAppConstant.TempIdSilSonra=questionIdController.text;
+                      GeneralAppConstant.TempRecordIdSilSonra=recordIdController.text;
+                    },
+                  ),
+                ),
+                const SizedBox(width: 20,),
+                SizedBox(
+                  width: 250,
+                  child: TextField(
+                    maxLines: 1,
+                    cursorHeight: 10,
+                    controller: userIdController,
+                    decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.all(10),
+                      labelText: 'Test User Id',
+                    ),
+                    textInputAction: TextInputAction.done,
+                    onChanged: (qId){
+                      GeneralAppConstant.TempUserIdSilSonra=qId;
+                    },
+                    onSubmitted: (value) {
+                      GeneralAppConstant.TempUserIdSilSonra=userIdController.text;
                     },
                   ),
                 ),
               ],
             ),
+            const SizedBox(height: 20,),
             ListView.builder(
               shrinkWrap: true,
               itemCount: routes.length,

@@ -485,6 +485,9 @@
       "ct_subdom": "Sub Domain",
       "ct_achv": "Achievements",
       "ct_subject":"Subject"
+    },
+    "getLearnHierarchies": {
+      "pleaseSelect": "Please Select"
     }
   },
   "lib.screen.quizPage.quizPage": {
@@ -779,6 +782,86 @@
       "share": "Share",
       "likes": "Likes"
 
+    }
+  },
+
+
+
+  "lib.screen.lecturePage.lecturePage": {
+    "build": {
+      "title": "Lecture Operations"
+    },
+    "LectureOperationsSteps": {
+      "lectureCreate": "Lecture",
+      "createFlow": "Lecture Flow",
+      "summaryAndSubmit": "Summary And Submit"
+    },
+    "getStepOneLayout": {
+      "academicYear": "Academic Year",
+      "title": "Title",
+      "descriptions": "Descriptions",
+      "grade": "Grade",
+      "branch": "Branch",
+      "clickWelcomeMsg": "Click to add welcome message",
+      "welcomeMsg": "Welcome Message",
+      "clickGoodbyeMsg": "Click to add goodbye message",
+      "goodbyeMsg": "Goodbye Message",
+      "canEveryoneSeeTheLecture": "Anybody can see this lecture ?"
+    },
+    "_buildStepper": {
+      "next": "Next",
+      "back": "Back",
+      "submit": "Submit"
+    },
+    "_buildInit": {
+      "initializing": "initializing..."
+    },
+    "_buildLoading": {
+      "loading": "loading..."
+    },
+    "_buildError": {
+      "unknownError": "Unknown Error"
+    },
+    "_buildLoadingStep1": {
+      "firstStepLoading": "First Step Loading..."
+    },
+    "_buildErrorStep1": {
+      "unknownError": "Unknown Error"
+    },
+    "_buildLoadingStep2": {
+      "secondStepLoading": "Second Step Loading..."
+    },
+    "_buildErrorStep2": {
+      "unknownError": "Unknown Error"
+    },
+    "_buildLoadingStep3": {
+      "thirdStepLoading": "Third Step Loading..."
+    },
+    "_buildErrorStep3": {
+      "unknownError": "Unknown Error"
+    },
+    "_buildLoadingPm": {
+      "pageModelLoading": "Page Model Loading"
+    },
+    "_buildDeletingPm": {
+      "pageModelDeleting": "Page Model Deleting"
+    },
+    "_buildRemovingPm": {
+      "pageModelRemoving": "Page Model Removing"
+    },
+    "_buildSavingPm": {
+      "pageModelSaving": "Page Model Saving"
+    },
+    "_buildSavedPm": {
+      "pageModelSaved": "Page Model Saved"
+    },
+    "_buildErrorPm": {
+      "pageModelNotSaved": "Page Model Not Saved"
+    }
+  },
+  "lib.bloc.bloc.lecture.lectureBloc": {
+    "initEvent": {
+      "pleaseSelect": "Please Select"
     }
   }
 }
