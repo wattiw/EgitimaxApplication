@@ -791,10 +791,11 @@
     "build": {
       "title": "Lecture Operations"
     },
-    "LectureOperationsSteps": {
+    "lectureOperationsSteps": {
       "lectureCreate": "Lecture",
       "createFlow": "Lecture Flow",
-      "summaryAndSubmit": "Summary And Submit"
+      "summaryAndSubmit": "Summary And Submit",
+      "error": "Error"
     },
     "getStepOneLayout": {
       "academicYear": "Academic Year",
@@ -807,6 +808,14 @@
       "clickGoodbyeMsg": "Click to add goodbye message",
       "goodbyeMsg": "Goodbye Message",
       "canEveryoneSeeTheLecture": "Anybody can see this lecture ?"
+    },
+    "getStepTwoLayout": {
+      "moveUp": "Move Up",
+      "moveDown": "Move Down",
+      "delete": "Delete",
+      "selectAction": "Select Action",
+      "addQuestion": "Add Question",
+      "addVideo": "Add Video"
     },
     "_buildStepper": {
       "next": "Next",

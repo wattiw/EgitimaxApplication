@@ -174,6 +174,10 @@ class TblCrsCourseFlow {
     };
   }
 
+  void updateOrderNo(int? orderNo) {
+    this.orderNo = orderNo;
+  }
+
   static TblCrsCourseFlow fromMap(Map<String, dynamic> map) {
     return TblCrsCourseFlow(
       id: map['id'],

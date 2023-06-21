@@ -1,17 +1,25 @@
 import 'package:egitimaxapplication/bloc/bloc/lecture/lectureBloc.dart';
 import 'package:egitimaxapplication/bloc/state/lecture/lectureState.dart';
+import 'package:egitimaxapplication/model/common/dataTableData.dart';
 import 'package:egitimaxapplication/model/lecture/lecturePageModel.dart';
+import 'package:egitimaxapplication/model/lecture/setLectureObjects.dart';
 import 'package:egitimaxapplication/repository/appRepositories.dart';
 import 'package:egitimaxapplication/repository/lecture/lectureRepository.dart';
 import 'package:egitimaxapplication/screen/common/collapsibleItemBuilder.dart';
+import 'package:egitimaxapplication/screen/common/commonDataTable.dart';
 import 'package:egitimaxapplication/screen/common/commonDropdownButtonFormField.dart';
 import 'package:egitimaxapplication/screen/common/commonTextFormField.dart';
 import 'package:egitimaxapplication/screen/common/learnLevels.dart';
+import 'package:egitimaxapplication/screen/common/questionDataTable.dart';
+import 'package:egitimaxapplication/screen/common/questionOverView.dart';
 import 'package:egitimaxapplication/screen/common/userInteractiveMessage.dart';
 import 'package:egitimaxapplication/screen/lecture/stepsValidator.dart';
 import 'package:egitimaxapplication/utils/config/language/appLocalizations.dart';
 import 'package:egitimaxapplication/utils/constant/language/appLocalizationConstant.dart';
+import 'package:egitimaxapplication/utils/constant/router/heroTagConstant.dart';
+import 'package:egitimaxapplication/utils/extension/apiDataSetExtension.dart';
 import 'package:egitimaxapplication/utils/widget/appBar/innerAppBar.dart';
+import 'package:egitimaxapplication/utils/widget/layout/mainLayout.dart';
 import 'package:egitimaxapplication/utils/widget/message/uIMessage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -126,14 +134,14 @@ class _LecturePageState extends State<LecturePage> {
     );
   }
 
-  List<Step> LectureOperationsSteps(BuildContext context, LectureState state) {
+  List<Step> lectureOperationsSteps(BuildContext context, LectureState state) {
     var vSteps = [
       Step(
         state: _activeCurrentStep <= 0 ? StepState.editing : StepState.complete,
         isActive: _activeCurrentStep >= 0,
         title: Text(AppLocalization.instance.translate(
             'lib.screen.lecturePage.lecturePage',
-            'LectureOperationsSteps',
+            'lectureOperationsSteps',
             'lectureCreate')),
         //subtitle: const Text('Fill in the details'),
         content: Container(
@@ -153,12 +161,27 @@ class _LecturePageState extends State<LecturePage> {
         isActive: _activeCurrentStep >= 1,
         title: Text(AppLocalization.instance.translate(
             'lib.screen.lecturePage.lecturePage',
-            'LectureOperationsSteps',
+            'lectureOperationsSteps',
             'createFlow')),
         //subtitle: const Text('Fill in the details'),
         content: Container(
           padding: const EdgeInsets.symmetric(horizontal: 1),
-          child: getStepTwoLayout(context),
+          child: FutureBuilder<Widget>(
+            future: getStepTwoLayout(context),
+            builder: (BuildContext context, AsyncSnapshot<Widget> snapshot) {
+              if (snapshot.hasData) {
+                return Padding(
+                  padding: const EdgeInsets.all(1.0),
+                  child: snapshot.data ?? Container(),
+                );
+              } else if (snapshot.hasError) {
+                return Text(
+                    '${AppLocalization.instance.translate('lib.screen.lecturePage.lecturePage', 'lectureOperationsSteps', 'error')} ${snapshot.error}');
+              } else {
+                return const CircularProgressIndicator(); // or any other loading indicator
+              }
+            },
+          ),
         ),
       ),
       Step(
@@ -166,12 +189,27 @@ class _LecturePageState extends State<LecturePage> {
         isActive: _activeCurrentStep >= 2,
         title: Text(AppLocalization.instance.translate(
             'lib.screen.lecturePage.lecturePage',
-            'LectureOperationsSteps',
+            'lectureOperationsSteps',
             'summaryAndSubmit')),
         //subtitle: const Text('Please check and submit !'),
         content: Container(
           padding: const EdgeInsets.symmetric(horizontal: 1),
-          child: getStepThreeLayout(context),
+          child: FutureBuilder<Widget>(
+            future: getStepThreeLayout(context),
+            builder: (BuildContext context, AsyncSnapshot<Widget> snapshot) {
+              if (snapshot.hasData) {
+                return Padding(
+                  padding: const EdgeInsets.all(1.0),
+                  child: snapshot.data ?? Container(),
+                );
+              } else if (snapshot.hasError) {
+                return Text(
+                    '${AppLocalization.instance.translate('lib.screen.lecturePage.lecturePage', 'lectureOperationsSteps', 'error')} ${snapshot.error}');
+              } else {
+                return const CircularProgressIndicator(); // or any other loading indicator
+              }
+            },
+          ),
         ),
       ),
     ];
@@ -309,7 +347,6 @@ class _LecturePageState extends State<LecturePage> {
                 onChangedAchievements: (achievements) {},
                 selectedAchievements: const {},
                 componentTextStyle: componentTextStyle),
-
           CollapsibleItemBuilder(
               items: [
                 CollapsibleItemData(
@@ -378,7 +415,6 @@ class _LecturePageState extends State<LecturePage> {
               onStateChanged: (value) {
                 isGoodbyeMsgCollapsed = !isGoodbyeMsgCollapsed;
               }),
-
           if (false)
             TextButton(
               onPressed: () {
@@ -417,25 +453,25 @@ class _LecturePageState extends State<LecturePage> {
               ),
             ),
           if (false)
-          TextButton(
-            onPressed: () {
-              setState(() {
-                isGoodbyeMsgCollapsed = !isGoodbyeMsgCollapsed;
-              });
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(AppLocalization.instance.translate(
-                    'lib.screen.lecturePage.lecturePage',
-                    'getStepOneLayout',
-                    'clickGoodbyeMsg')),
-                Icon(!isGoodbyeMsgCollapsed
-                    ? Icons.arrow_drop_up_outlined
-                    : Icons.arrow_drop_down_outlined),
-              ],
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  isGoodbyeMsgCollapsed = !isGoodbyeMsgCollapsed;
+                });
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(AppLocalization.instance.translate(
+                      'lib.screen.lecturePage.lecturePage',
+                      'getStepOneLayout',
+                      'clickGoodbyeMsg')),
+                  Icon(!isGoodbyeMsgCollapsed
+                      ? Icons.arrow_drop_up_outlined
+                      : Icons.arrow_drop_down_outlined),
+                ],
+              ),
             ),
-          ),
           if (!isGoodbyeMsgCollapsed && false)
             Padding(
               padding: const EdgeInsets.all(15.0),
@@ -506,16 +542,554 @@ class _LecturePageState extends State<LecturePage> {
     );
   }
 
-  Widget getStepTwoLayout(BuildContext context) {
-    return Container();
+  Future<Widget> getStepTwoLayout(BuildContext context) async {
+
+    final theme = Theme.of(context);
+
+    var flows = lecturePageModel.setLectureObjects?.tblCrsCourseMain!.tblCrsCourseFlows;
+
+    if (flows!.length > 1) {
+      flows = flows.where((element) => element.orderNo != 0).toList();
+    }
+
+    flows.sort((a, b) => a.orderNo!.compareTo(b.orderNo!));
+
+    List<Map<Map<String, String>, Widget>>? dataTableRows =
+        List.empty(growable: true);
+    if (flows != null && flows.isNotEmpty) {
+      for (var flow in flows) {
+        if (flow.orderNo != 0 || (flow.orderNo == 0 && flows.length==1)) // Default Kayıt Filtrelendi
+        {
+          Map<Map<String, String>, Widget> cells = {};
+
+          Map<String, String> key0 = {};
+          key0['id'] = flow.id.toString();
+          cells[key0] = Text(flow.id.toString());
+
+          Map<String, String> key1 = {};
+          key1['course_id'] = flow.courseId.toString();
+          cells[key1] = Text(flow.courseId.toString());
+
+          Map<String, String> key2 = {};
+          key2['order_no'] = flow.orderNo.toString();
+          cells[key2] = Text(flow.orderNo.toString());
+
+          if (flow.videoId != null && flow.videoId != BigInt.parse('0')) {
+            Map<String, String> key3 = {};
+            key3['flow_id'] = flow.videoId.toString();
+            cells[key3] = Text(flow.videoId.toString());
+
+            var tblVidVideoMainDataSet = await appRepositories.tblVidVideoMain(
+                'Lecture/GetObject', ['id', 'title', 'description'],
+                id: flow.videoId, getNoSqlData: 0);
+            var videoTitle = tblVidVideoMainDataSet.firstValue('data', 'title',
+                insteadOfNull: '');
+            Map<String, String> key3_1 = {};
+            key3_1['flow_item'] = videoTitle;
+            cells[key3_1] = Text(videoTitle);
+
+            Map<String, String> key3_2 = {};
+            key3_2['flow_type'] = 'Video';
+            cells[key3_2] = const Text('Video');
+          } else if (flow.quizId != null && flow.quizId != BigInt.parse('0')) {
+            Map<String, String> key4 = {};
+            key4['flow_id'] = flow.quizId.toString();
+            cells[key4] = Text(flow.quizId.toString());
+
+            var tblQuizMainDataSet = await appRepositories.tblQuizMain(
+                'Lecture/GetObject', ['id', 'title', 'description'],
+                id: flow.quizId, getNoSqlData: 0);
+            var quizTitle = tblQuizMainDataSet.firstValue('data', 'title',
+                insteadOfNull: '');
+            Map<String, String> key4_1 = {};
+            key4_1['flow_item'] = quizTitle;
+            cells[key4_1] = Text(quizTitle);
+
+            Map<String, String> key4_2 = {};
+            key4_2['flow_type'] = 'Quiz';
+            cells[key4_2] = const Text('Quiz');
+          } else if (flow.docId != null && flow.docId != BigInt.parse('0')) {
+            Map<String, String> key5 = {};
+            key5['flow_id'] = flow.docId.toString();
+            cells[key5] = Text(flow.docId.toString());
+
+            var tblCrsCourseDocDataSet = await appRepositories.tblCrsCourseDoc(
+                'Lecture/GetObject', ['id', 'description'],
+                id: flow.docId, getNoSqlData: 0);
+            var docTitle = tblCrsCourseDocDataSet
+                .firstValue('data', 'description', insteadOfNull: '');
+            Map<String, String> key5_1 = {};
+            key5_1['flow_item'] = docTitle;
+            cells[key5_1] = Text(docTitle);
+
+            Map<String, String> key5_2 = {};
+            key5_2['flow_type'] = 'Document';
+            cells[key5_2] = const Text('Document');
+          } else if (flow.questId != null &&
+              flow.questId != BigInt.parse('0')) {
+            Map<String, String> key6 = {};
+            key6['flow_id'] = flow.questId.toString();
+            cells[key6] = Text(flow.questId.toString());
+
+            var tblQueQuestionMainDataSet =
+                await appRepositories.tblQueQuestionMain(
+                    'Lecture/GetObject', ['id', 'question_text'],
+                    id: flow.questId, getNoSqlData: 0);
+            var questionTitle = tblQueQuestionMainDataSet
+                .firstValue('data', 'question_text', insteadOfNull: '');
+            Map<String, String> key5_1 = {};
+            key5_1['flow_item'] = questionTitle;
+            cells[key5_1] = TextButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return QuestionOverView(
+                      questionId: flow.questId ?? BigInt.parse('0'),
+                      userId: widget.userId,
+                    );
+                  },
+                );
+              },
+              style: ButtonStyle(
+                textStyle: MaterialStateProperty.all<TextStyle>(
+                  TextStyle(
+                      fontSize:
+                      theme.dataTableTheme.dataTextStyle?.fontSize),
+                ),
+              ),
+              child: Tooltip(
+                message: questionTitle ?? "",
+                child: Wrap(
+                  children: [
+                    Text(
+                      questionTitle!= null && questionTitle.length > 20
+                          ? "${questionTitle.substring(0, 20)}..."
+                          : questionTitle ?? "",
+                    ),
+                  ],
+                ),
+              ),
+            );
+
+            Map<String, String> key5_2 = {};
+            key5_2['flow_type'] = 'Question';
+            cells[key5_2] = const Text('Question');
+          } else {
+            Map<String, String> key7 = {};
+            key7['flow_id'] = '0';
+            cells[key7] = const Text('0');
+
+            Map<String, String> key7_1 = {};
+            key7_1['flow_item'] = 'NoItem';
+            cells[key7_1] = const Text('No Item');
+
+            Map<String, String> key7_2 = {};
+            key7_2['flow_type'] = 'NoItem';
+            cells[key7_2] = const Text('No Item');
+          }
+
+          Map<String, String> key8 = {};
+          key8['is_active'] = flow.isActive.toString();
+          cells[key8] = Text(flow.isActive.toString());
+
+          Map<String, String> key9 = {};
+          key9['actions'] = 'actions';
+          cells[key9] = Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              PopupMenuButton<String>(
+                  padding: const EdgeInsets.all(3.0),
+                  itemBuilder: (BuildContext context) => [
+                        if (flow.orderNo != 1 && flow.orderNo != 0)
+                          PopupMenuItem<String>(
+                            padding: const EdgeInsets.all(3.0),
+                            value: 'move_up',
+                            child: Row(
+                              children: [
+                                const Icon(Icons.arrow_upward, size: 14),
+                                const SizedBox(width: 5),
+                                Text(
+                                  AppLocalization.instance.translate(
+                                      'lib.screen.lecturePage.lecturePage',
+                                      'getStepTwoLayout',
+                                      'moveUp'),
+                                  style: TextStyle(fontSize: 10),
+                                ),
+                              ],
+                            ),
+                          ),
+                        if (flows!.where((element) => element.orderNo!=0).length != flow.orderNo && flow.orderNo != 0)
+                          PopupMenuItem<String>(
+                            padding: const EdgeInsets.all(3.0),
+                            value: 'move_down',
+                            child: Row(
+                              children: [
+                                const Icon(Icons.arrow_downward, size: 14),
+                                const SizedBox(width: 5),
+                                Text(
+                                  AppLocalization.instance.translate(
+                                      'lib.screen.lecturePage.lecturePage',
+                                      'getStepTwoLayout',
+                                      'moveDown'),
+                                  style: TextStyle(fontSize: 10),
+                                ),
+                              ],
+                            ),
+                          ),
+                        if (flow.orderNo != 1 && flow.orderNo != 0)
+                          PopupMenuItem<String>(
+                            padding: const EdgeInsets.all(3.0),
+                            value: 'delete',
+                            child: Row(
+                              children: [
+                                const Icon(Icons.delete, size: 14),
+                                const SizedBox(width: 5),
+                                Text(
+                                  AppLocalization.instance.translate(
+                                      'lib.screen.lecturePage.lecturePage',
+                                      'getStepTwoLayout',
+                                      'delete'),
+                                  style: TextStyle(fontSize: 10),
+                                ),
+                              ],
+                            ),
+                          ),
+                      ],
+                  onSelected: (String? value) {
+                    if (value == 'move_up') {
+                      if (flow.orderNo != 1) {
+                        int currentOrder = flow.orderNo ?? 0;
+
+
+                        var replacedElement=lecturePageModel.setLectureObjects?.tblCrsCourseMain!
+                            .tblCrsCourseFlows!
+                            .where((element) =>element.orderNo == (currentOrder - 1))
+                            .first;
+
+                        lecturePageModel.setLectureObjects?.tblCrsCourseMain!
+                            .tblCrsCourseFlows!.removeWhere((element) => element.orderNo==(currentOrder - 1));
+
+
+                        lecturePageModel.setLectureObjects?.tblCrsCourseMain!
+                            .tblCrsCourseFlows!
+                            .where((element) => element.orderNo == flow.orderNo)
+                            .first
+                            .updateOrderNo((currentOrder - 1));
+
+                        if(replacedElement!=null)
+                        {
+                          replacedElement?.orderNo=currentOrder;
+
+                          lecturePageModel.setLectureObjects?.tblCrsCourseMain!
+                              .tblCrsCourseFlows!.add(replacedElement!);
+                        }
+
+                        setState(() {
+
+                        });
+
+                      }
+                    } else if (value == 'move_down') {
+                      if (flow.orderNo != flows!.length) {
+                        int currentOrder = flow.orderNo ?? 0;
+
+                        var replacedElement=lecturePageModel.setLectureObjects?.tblCrsCourseMain!
+                            .tblCrsCourseFlows!
+                            .where((element) =>element.orderNo == (currentOrder + 1))
+                            .first;
+
+                        lecturePageModel.setLectureObjects?.tblCrsCourseMain!
+                            .tblCrsCourseFlows!.removeWhere((element) => element.orderNo==(currentOrder + 1));
+
+
+                        lecturePageModel.setLectureObjects?.tblCrsCourseMain!
+                            .tblCrsCourseFlows!
+                            .where((element) => element.orderNo == flow.orderNo)
+                            .first
+                            .updateOrderNo((currentOrder + 1));
+
+                        if(replacedElement!=null)
+                          {
+                            replacedElement?.orderNo=currentOrder;
+
+                            lecturePageModel.setLectureObjects?.tblCrsCourseMain!
+                                .tblCrsCourseFlows!.add(replacedElement!);
+                          }
+                        setState(() {
+
+                        });
+
+                      }
+                    } else if (value == 'delete') {
+                      lecturePageModel.setLectureObjects?.tblCrsCourseMain!
+                          .tblCrsCourseFlows!
+                          .removeWhere((element) => element.orderNo == flow.orderNo);
+
+                      lecturePageModel.setLectureObjects?.tblCrsCourseMain!
+                          .tblCrsCourseFlows!
+                          .sort((a, b) => a.orderNo!.compareTo(b.orderNo!));
+
+                      int newOrder = 1;
+                      lecturePageModel.setLectureObjects?.tblCrsCourseMain!
+                          .tblCrsCourseFlows!
+                          .forEach((element) {
+                        element.orderNo = newOrder;
+                        newOrder++;
+                      });
+
+
+                      setState(() {
+
+                      });
+
+                    }
+                  },
+                  child: Row(
+                    children: [
+                      Text(
+                        flow.orderNo != 0
+                            ? AppLocalization.instance.translate(
+                                'lib.screen.lecturePage.lecturePage',
+                                'getStepTwoLayout',
+                                'selectAction')
+                            : 'No Available Action',
+                        style:
+                            const TextStyle(color: Colors.blue, fontSize: 10),
+                      ),
+                      const SizedBox(width: 5.0),
+                      const Icon(Icons.arrow_drop_down),
+                    ],
+                  )),
+            ],
+          );
+
+          dataTableRows.add(cells);
+        }
+        else
+          {}
+      }
+    } else {}
+
+    var toolBarButtons = [
+      IconButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => MainLayout(
+                  context: context,
+                  loadedStateContainer: QuestionDataTable(
+                    userId: widget.userId,
+                    componentTextStyle: componentTextStyle,
+                    selectedQuestionIds: List.empty(growable: true),
+                    onSelectedRowsChanged: (selectedRows, selectedKeys) {},
+                    onSelectedQuestionIdsChanged:
+                        (List<BigInt>? selectedQuestionIds) {
+                          var flows=lecturePageModel.setLectureObjects?.tblCrsCourseMain!.tblCrsCourseFlows;
+
+                      if (flows==null || flows!.isEmpty) {
+                        lecturePageModel.setLectureObjects?.tblCrsCourseMain!
+                            .tblCrsCourseFlows = List.empty(growable: true);
+                      }
+
+                      if (selectedQuestionIds != null) {
+                        for (var question in selectedQuestionIds) {
+                          BigInt id = BigInt.parse('0');
+                          BigInt? courseId = lecturePageModel
+                                      .setLectureObjects?.tblCrsCourseMain !=
+                                  null
+                              ? lecturePageModel
+                                  .setLectureObjects?.tblCrsCourseMain!.id
+                              : BigInt.parse('0');
+                          int? orderNo = lecturePageModel.setLectureObjects
+                                      ?.tblCrsCourseMain!.tblCrsCourseFlows !=
+                                  null
+                              ? (lecturePageModel
+                                          .setLectureObjects
+                                          ?.tblCrsCourseMain!
+                                          .tblCrsCourseFlows!.where((element) => element.orderNo!=0)
+                                          .length ??
+                                      0) +
+                                  1
+                              : 1;
+                          BigInt? videoId = BigInt.parse('0');
+                          BigInt? quizId = BigInt.parse('0');
+                          BigInt? docId = BigInt.parse('0');
+                          BigInt? questId = question;
+                          int? isActive = 0;
+
+
+                          bool isExistQuestion=false;
+
+                          if(flows!=null)
+                            {
+                              if(flows!.where((element) => element.questId==questId).isNotEmpty)
+                              {
+                                isExistQuestion=true;
+                              }
+                            }
+
+
+                          if(!isExistQuestion)
+                            {
+                              lecturePageModel.setLectureObjects?.tblCrsCourseMain!
+                                  .tblCrsCourseFlows!
+                                  .add(TblCrsCourseFlow(
+                                  id: id,
+                                  courseId: courseId,
+                                  orderNo: orderNo,
+                                  videoId: videoId,
+                                  quizId: quizId,
+                                  docId: docId,
+                                  questId: questId,
+                                  isActive: isActive));
+                            }
+
+                        }
+                      }
+
+                      setState(() {});
+                    },
+                  )),
+              settings: const RouteSettings(
+                  name: HeroTagConstant
+                      .questionSelector), // use the route name as the Hero tag
+            ),
+          );
+        },
+        icon: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            const Icon(Icons.add),
+            const SizedBox(width: 3),
+            // Adjust the spacing between the icon and text
+            Text(AppLocalization.instance.translate(
+                'lib.screen.lecturePage.lecturePage',
+                'getStepTwoLayout',
+                'addQuestion')),
+          ],
+        ),
+        tooltip: AppLocalization.instance.translate(
+            'lib.screen.lecturePage.lecturePage',
+            'getStepTwoLayout',
+            'addQuestion'),
+      ),
+      IconButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => MainLayout(
+                  context: context,
+                  loadedStateContainer: QuestionDataTable(
+                    userId: widget.userId,
+                    componentTextStyle: componentTextStyle,
+                    selectedQuestionIds: List.empty(growable: true),
+                    onSelectedRowsChanged: (selectedRows, selectedKeys) {},
+                    onSelectedQuestionIdsChanged:
+                        (List<BigInt>? selectedQuestionIds) {
+                      int c00 = 0;
+                    },
+                  )),
+              settings: const RouteSettings(
+                  name: HeroTagConstant
+                      .questionSelector), // use the route name as the Hero tag
+            ),
+          );
+        },
+        icon: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            const Icon(Icons.add),
+            const SizedBox(width: 3),
+            // Adjust the spacing between the icon and text
+            Text(AppLocalization.instance.translate(
+                'lib.screen.lecturePage.lecturePage',
+                'getStepTwoLayout',
+                'addVideo')),
+          ],
+        ),
+        tooltip: AppLocalization.instance.translate(
+            'lib.screen.lecturePage.lecturePage',
+            'getStepTwoLayout',
+            'addVideo'),
+      )
+    ];
+    var dataTableColumnAlias = [
+      'Id',
+      'Course Id',
+      'Order No',
+      'Flow Id',
+      'Flow Item',
+      'Flow Type',
+      'Is Active',
+      'Actions'
+    ];
+    var dataTableColumnNames = const [
+      'id',
+      'course_id',
+      'order_no',
+      'flow_id',
+      'flow_item',
+      'flow_type',
+      'is_active',
+      'actions'
+    ];
+    var disabledColumFilters = const [
+      'id',
+      'course_id',
+      'order_no',
+      'flow_id',
+      'flow_item',
+      'flow_type',
+      'is_active',
+      'actions'
+    ];
+    var dataTableHideColumn = const ['id', 'course_id', 'is_active'];
+    var columnDataTypes = [
+      ColumnDataType('id', BigInt),
+      ColumnDataType('course_id', BigInt),
+      ColumnDataType('orderNo', int),
+      ColumnDataType('flow_id', BigInt),
+      ColumnDataType('flow_item', String),
+      ColumnDataType('flow_type', String),
+      ColumnDataType('is_active', int),
+      ColumnDataType('actions', String),
+    ];
+
+
+
+    return Container(
+      alignment: Alignment.centerLeft,
+      child: Column(
+        children: [
+          CommonDataTable(
+            toolBarButtons: toolBarButtons,
+            dataTableColumnAlias: dataTableColumnAlias,
+            dataTableColumnNames: dataTableColumnNames,
+            dataTableDisableColumnFilter: disabledColumFilters,
+            dataTableHideColumn: dataTableHideColumn,
+            columnDataTypes: columnDataTypes,
+            dataTableRows: dataTableRows,
+            dataTableKeyColumnName: 'orderNo',
+            dataTableSelectedKeys:List.empty(),
+            showCheckboxColumn: false,
+          ),
+        ],
+      ),
+    );
   }
 
-  Widget getStepThreeLayout(BuildContext context) {
+  Future<Widget> getStepThreeLayout(BuildContext context) async {
     final screenWidth = MediaQuery.of(context).size.width;
     return Container();
   }
 
-  void LectureBlocAddEvent(int? activeCurrentStep) {
+  void lectureBlocAddEvent(int? activeCurrentStep) {
     switch (activeCurrentStep) {
       case 0:
         lectureBloc.add(Step1Event(lecturePageModel: lecturePageModel));
@@ -532,16 +1106,16 @@ class _LecturePageState extends State<LecturePage> {
   }
 
   Widget _buildStepper(BuildContext context, LectureState state) {
-    var qOStepsCount = LectureOperationsSteps(context, state).length;
+    var qOStepsCount = lectureOperationsSteps(context, state).length;
     return Stepper(
       type: StepperType.vertical,
       currentStep: _activeCurrentStep,
-      steps: LectureOperationsSteps(context, state),
+      steps: lectureOperationsSteps(context, state),
       onStepContinue: () {
         if (_activeCurrentStep < (qOStepsCount - 1)) {
           setState(() {
             _activeCurrentStep += 1;
-            LectureBlocAddEvent(_activeCurrentStep);
+            lectureBlocAddEvent(_activeCurrentStep);
           });
         } else {
           //Save Pressed
@@ -554,13 +1128,13 @@ class _LecturePageState extends State<LecturePage> {
         }
         setState(() {
           _activeCurrentStep -= 1;
-          LectureBlocAddEvent(_activeCurrentStep);
+          lectureBlocAddEvent(_activeCurrentStep);
         });
       },
       onStepTapped: (int index) {
         setState(() {
           _activeCurrentStep = index;
-          LectureBlocAddEvent(_activeCurrentStep);
+          lectureBlocAddEvent(_activeCurrentStep);
         });
       },
       controlsBuilder: (BuildContext context, ControlsDetails controlsDetails) {
@@ -698,7 +1272,7 @@ class _LecturePageState extends State<LecturePage> {
 
   Widget _buildLoaded(BuildContext context, LoadedState state) {
     lecturePageModel = state.lecturePageModel;
-    LectureBlocAddEvent(_activeCurrentStep);
+    lectureBlocAddEvent(_activeCurrentStep);
     return Container();
   }
 

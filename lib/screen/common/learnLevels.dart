@@ -171,7 +171,9 @@ class _LearnLevelsState extends State<LearnLevels> {
             var typeLast = tblLearnMainLastDataSet.firstValue('data', 'type');
 
             if (lastItems.isNotEmpty) {
-              lastItems[0]=AppLocalization.instance.translate('lib.screen.common.learnLevels','getLearnHierarchies','pleaseSelect');
+              if(typeLast!= 'ct_achv') {
+                lastItems[0]=AppLocalization.instance.translate('lib.screen.common.learnLevels','getLearnHierarchies','pleaseSelect');
+              }
 
               levelLast['selectedId'] = 0;//lastItems.entries.first.key;
               levelLast['parentId'] = parent_id;

@@ -146,6 +146,7 @@ class LectureBloc extends Bloc<LectureEvent, LectureState> {
 
         var tblCrsCourseFlowDataSet=await appRepositories.tblCrsCourseFlow('Lecture/GetObject', ['*'],course_id: event.lecturePageModel.lectureId ?? BigInt.parse('0'));
 
+        bool addedAtLeastOne=false;
         for(var flow in tblCrsCourseFlowDataSet.selectDataTable('data'))
           {
             TblCrsCourseFlow newFlow = TblCrsCourseFlow(
@@ -159,7 +160,23 @@ class LectureBloc extends Bloc<LectureEvent, LectureState> {
               isActive: flow['is_active'],
             );
             event.lecturePageModel.setLectureObjects!.tblCrsCourseMain!.tblCrsCourseFlows!.add(newFlow);
+            addedAtLeastOne=true;
         }
+
+        if(!addedAtLeastOne)
+          {
+            TblCrsCourseFlow newFlow = TblCrsCourseFlow(
+              id:BigInt.parse('0'),
+              courseId: BigInt.parse('0'),
+              orderNo: 0,
+              videoId: BigInt.parse('0'),
+              quizId:BigInt.parse('0'),
+              docId: BigInt.parse('0'),
+              questId: BigInt.parse('0'),
+              isActive: 0,
+            );
+            event.lecturePageModel.setLectureObjects!.tblCrsCourseMain!.tblCrsCourseFlows!.add(newFlow);
+          }
 
         String pleaseSelect=AppLocalization.instance.translate(
             'lib.bloc.bloc.lecture.lectureBloc',
