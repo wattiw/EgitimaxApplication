@@ -143,4 +143,52 @@ extension VideoRepositoryExtension on VideoRepository {
     }
     return getDataSet(query: query, parameters: parameters,getNoSqlData: getNoSqlData);
   }
+
+
+  Future<Map<String, dynamic>> videoTotalLikes(
+      List<String> columns,BigInt video_id,
+      {int? getNoSqlData }) async {
+    var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
+    String query = "SELECT $columnJoinedString FROM ( SELECT video_id,count(video_id) as like_count FROM tbl_vid_video_like root  where like_type=1 group by video_id ) RTX";
+
+    List<SqlParameter> parameters = List.empty(growable: true);
+    if (video_id != null) {
+      parameters.add(SqlParameter('@video_id', video_id));
+    }
+    return getDataSet(query: query, parameters: parameters,getNoSqlData: getNoSqlData);
+  }
+
+  Future<Map<String, dynamic>> videoSetIsLikeOrNot(
+      List<String> columns,BigInt video_id,int like_type,BigInt user_id,
+      {int? getNoSqlData }) async {
+    String queryPart = 'proc_vid_video_like';
+
+    List<String> queryParts = queryPart.split('\n');
+    String joinedQuery = queryParts.join(' ');
+
+    List<SqlParameter> parameters = List.empty(growable: true);
+
+    parameters.add(SqlParameter('@p_user_id', user_id));
+    parameters.add(SqlParameter('@p_video_id', video_id));
+    parameters.add(SqlParameter('@p_like_type', like_type));
+
+    return getDataSet(query: joinedQuery, parameters: parameters, isProcedure: true);
+  }
+
+  Future<Map<String, dynamic>> videoSetMyFavorite(
+      List<String> columns,BigInt video_id,int isMyFavorite,BigInt user_id,
+      {int? getNoSqlData }) async {
+    String queryPart = 'proc_fav_video';
+
+    List<String> queryParts = queryPart.split('\n');
+    String joinedQuery = queryParts.join(' ');
+
+    List<SqlParameter> parameters = List.empty(growable: true);
+
+    parameters.add(SqlParameter('@p_user_id', user_id));
+    parameters.add(SqlParameter('@p_video_id', video_id));
+    parameters.add(SqlParameter('@p_isMyFavorite', isMyFavorite));
+
+    return getDataSet(query: joinedQuery, parameters: parameters, isProcedure: true);
+  }
 }

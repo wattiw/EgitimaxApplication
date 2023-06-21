@@ -19,7 +19,9 @@ class Assets {
   static const String commonQuestionDataTable = 'lib/screen/common/questionDataTable.dart';
   static const String commonQuestionOverView = 'lib/screen/common/questionOverView.dart';
   static const String commonUserInteractiveMessage = 'lib/screen/common/userInteractiveMessage.dart';
+  static const String commonVideoDataTable = 'lib/screen/common/videoDataTable.dart';
   static const String commonVideoItems = 'lib/screen/common/videoItems.dart';
+  static const String commonVideoOverView = 'lib/screen/common/videoOverView.dart';
   static const String commonVideoPlayer = 'lib/screen/common/videoPlayer.dart';
   static const String commonWebViewPage = 'lib/screen/common/webViewPage.dart';
   static const String drawerMainDrawer = 'lib/utils/widget/drawer/mainDrawer.dart';

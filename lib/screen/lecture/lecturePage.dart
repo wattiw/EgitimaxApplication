@@ -13,6 +13,7 @@ import 'package:egitimaxapplication/screen/common/learnLevels.dart';
 import 'package:egitimaxapplication/screen/common/questionDataTable.dart';
 import 'package:egitimaxapplication/screen/common/questionOverView.dart';
 import 'package:egitimaxapplication/screen/common/userInteractiveMessage.dart';
+import 'package:egitimaxapplication/screen/common/videoOverView.dart';
 import 'package:egitimaxapplication/screen/lecture/stepsValidator.dart';
 import 'package:egitimaxapplication/utils/config/language/appLocalizations.dart';
 import 'package:egitimaxapplication/utils/constant/language/appLocalizationConstant.dart';
@@ -43,7 +44,7 @@ class LecturePage extends StatefulWidget {
 }
 
 class _LecturePageState extends State<LecturePage> {
-  int _activeCurrentStep = 0;
+  int _activeCurrentStep = 1;
   late LectureBloc lectureBloc;
   late LecturePageModel lecturePageModel;
   LectureRepository lectureRepository = LectureRepository();
@@ -873,6 +874,38 @@ class _LecturePageState extends State<LecturePage> {
     } else {}
 
     var toolBarButtons = [
+      IconButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => MainLayout(
+                  context: context,
+                  loadedStateContainer: VideoOverView(
+                    userId: widget.userId,
+                    videoId: BigInt.parse('16'),
+                  )),
+              settings: const RouteSettings(
+                  name: HeroTagConstant
+                      .questionSelector), // use the route name as the Hero tag
+            ),
+          );
+        },
+        icon: const Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Icon(Icons.remove_red_eye_outlined),
+            SizedBox(width: 3),
+            // Adjust the spacing between the icon and text
+            Text('Video Overview'),
+          ],
+        ),
+        tooltip: AppLocalization.instance.translate(
+            'lib.screen.lecturePage.lecturePage',
+            'getStepTwoLayout',
+            'addQuestion'),
+      ),
       IconButton(
         onPressed: () {
           Navigator.push(

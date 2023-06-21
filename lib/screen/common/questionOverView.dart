@@ -574,18 +574,27 @@ class _LikeDislikeFavShareButtonsState
     var nullVoid = await widget.questionRepository.questionSetIsLikeOrNot(
         ['*'], widget.questionId, isLiked ? 1 : 0, widget.userId,
         getNoSqlData: 0);
+    setState(() {
+
+    });
   }
 
   Future<void> setIsDisLikedByMe() async {
     var nullVoid = await widget.questionRepository.questionSetIsLikeOrNot(
         ['*'], widget.questionId, isDisLiked ? 2 : 0, widget.userId,
         getNoSqlData: 0);
+    setState(() {
+
+    });
   }
 
   Future<void> setIsMyFavorite() async {
     var nullVoid = await widget.questionRepository.questionSetMyFavorite(
         ['*'], widget.questionId, isFavorite ? 1 : 0, widget.userId,
         getNoSqlData: 0);
+    setState(() {
+
+    });
   }
 
   void shareQuestion() {}

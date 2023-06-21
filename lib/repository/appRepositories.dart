@@ -1137,7 +1137,8 @@ extension AppRepositoriesExtension on AppRepositories {
         query: query, parameters: parameters);
   }
 
-  Future<Map<String, dynamic>> tblCrsCourseMain( String controllerAndAction, List<String> columns,
+  Future<Map<String, dynamic>> tblCrsCourseMain(
+      String controllerAndAction, List<String> columns,
       {int? academic_year,
       double? agg_rating,
       int? branch_id,
@@ -1156,8 +1157,8 @@ extension AppRepositoriesExtension on AppRepositories {
       BigInt? updated_by,
       DateTime? updated_on,
       BigInt? user_id,
-      String? welcome_msg,int? getNoSqlData}) async {
-
+      String? welcome_msg,
+      int? getNoSqlData}) async {
     var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
     String query =
         "select $columnJoinedString from (select * from tbl_crs_course_main ) rt";
@@ -4800,6 +4801,42 @@ extension AppRepositoriesExtension on AppRepositories {
     }
     if (video_path != null) {
       parameters.add(SqlParameter('@video_path', video_path));
+    }
+    return getDataSet(controllerAndAction,
+        query: query, parameters: parameters);
+  }
+
+  Future<Map<String, dynamic>> tblVidVideoLike(
+      String controllerAndAction, List<String> columns,
+      {DateTime? created_on,
+      BigInt? id,
+      int? is_active,
+      int? like_type,
+      BigInt? user_id,
+      BigInt? video_id}) async {
+
+    var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
+
+    String query = "select $columnJoinedString from (select * from tbl_vid_video_like ) rt";
+
+    List<SqlParameter> parameters = List.empty(growable: true);
+    if (created_on != null) {
+      parameters.add(SqlParameter('@created_on', created_on));
+    }
+    if (id != null) {
+      parameters.add(SqlParameter('@id', id));
+    }
+    if (is_active != null) {
+      parameters.add(SqlParameter('@is_active', is_active));
+    }
+    if (like_type != null) {
+      parameters.add(SqlParameter('@like_type', like_type));
+    }
+    if (user_id != null) {
+      parameters.add(SqlParameter('@user_id', user_id));
+    }
+    if (video_id != null) {
+      parameters.add(SqlParameter('@video_id', video_id));
     }
     return getDataSet(controllerAndAction,
         query: query, parameters: parameters);

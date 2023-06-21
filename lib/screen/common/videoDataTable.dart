@@ -1,13 +1,14 @@
+/*
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:egitimaxapplication/model/common/dataTableData.dart';
 import 'package:egitimaxapplication/repository/appRepositories.dart';
-import 'package:egitimaxapplication/repository/question/questionRepository.dart';
+import 'package:egitimaxapplication/repository/video/videoRepository.dart';
 import 'package:egitimaxapplication/screen/common/collapsibleItemBuilder.dart';
 import 'package:egitimaxapplication/screen/common/commonDataTable.dart';
 import 'package:egitimaxapplication/screen/common/commonDropdownButtonFormField.dart';
 import 'package:egitimaxapplication/screen/common/commonTextFormField.dart';
 import 'package:egitimaxapplication/screen/common/learnLevels.dart';
-import 'package:egitimaxapplication/screen/common/questionOverView.dart';
+import 'package:egitimaxapplication/screen/common/videoOverView.dart';
 import 'package:egitimaxapplication/utils/extension/apiDataSetExtension.dart';
 import 'package:egitimaxapplication/utils/helper/getDeviceType.dart';
 import 'package:egitimaxapplication/utils/widget/appBar/innerAppBar.dart';
@@ -17,59 +18,59 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../utils/config/language/appLocalizations.dart';
 
-class QuestionDataTable extends StatefulWidget {
+class VideoDataTable extends StatefulWidget {
   BigInt userId;
-  List<BigInt>? selectedQuestionIds;
+  List<BigInt>? selectedVideoIds;
   List<Map<String, dynamic>>? selectedRows = List.empty(growable: true);
   List<BigInt>? selectedRowsKeys = List.empty(growable: true);
   Function(List<Map<String, dynamic>>? rows, List<BigInt>? rowKeys)?
       onSelectedRowsChanged;
   final TextStyle componentTextStyle;
-  Function(List<BigInt>? selectedQuestionIds)? onSelectedQuestionIdsChanged;
+  Function(List<BigInt>? selectedVideoIds)? onSelectedVideoIdsChanged;
 
-  QuestionDataTable(
+  VideoDataTable(
       {required this.userId,
-      this.selectedQuestionIds,
+      this.selectedVideoIds,
       required this.componentTextStyle,
-      required this.onSelectedQuestionIdsChanged,
+      required this.onSelectedVideoIdsChanged,
       this.onSelectedRowsChanged});
 
   @override
-  _QuestionDataTableState createState() => _QuestionDataTableState();
+  _VideoDataTableState createState() => _VideoDataTableState();
 }
 
-class _QuestionDataTableState extends State<QuestionDataTable> {
+class _VideoDataTableState extends State<VideoDataTable> {
   AppRepositories appRepositories = AppRepositories();
 
   BigInt? userId;
   bool isFilterActive = false;
 
-  Map<String, String> questionSourceList = {
-    'myQuestions': AppLocalization.instance.translate(
-        'lib.screen.common.questionDataTable',
-        '_QuestionDataTableState',
-        'myQuestion'),
-    'myFavoriteQuestions': AppLocalization.instance.translate(
-        'lib.screen.common.questionDataTable',
-        '_QuestionDataTableState',
-        'myFavoriteQuestion'),
-    'egitimaxPublicQuestions': AppLocalization.instance.translate(
-        'lib.screen.common.questionDataTable',
-        '_QuestionDataTableState',
+  Map<String, String> videoSourceList = {
+    'myVideos': AppLocalization.instance.translate(
+        'lib.screen.common.videoDataTable',
+        '_VideoDataTableState',
+        'myVideo'),
+    'myFavoriteVideos': AppLocalization.instance.translate(
+        'lib.screen.common.videoDataTable',
+        '_VideoDataTableState',
+        'myFavoriteVideo'),
+    'egitimaxPublicVideos': AppLocalization.instance.translate(
+        'lib.screen.common.videoDataTable',
+        '_VideoDataTableState',
         'searchInEgitimax')
   };
-  Map<int, String> questionSourceListAsKey = {
-    0: AppLocalization.instance.translate('lib.screen.common.questionDataTable',
-        '_QuestionDataTableState', 'myQuestion'),
-    1: AppLocalization.instance.translate('lib.screen.common.questionDataTable',
-        '_QuestionDataTableState', 'myFavoriteQuestion'),
-    2: AppLocalization.instance.translate('lib.screen.common.questionDataTable',
-        '_QuestionDataTableState', 'searchInEgitimax')
+  Map<int, String> videoSourceListAsKey = {
+    0: AppLocalization.instance.translate('lib.screen.common.videoDataTable',
+        '_VideoDataTableState', 'myVideo'),
+    1: AppLocalization.instance.translate('lib.screen.common.videoDataTable',
+        '_VideoDataTableState', 'myFavoriteVideo'),
+    2: AppLocalization.instance.translate('lib.screen.common.videoDataTable',
+        '_VideoDataTableState', 'searchInEgitimax')
   };
-  Map<int, String> questionSourceListAsKeyValues = {
-    0: 'myQuestions',
-    1: 'myFavoriteQuestions',
-    2: 'egitimaxPublicQuestions'
+  Map<int, String> videoSourceListAsKeyValues = {
+    0: 'myVideos',
+    1: 'myFavoriteVideos',
+    2: 'egitimaxPublicVideos'
   };
 
   bool isFavoriteGroupVisible = false;
@@ -77,8 +78,8 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
 
   int? selectedLearn;
 
-  String? questionSourceName;
-  int? questionSourceId;
+  String? videoSourceName;
+  int? videoSourceId;
 
   Map<String, dynamic>? userRootDataSet;
   Map<int, String>? userRoot;
@@ -113,7 +114,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
 
   String? filterTitle; // Başlangıç başlık değeri
 
-  TextEditingController filterQuestionTextController = TextEditingController();
+  TextEditingController filterVideoTextController = TextEditingController();
   TextEditingController ageController = TextEditingController();
 
   bool isFilterExpanded = false;
@@ -135,14 +136,14 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
   void initState() {
     widget.selectedRowsKeys ??= [];
     widget.selectedRows ??= [];
-    widget.selectedQuestionIds ??= [];
+    widget.selectedVideoIds ??= [];
 
     super.initState();
   }
 
   @override
   void dispose() {
-    filterQuestionTextController.dispose();
+    filterVideoTextController.dispose();
     ageController.dispose();
     super.dispose();
   }
@@ -160,7 +161,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
           children: [
             Expanded(
               child: Text(
-                '${filterTitle == null || filterTitle == '' ? '${AppLocalization.instance.translate('lib.screen.common.questionDataTable', 'build', 'filters')} :' : ''}${filterTitle ?? AppLocalization.instance.translate('lib.screen.common.questionDataTable', 'build', 'pleaseSelectQuestionSource')}',
+                '${filterTitle == null || filterTitle == '' ? '${AppLocalization.instance.translate('lib.screen.common.videoDataTable', 'build', 'filters')} :' : ''}${filterTitle ?? AppLocalization.instance.translate('lib.screen.common.videoDataTable', 'build', 'pleaseSelectVideoSource')}',
                 style: widget.componentTextStyle,
               ),
             ),
@@ -173,7 +174,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                 ),
                 SizedBox(width: 5),
                 Text(AppLocalization.instance.translate(
-                    'lib.screen.common.questionDataTable', 'build', 'filters')),
+                    'lib.screen.common.videoDataTable', 'build', 'filters')),
               ],
             ))
           ],
@@ -202,7 +203,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                                   return snapshot.data!;
                                 } else if (snapshot.hasError) {
                                   return Text(
-                                      '${AppLocalization.instance.translate('lib.screen.common.questionDataTable', 'build', 'error')}: ${snapshot.error}');
+                                      '${AppLocalization.instance.translate('lib.screen.common.VideoDataTable', 'build', 'error')}: ${snapshot.error}');
                                 } else {
                                   return const CircularProgressIndicator(); // or any other loading indicator
                                 }
@@ -220,7 +221,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                                   return snapshot.data!;
                                 } else if (snapshot.hasError) {
                                   return Text(
-                                      '${AppLocalization.instance.translate('lib.screen.common.questionDataTable', 'build', 'error')}: ${snapshot.error}');
+                                      '${AppLocalization.instance.translate('lib.screen.common.videoDataTable', 'build', 'error')}: ${snapshot.error}');
                                 } else {
                                   return const CircularProgressIndicator(); // or any other loading indicator
                                 }
@@ -246,7 +247,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                                     return snapshot.data!;
                                   } else if (snapshot.hasError) {
                                     return Text(
-                                        '${AppLocalization.instance.translate('lib.screen.common.questionDataTable', 'build', 'error')}: ${snapshot.error}');
+                                        '${AppLocalization.instance.translate('lib.screen.common.VideoDataTable', 'build', 'error')}: ${snapshot.error}');
                                   } else {
                                     return const CircularProgressIndicator(); // or any other loading indicator
                                   }
@@ -267,7 +268,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                                     return snapshot.data!;
                                   } else if (snapshot.hasError) {
                                     return Text(
-                                        '${AppLocalization.instance.translate('lib.screen.common.questionDataTable', 'build', 'error')}: ${snapshot.error}');
+                                        '${AppLocalization.instance.translate('lib.screen.common.videoDataTable', 'build', 'error')}: ${snapshot.error}');
                                   } else {
                                     return const CircularProgressIndicator(); // or any other loading indicator
                                   }
@@ -293,7 +294,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                                   return snapshot.data!;
                                 } else if (snapshot.hasError) {
                                   return Text(
-                                      '${AppLocalization.instance.translate('lib.screen.common.questionDataTable', 'build', 'error')}: ${snapshot.error}');
+                                      '${AppLocalization.instance.translate('lib.screen.common.videoDataTable', 'build', 'error')}: ${snapshot.error}');
                                 } else {
                                   return const CircularProgressIndicator(); // or any other loading indicator
                                 }
@@ -311,7 +312,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                                   return snapshot.data!;
                                 } else if (snapshot.hasError) {
                                   return Text(
-                                      '${AppLocalization.instance.translate('lib.screen.common.questionDataTable', 'build', 'error')}: ${snapshot.error}');
+                                      '${AppLocalization.instance.translate('lib.screen.common.videoDataTable', 'build', 'error')}: ${snapshot.error}');
                                 } else {
                                   return const CircularProgressIndicator(); // or any other loading indicator
                                 }
@@ -337,7 +338,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                                     return snapshot.data!;
                                   } else if (snapshot.hasError) {
                                     return Text(
-                                        '${AppLocalization.instance.translate('lib.screen.common.questionDataTable', 'build', 'error')}: ${snapshot.error}');
+                                        '${AppLocalization.instance.translate('lib.screen.common.VideoDataTable', 'build', 'error')}: ${snapshot.error}');
                                   } else {
                                     return const CircularProgressIndicator(); // or any other loading indicator
                                   }
@@ -358,7 +359,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                                     return snapshot.data!;
                                   } else if (snapshot.hasError) {
                                     return Text(
-                                        '${AppLocalization.instance.translate('lib.screen.common.questionDataTable', 'build', 'error')}: ${snapshot.error}');
+                                        '${AppLocalization.instance.translate('lib.screen.common.videoDataTable', 'build', 'error')}: ${snapshot.error}');
                                   } else {
                                     return const CircularProgressIndicator(); // or any other loading indicator
                                   }
@@ -398,7 +399,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                           deviceType == DeviceType.mobileLarge)
                         Column(
                           children: [
-                            filterQuestionText(),
+                            filterVideoText(),
                           ],
                         ),
                       const SizedBox(
@@ -412,7 +413,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Expanded(
-                              child: filterQuestionText(),
+                              child: filterVideoText(),
                             ),
                           ],
                         ),
@@ -430,7 +431,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                       await clearButtonOnPressed();
                     },
                     child: Text(AppLocalization.instance.translate(
-                        'lib.screen.common.questionDataTable',
+                        'lib.screen.common.videoDataTable',
                         'build',
                         'clear')),
                   ),
@@ -439,7 +440,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                       await searchButtonOnPressed(userId ?? BigInt.parse('0'));
                     },
                     child: Text(AppLocalization.instance.translate(
-                        'lib.screen.common.questionDataTable',
+                        'lib.screen.common.videoDataTable',
                         'build',
                         'search')),
                   ),
@@ -468,7 +469,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
     return Scaffold(
       appBar: InnerAppBar(
         title: AppLocalization.instance.translate(
-            'lib.screen.common.questionDataTable', 'build', 'questionSelector'),
+            'lib.screen.common.videoDataTable', 'build', 'videoSelector'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -487,10 +488,10 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                     runSpacing: 10,
                     spacing: 10,
                     children: [
-                      questionSources(),
+                      videoSources(),
                       if (isFavoriteGroupVisible)
                         FutureBuilder<CommonDropdownButtonFormField>(
-                          future: questionFavoriteGroups(),
+                          future: videoFavoriteGroups(),
                           builder: (BuildContext context,
                               AsyncSnapshot<CommonDropdownButtonFormField>
                                   snapshot) {
@@ -498,7 +499,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                               return snapshot.data!;
                             } else if (snapshot.hasError) {
                               return Text(
-                                  '${AppLocalization.instance.translate('lib.screen.common.questionDataTable', 'build', 'error')}: ${snapshot.error}');
+                                  '${AppLocalization.instance.translate('lib.screen.common.videoDataTable', 'build', 'error')}: ${snapshot.error}');
                             } else {
                               return const CircularProgressIndicator(); // or any other loading indicator
                             }
@@ -513,7 +514,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                                   userId ?? BigInt.parse('0'));
                             },
                             child: Text(AppLocalization.instance.translate(
-                                'lib.screen.common.questionDataTable',
+                                'lib.screen.common.videoDataTable',
                                 'build',
                                 'search')),
                           ),
@@ -525,12 +526,12 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                     deviceType != DeviceType.mobileLarge)
                   Row(
                     children: [
-                      Expanded(child: questionSources()),
+                      Expanded(child: videoSources()),
                       const SizedBox(width: 3.0),
                       if (isFavoriteGroupVisible)
                         Expanded(
                           child: FutureBuilder<CommonDropdownButtonFormField>(
-                            future: questionFavoriteGroups(),
+                            future: videoFavoriteGroups(),
                             builder: (BuildContext context,
                                 AsyncSnapshot<CommonDropdownButtonFormField>
                                     snapshot) {
@@ -538,7 +539,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                                 return snapshot.data!;
                               } else if (snapshot.hasError) {
                                 return Text(
-                                    '${AppLocalization.instance.translate('lib.screen.common.questionDataTable', 'build', 'error')}: ${snapshot.error}');
+                                    '${AppLocalization.instance.translate('lib.screen.common.videoDataTable', 'build', 'error')}: ${snapshot.error}');
                               } else {
                                 return const CircularProgressIndicator(); // or any other loading indicator
                               }
@@ -555,7 +556,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                                   userId ?? BigInt.parse('0'));
                             },
                             child: Text(AppLocalization.instance.translate(
-                                'lib.screen.common.questionDataTable',
+                                'lib.screen.common.videoDataTable',
                                 'build',
                                 'search')),
                           ),
@@ -578,7 +579,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                                 toolBarButtons: null,
                                 dataTableKeyColumnName: dataTableKeyColumnName,
                                 dataTableSelectedKeys:
-                                    widget.selectedQuestionIds,
+                                    widget.selectedVideoIds,
                                 dataTableColumnAlias: dataTableColumnAlias,
                                 createDataTableColumnAlias:
                                     createDataTableColumnAlias,
@@ -601,26 +602,26 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                                 ) {},
                                 onSelectedRowsChanged:
                                     (selectedRows, selectedKeys) async {
-                                  widget.selectedQuestionIds =
+                                  widget.selectedVideoIds =
                                       await convertToBigIntList(selectedKeys);
 
                                   widget.selectedRows = selectedRows;
                                   widget.selectedRowsKeys =
-                                      widget.selectedQuestionIds;
+                                      widget.selectedVideoIds;
                                   if (widget.onSelectedRowsChanged != null) {
                                     widget.onSelectedRowsChanged!(selectedRows,
-                                        widget.selectedQuestionIds);
+                                        widget.selectedVideoIds);
                                   }
-                                  if (widget.onSelectedQuestionIdsChanged !=
+                                  if (widget.onSelectedVideoIdsChanged !=
                                       null) {
-                                    widget.onSelectedQuestionIdsChanged!(
-                                        widget.selectedQuestionIds);
+                                    widget.onSelectedVideoIdsChanged!(
+                                        widget.selectedVideoIds);
                                   }
                                 },
                               )
                             : Center(
                                 child: Text(AppLocalization.instance.translate(
-                                    'lib.screen.common.questionDataTable',
+                                    'lib.screen.common.videoDataTable',
                                     'build',
                                     'noData'))))
                   ],
@@ -634,7 +635,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                         Navigator.pop(context);
                       },
                       child: Text(AppLocalization.instance.translate(
-                          'lib.screen.common.questionDataTable',
+                          'lib.screen.common.videoDataTable',
                           'build',
                           'cancel')),
                     ),
@@ -646,15 +647,15 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                                 widget.selectedRows, widget.selectedRowsKeys);
                           }
 
-                          if (widget.onSelectedQuestionIdsChanged != null) {
-                            widget.onSelectedQuestionIdsChanged!(
-                                widget.selectedQuestionIds);
+                          if (widget.onSelectedVideoIdsChanged != null) {
+                            widget.onSelectedVideoIdsChanged!(
+                                widget.selectedVideoIds);
                           }
 
                           Navigator.pop(context);
                         },
                         child: Text(AppLocalization.instance.translate(
-                            'lib.screen.common.questionDataTable',
+                            'lib.screen.common.videoDataTable',
                             'build',
                             'save')),
                       ),
@@ -690,17 +691,17 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
     dataTableDataRoot = null;
     dataTableRows = null;
     final theme = Theme.of(context);
-    if (questionSourceName != null) {
-      var questionRepository = await appRepositories.questionRepository();
+    if (videoSourceName != null) {
+      var VideoRepository = await appRepositories.videoRepository();
 
-      var dataSet = await questionRepository.getQuestionDataTableData(['*'],
+      var dataSet = await videoRepository.getVideoDataTableData(['*'],
           getNoSqlData: 0,
           user_id_for_isMyFavorite: widget.userId,
-          user_id: questionSourceName != 'egitimaxPublicQuestions'
+          user_id: videoSourceName != 'egitimaxPublicVideos'
               ? widget.userId
               : null,
-          isMyFavorite: questionSourceName == 'myFavoriteQuestions' ? 1 : null,
-          favGroupId: questionSourceName == 'myFavoriteQuestions'
+          isMyFavorite: videoSourceName == 'myFavoriteVideos' ? 1 : null,
+          favGroupId: videoSourceName == 'myFavoriteVideos'
               ? favoriteGroupId == 0
                   ? null
                   : favoriteGroupId
@@ -710,17 +711,17 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
           grade_id: gradeId == 0 ? null : gradeId,
           branch_id: branchId == 0 ? null : branchId,
           learn_id: selectedLearn == 0 ? null : selectedLearn,
-          question_text: filterQuestionTextController.text == '' ||
-                  filterQuestionTextController.text.isEmpty
+          video_text: filterVideoTextController.text == '' ||
+                  filterVideoTextController.text.isEmpty
               ? null
-              : filterQuestionTextController.text);
+              : filterVideoTextController.text);
       if (dataSet != null && dataSet.entries.isNotEmpty) {
         var dataTable = dataSet.getDataTable();
         if (dataTable != null &&
             dataTable.columns != null &&
             dataTable.columns.isNotEmpty) {
           var dataTableData = dataSet.getDataTableData();
-          // Update QuestionColumn Widget As Text Button Widget
+          // Update VideoColumn Widget As Text Button Widget
           List<Map<Map<String, String>, Widget>> modifiedRows =
               dataTableData.rowsAsWidget.map((row) {
             Map<Map<String, String>, Widget> modifiedRow = {};
@@ -742,7 +743,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                     BigInt.parse(idCell.key.entries.first.value.toString());
               }
 
-              if (keyMap.entries.first.key == "question_text") {
+              if (keyMap.entries.first.key == "video_text") {
                 modifiedRow[keyMap] = MouseRegion(
                   onHover: (event) {
                     // Handle hover event
@@ -757,10 +758,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return QuestionOverView(
-                            questionId: idValue,
-                            userId: userId,
-                          );
+                          return Container() ;// VideoOverView( videoId: idValue, userId: userId, );
                         },
                       );
                     },
@@ -810,42 +808,42 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
           dataTableDataRoot = dataTableData;
           dataTableColumnAlias = [
             AppLocalization.instance.translate(
-                'lib.screen.common.questionDataTable',
+                'lib.screen.common.videoDataTable',
                 'searchButtonOnPressed',
                 'id'),
             AppLocalization.instance.translate(
-                'lib.screen.common.questionDataTable',
+                'lib.screen.common.videoDataTable',
                 'searchButtonOnPressed',
                 'academicYear'),
             AppLocalization.instance.translate(
-                'lib.screen.common.questionDataTable',
+                'lib.screen.common.videoDataTable',
                 'searchButtonOnPressed',
-                'question'),
+                'Video'),
             AppLocalization.instance.translate(
-                'lib.screen.common.questionDataTable',
+                'lib.screen.common.videoDataTable',
                 'searchButtonOnPressed',
                 'difficultyLevel'),
             AppLocalization.instance.translate(
-                'lib.screen.common.questionDataTable',
+                'lib.screen.common.videoDataTable',
                 'searchButtonOnPressed',
                 'branchName'),
             AppLocalization.instance.translate(
-                'lib.screen.common.questionDataTable',
+                'lib.screen.common.videoDataTable',
                 'searchButtonOnPressed',
                 'achievementTree'),
             AppLocalization.instance.translate(
-                'lib.screen.common.questionDataTable',
+                'lib.screen.common.videoDataTable',
                 'searchButtonOnPressed',
                 'createdOn'),
             AppLocalization.instance.translate(
-                'lib.screen.common.questionDataTable',
+                'lib.screen.common.videoDataTable',
                 'searchButtonOnPressed',
                 'favorite'),
           ];
           dataTableColumnNames = [
             'id',
             'acad_year',
-            'question_text',
+            'video_text',
             'dif_level',
             'branch_name',
             'achievementTree',
@@ -868,7 +866,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
     } else {
       UIMessage.showError(
           AppLocalization.instance.translate(
-              'lib.screen.common.questionDataTable',
+              'lib.screen.common.VideoDataTable',
               'searchButtonOnPressed',
               'pleaseSelectSourceType'),
           gravity: ToastGravity.CENTER);
@@ -886,7 +884,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
       subDomainId = 0;
       subDomainsRoot = null;
       selectedLearn = null;
-      filterQuestionTextController.text = '';
+      filterVideoTextController.text = '';
       isFilterActive = false;
       isFilterExpanded = false;
     });
@@ -895,7 +893,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
   Future<CommonDropdownButtonFormField> filterAcademicYears() async {
     var academicYearsDataSet = academicYearsRootDataSet ??
         await appRepositories.tblUtilAcademicYear(
-            'Question/GetObject', ['id', 'acad_year', 'is_default']);
+            'Video/GetObject', ['id', 'acad_year', 'is_default']);
     academicYearsRootDataSet ??= academicYearsDataSet;
 
     var academicYears = academicYearsRoot ??
@@ -903,7 +901,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
             valueColumn: 'acad_year');
     //Add NotSelectableItem
     academicYears[0] = AppLocalization.instance.translate(
-        'lib.screen.common.questionDataTable', 'filterAcademicYears', 'all');
+        'lib.screen.common.videoDataTable', 'filterAcademicYears', 'all');
 
     academicYearsRoot ??= academicYears;
 
@@ -922,17 +920,17 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
       isSearchEnable: true,
       items: academicYears,
       label: AppLocalization.instance.translate(
-          'lib.screen.common.questionDataTable',
+          'lib.screen.common.videoDataTable',
           'filterAcademicYears',
           'academicYear'),
       dropdownDecoratorProps: DropDownDecoratorProps(
         dropdownSearchDecoration: InputDecoration(
           labelText: AppLocalization.instance.translate(
-              'lib.screen.common.questionDataTable',
+              'lib.screen.common.videoDataTable',
               'filterAcademicYears',
               'academicYear'),
           hintText: AppLocalization.instance.translate(
-              'lib.screen.common.questionDataTable',
+              'lib.screen.common.videoDataTable',
               'filterAcademicYears',
               'pleaseSelectAcademicYear'),
           contentPadding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
@@ -963,7 +961,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
   Future<CommonDropdownButtonFormField> filterGrades() async {
     var gradesDataSet = gradesRootDataSet ??
         await appRepositories
-            .tblClassGrade('Question/GetObject', ['id', 'grade_name']);
+            .tblClassGrade('Video/GetObject', ['id', 'grade_name']);
     gradesRootDataSet ??= gradesDataSet;
 
     var grades = gradesRoot ??
@@ -971,13 +969,13 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
             valueColumn: 'grade_name');
     //Add NotSelectableItem
     grades[0] = AppLocalization.instance.translate(
-        'lib.screen.common.questionDataTable', 'filterGrades', 'all');
+        'lib.screen.common.videoDataTable', 'filterGrades', 'all');
 
     gradesRoot ??= grades;
 
     var userDataSet = userRootDataSet ??
         await appRepositories.tblUserMain(
-            'Question/GetObject', ['id', 'grade_id'],
+            'Video/GetObject', ['id', 'grade_id'],
             id: widget.userId);
     userRootDataSet ??= userDataSet;
 
@@ -992,16 +990,16 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
       isExpandedObject: true,
       isSearchEnable: true,
       label: AppLocalization.instance.translate(
-          'lib.screen.common.questionDataTable', 'filterGrades', 'gradeName'),
+          'lib.screen.common.videoDataTable', 'filterGrades', 'gradeName'),
       items: grades,
       dropdownDecoratorProps: DropDownDecoratorProps(
         dropdownSearchDecoration: InputDecoration(
           labelText: AppLocalization.instance.translate(
-              'lib.screen.common.questionDataTable',
+              'lib.screen.common.videoDataTable',
               'filterGrades',
               'gradeName'),
           hintText: AppLocalization.instance.translate(
-              'lib.screen.common.questionDataTable',
+              'lib.screen.common.videoDataTable',
               'filterGrades',
               'pleaseSelectGradeName'),
           contentPadding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
@@ -1035,7 +1033,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
   Future<CommonDropdownButtonFormField> filterBranches() async {
     var branchesDataSet = branchesRootDataSet ??
         await appRepositories
-            .tblLearnBranch('Question/GetObject', ['id', 'branch_name']);
+            .tblLearnBranch('Video/GetObject', ['id', 'branch_name']);
     branchesRootDataSet ??= branchesDataSet;
 
     var branches = branchesRoot ??
@@ -1043,11 +1041,11 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
             valueColumn: 'branch_name');
     //Add NotSelectableItem
     branches[0] = AppLocalization.instance.translate(
-        'lib.screen.common.questionDataTable', 'filterBranches', 'all');
+        'lib.screen.common.videoDataTable', 'filterBranches', 'all');
     branchesRoot = branches;
 
     var branchesMapDataSet = await appRepositories.tblTheaBranMap(
-        'Question/GetObject', ['id', 'branch_id', 'user_id'],
+        'Video/GetObject', ['id', 'branch_id', 'user_id'],
         user_id: widget.userId);
     var defaultBranch = !isFilterExpanded
         ? null
@@ -1061,17 +1059,17 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
       isSearchEnable: true,
       items: branches,
       label: AppLocalization.instance.translate(
-          'lib.screen.common.questionDataTable',
+          'lib.screen.common.videoDataTable',
           'filterBranches',
           'branchName'),
       dropdownDecoratorProps: DropDownDecoratorProps(
         dropdownSearchDecoration: InputDecoration(
           labelText: AppLocalization.instance.translate(
-              'lib.screen.common.questionDataTable',
+              'lib.screen.common.videoDataTable',
               'filterBranches',
               'branchName'),
           hintText: AppLocalization.instance.translate(
-              'lib.screen.common.questionDataTable',
+              'lib.screen.common.videoDataTable',
               'filterBranches',
               'pleaseSelectBranchName'),
           contentPadding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
@@ -1099,7 +1097,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
           String countryCode = currentLocale.languageCode; // 'TR'
 
           var tblLocL1Country = await appRepositories.tblLocL1Country(
-            'Question/GetObject',
+            'Video/GetObject',
             ['id', 'countrycode'],
           );
           countryId = tblLocL1Country.firstValue('data', 'id',
@@ -1108,7 +1106,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
               insteadOfNull: 0);
 
           var userDataSet = await appRepositories.tblUserMain(
-              'Question/GetObject', ['id', 'country_id'],
+              'Video/GetObject', ['id', 'country_id'],
               id: widget.userId);
           countryId = userDataSet.firstValue('data', 'country_id',
               insteadOfNull: countryId);
@@ -1124,7 +1122,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
   Future<CommonDropdownButtonFormField> filterDifficultyLevels() async {
     var difficultyDataSet = difficultiesRootDataSet ??
         await appRepositories
-            .tblUtilDifficulty('Question/GetObject', ['id', 'dif_level']);
+            .tblUtilDifficulty('Video/GetObject', ['id', 'dif_level']);
 
     difficultiesRootDataSet ??= difficultyDataSet;
 
@@ -1133,7 +1131,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
             valueColumn: 'dif_level');
     //Add NotSelectableItem
     difficulties[0] = AppLocalization.instance.translate(
-        'lib.screen.common.questionDataTable', 'filterDifficultyLevels', 'all');
+        'lib.screen.common.videoDataTable', 'filterDifficultyLevels', 'all');
 
     difficultiesRoot ??= difficulties;
 
@@ -1151,17 +1149,17 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
       isSearchEnable: true,
       items: difficulties,
       label: AppLocalization.instance.translate(
-          'lib.screen.common.questionDataTable',
+          'lib.screen.common.videoDataTable',
           'filterDifficultyLevels',
           'difficultyLevel'),
       dropdownDecoratorProps: DropDownDecoratorProps(
         dropdownSearchDecoration: InputDecoration(
           labelText: AppLocalization.instance.translate(
-              'lib.screen.common.questionDataTable',
+              'lib.screen.common.videoDataTable',
               'filterDifficultyLevels',
               'difficultyLevel'),
           hintText: AppLocalization.instance.translate(
-              'lib.screen.common.questionDataTable',
+              'lib.screen.common.videoDataTable',
               'filterDifficultyLevels',
               'pleaseSelectDifficultyLevel'),
           contentPadding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
@@ -1218,20 +1216,20 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
     );
   }
 
-  StatefulWidget filterQuestionText() {
+  StatefulWidget filterVideoText() {
     return CommonTextFormField(
-        controller: filterQuestionTextController,
+        controller: filterVideoTextController,
         labelText: AppLocalization.instance.translate(
-            'lib.screen.common.questionDataTable',
-            'filterQuestionText',
-            'questionKeyWords'));
+            'lib.screen.common.videoDataTable',
+            'filterVideoText',
+            'videoKeyWords'));
   }
 
-  Future<CommonDropdownButtonFormField> questionFavoriteGroups() async {
+  Future<CommonDropdownButtonFormField> videoFavoriteGroups() async {
     var userFavoriteGroupsDataSet = favoriteGroupsRootDataSet ??
         await appRepositories.tblFavGroupQuest(
-            'Question/GetObject', ['id', 'group_name', 'user_id'],
-            user_id: widget.userId,getNoSqlData: 0);
+            'Video/GetObject', ['id', 'group_name', 'user_id'],
+            user_id: widget.userId);
     favoriteGroupsRootDataSet ??= userFavoriteGroupsDataSet;
 
     var favoriteGroups = favoriteGroupsRoot ??
@@ -1239,7 +1237,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
             'data', 'id',
             valueColumn: 'group_name');
     favoriteGroups[0] = AppLocalization.instance.translate(
-        'lib.screen.common.questionDataTable', 'questionFavoriteGroups', 'all');
+        'lib.screen.common.videoDataTable', 'videoFavoriteGroups', 'all');
 
     favoriteGroupsRoot ??= favoriteGroups;
 
@@ -1249,8 +1247,8 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
       isExpandedObject: true,
       isSearchEnable: true,
       label: AppLocalization.instance.translate(
-          'lib.screen.common.questionDataTable',
-          'questionFavoriteGroups',
+          'lib.screen.common.videoDataTable',
+          'videoFavoriteGroups',
           'favGroup'),
       selectedItem: favoriteGroupId,
       items: favoriteGroups,
@@ -1261,23 +1259,23 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
     );
   }
 
-  CommonDropdownButtonFormField questionSources() {
+  CommonDropdownButtonFormField videoSources() {
     return CommonDropdownButtonFormField(
       isExpandedObject: true,
       label: AppLocalization.instance.translate(
-          'lib.screen.common.questionDataTable',
-          'questionSources',
-          'questionResource'),
+          'lib.screen.common.videoDataTable',
+          'videoSources',
+          'videoResource'),
       isSearchEnable: true,
-      selectedItem: questionSourceId,
-      items: questionSourceListAsKey,
-      onSelectedItemChanged: (questionSourceId) {
-        var value = questionSourceListAsKeyValues[questionSourceId];
-        questionSourceName = value;
+      selectedItem: videoSourceId,
+      items: videoSourceListAsKey,
+      onSelectedItemChanged: (videoSourceId) {
+        var value = videoSourceListAsKeyValues[videoSourceId];
+        videoSourceName = value;
 
         setState(() {
-          filterTitle = questionSourceList[value];
-          questionSourceName = value;
+          filterTitle = videoSourceList[value];
+          videoSourceName = value;
           if (value != null) {
             isFilterActive = true;
           } else {
@@ -1290,7 +1288,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
             isFavoriteGroupVisible = false;
           }
 
-          if (value == 'egitimaxPublicQuestions') {
+          if (value == 'egitimaxPublicVideos') {
             isFilterExpanded = true;
           } else {
             isFilterExpanded = false;
@@ -1301,3 +1299,4 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
     );
   }
 }
+*/
