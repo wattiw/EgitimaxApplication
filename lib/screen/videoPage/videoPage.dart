@@ -612,6 +612,19 @@ class _VideoPageState extends State<VideoPage> {
   Future<Widget> getStepThreeLayout(BuildContext context) async {
     final screenWidth = MediaQuery.of(context).size.width;
 
+    var vpO=VideoPlayerObject(
+        autoplay: false,
+        looping: false,
+        videoPlayerController:
+        videoPageModel.videoPlayerController,isFullScreen: (isFullScreen){
+      if(!isFullScreen)
+      {
+        setState(() {
+
+        });
+
+      }
+    });
     return Column(
       children: [
         Wrap(
@@ -629,19 +642,7 @@ class _VideoPageState extends State<VideoPage> {
                 padding: const EdgeInsets.all(0),
                 child: SizedBox(
                   width: screenWidth < 600 ? double.infinity : 600,
-                  child: VideoPlayerObject(
-                      autoplay: false,
-                      looping: false,
-                      videoPlayerController:
-                          videoPageModel.videoPlayerController,isFullScreen: (isFullScreen){
-                        if(!isFullScreen)
-                          {
-                            setState(() {
-
-                            });
-
-                          }
-                  }),
+                  child: vpO,
                 ),
               ),
             if (videoPageModel.videoPlayerController == null)

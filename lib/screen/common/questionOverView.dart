@@ -604,7 +604,7 @@ class _LikeDislikeFavShareButtonsState
         'Question/GetObject', ['id', 'quest_id', 'user_id', 'like_type'],
         quest_id: widget.questionId, user_id: widget.userId);
     var qL =
-        questionLikeDataSet.firstValue('data', 'like_type', insteadOfNull: 2);
+        questionLikeDataSet.firstValue('data', 'like_type', insteadOfNull: 0);
 
     if (qL == 1) {
       isLiked = true;

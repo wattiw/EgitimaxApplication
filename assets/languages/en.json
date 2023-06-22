@@ -868,9 +868,33 @@
       "pageModelNotSaved": "Page Model Not Saved"
     }
   },
-  "lib.bloc.bloc.lecture.lectureBloc": {
-    "initEvent": {
-      "pleaseSelect": "Please Select"
+  "lib.screen.common.videoOverView": {
+    "build": {
+      "viewVideo": "Video Overview",
+      "error": "Hata",
+      "unlike": "Unlike",
+      "like": "Like",
+      "removeDisLike": "Remove DisLike",
+      "disLike": "DisLike",
+      "removeFav": "Remove Favorite",
+      "addFav": "Add Favorite",
+      "shareVideo": "Share Video",
+      "share": "Share",
+      "likes": "Likes",
+      "students": "Students",
+      "teacherLikes": "Teacher Likes",
+      "cancel": "Cancel",
+      "add": "Add",
+      "domain": "Domain",
+      "subdomain": "Subdomain",
+      "achievement": "Achievement",
+      "achievements": "Achievements",
+      "subject": "Subject",
+      "videoTitle": "Title",
+      "videoPreparedBy":"Prepared By",
+      "videoDetails": "Video Details"
     }
   }
+
+
 }

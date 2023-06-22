@@ -60,6 +60,8 @@ class AppRepositories implements AppRepositoriesBase {
     return LectureRepository();
   }
 
+
+
   Future<Map<String, dynamic>> getDataSet(String controllerAndAction,
       {required String query,
       List<SqlParameter>? parameters,
@@ -113,6 +115,36 @@ class AppRepositories implements AppRepositoriesBase {
 }
 
 extension AppRepositoriesExtension on AppRepositories {
+
+
+  Future<Map<String, dynamic>> userTotalLikesOrDislikes(String controllerAndAction,
+      List<String> columns,BigInt user_id,int like_type,
+      {int? getNoSqlData }) async {
+    String queryPart = 'proc_user_total_likes';
+
+    List<String> queryParts = queryPart.split('\n');
+    String joinedQuery = queryParts.join(' ');
+
+    List<SqlParameter> parameters = List.empty(growable: true);
+
+    parameters.add(SqlParameter('@p_user_id', user_id));
+    parameters.add(SqlParameter('@p_like_type', like_type));
+
+    return getDataSet(controllerAndAction,
+        query: joinedQuery, parameters: parameters, isProcedure: true);
+  }
+  Future<Map<String, dynamic>> userTotalStudents(String controllerAndAction,
+      List<String> columns,BigInt user_id,
+      {int? getNoSqlData }) async {
+    // Tobe implemented later on
+
+    var tempResult ={'data':{'user_id':user_id,'total_student':0}};
+
+    return tempResult;
+
+
+  }
+
   Future<Map<String, dynamic>> questionOverView(
       String controllerAndAction, List<String> columns, BigInt question_id,
       {BigInt? user_id, int? getNoSqlData}) async {
@@ -148,6 +180,50 @@ extension AppRepositoriesExtension on AppRepositories {
 
     if (question_id != null) {
       parameters.add(SqlParameter('@id', question_id));
+    }
+    if (user_id != null) {
+      parameters.add(SqlParameter('@user_id', user_id));
+    }
+
+    return getDataSet(controllerAndAction,
+        query: query,
+        parameters: parameters,
+        isProcedure: false,
+        getNoSqlData: getNoSqlData);
+  }
+
+  Future<Map<String, dynamic>> videoOverView(
+      String controllerAndAction, List<String> columns, BigInt video_id,
+      {BigInt? user_id, int? getNoSqlData}) async {
+    String query = '''
+                SELECT
+                L1.*,
+                branch.branch_name
+                FROM(
+                SELECT 
+                root.*,
+                grade.grade_name,
+                ay.acad_year,
+                getLearnInfoById(subdom_id) as learn_data,
+                achievements.achievements
+                FROM egitimax.tbl_vid_video_main root
+                left join tbl_learn_main learn on learn.id=root.subdom_id
+                left join tbl_class_grade grade on grade.id=root.grade_id
+                left join tbl_util_academic_year ay on ay.id=root.academic_year
+                left join (SELECT video_id,GROUP_CONCAT( concat(learn.item_code,' ',name) SEPARATOR '|') AS achievements
+                FROM tbl_vid_video_achv_map vam
+                LEFT JOIN tbl_learn_main learn ON learn.id = vam.achv_id
+                GROUP BY vam.video_id ) achievements on achievements.video_id=root.id
+                ) L1 
+                left join tbl_learn_branch branch on branch.id=L1.branch_id''';
+
+    var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
+    query = "select $columnJoinedString from ( $query ) rt";
+
+    List<SqlParameter> parameters = List.empty(growable: true);
+
+    if (video_id != null) {
+      parameters.add(SqlParameter('@id', video_id));
     }
     if (user_id != null) {
       parameters.add(SqlParameter('@user_id', user_id));

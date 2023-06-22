@@ -867,6 +867,34 @@
     "initEvent": {
       "pleaseSelect": "Lütfen Seçiniz"
     }
+  },
+  "lib.screen.common.videoOverView": {
+    "build": {
+      "viewVideo": "Video Görüntüle",
+      "error": "Hata",
+      "unlike": "Beğenmekten Vazgeç",
+      "like": "Beğen",
+      "removeDisLike": "Beğenmemeyi Kaldır",
+      "disLike": "Beğenme",
+      "removeFav": "Favorilerden Kaldır",
+      "addFav": "Favorilere Ekle",
+      "shareVideo": "Videoyu Paylaş",
+      "share": "Paylaş",
+      "likes": "Beğeniler",
+      "students": "Öğrenciler",
+      "teacherLikes": "Öğretmen Beğenileri",
+      "cancel": "İptal",
+      "add": "Ekle",
+      "domain": "Alan",
+      "subdomain": "Alt Alan",
+      "achievement": "Kazanım",
+      "achievements": "Kazanımlar",
+      "subject": "Konu",
+      "videoTitle": "Başlık",
+      "videoPreparedBy": "Hazırlayan",
+      "videoDetails": "Video Detayları"
+    }
   }
+
 
 }

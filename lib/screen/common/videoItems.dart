@@ -7,18 +7,25 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:video_player/video_player.dart';
+import 'dart:ui_web' as ui;
 
 class VideoPlayerObject extends StatefulWidget {
   final bool looping;
   final bool autoplay;
-  final VideoPlayerController? videoPlayerController;
+  VideoPlayerController? videoPlayerController;
   final Function(bool)? isFullScreen;
+  Uint8List? videoData;
+  String? videoUrl;
+  String? assetPath;
 
   VideoPlayerObject({
     required this.looping,
     required this.autoplay,
     required this.videoPlayerController,
-    required this.isFullScreen
+    required this.isFullScreen,
+    Uint8List? videoData,
+    String? videoUrl,
+    String? assetPath,
   });
 
   @override
@@ -30,9 +37,27 @@ class _VideoPlayerObjectState extends State<VideoPlayerObject> {
 
   @override
   void initState() {
+    initialize();
     super.initState();
+
+  }
+
+  Future<void> initialize() async {
+    if (widget.videoPlayerController == null) {
+      if (widget.videoData != null) {
+        widget.videoPlayerController =
+        await VideoControllerProvider.createController(videoData: widget.videoData);
+      } else if (widget.videoUrl != null) {
+        widget.videoPlayerController =
+        await VideoControllerProvider.createController(videoUrl: widget.videoUrl);
+      } else if (widget.assetPath != null) {
+        widget.videoPlayerController =
+        await VideoControllerProvider.createController(assetPath: widget.assetPath);
+      }
+    }
     initChewieController();
   }
+
 
   @override
   void dispose() {
@@ -63,6 +88,9 @@ class _VideoPlayerObjectState extends State<VideoPlayerObject> {
         deviceOrientationsOnEnterFullScreen: [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight],
       );
       _chewieController!.addListener(_onVideoPlayerValueChanged);
+      setState(() {
+
+      });
     }
   }
 
