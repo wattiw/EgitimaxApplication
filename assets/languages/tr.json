@@ -690,6 +690,7 @@
       "achievementTree": "Kazanım Ağacı",
       "createdOn": "Oluşturulma Tarihi",
       "favorite": "Favori",
+      "likeCount": "Beğeniler",
       "pleaseSelectSourceType": "Lütfen soru kaynak türünü seçin!"
     },
     "filterAcademicYears": {
@@ -893,6 +894,60 @@
       "videoTitle": "Başlık",
       "videoPreparedBy": "Hazırlayan",
       "videoDetails": "Video Detayları"
+    }
+  },
+  "lib.screen.common.videoDataTable": {
+    "_VideoDataTableState": {
+      "myVideo": "Videolarım",
+      "myFavoriteVideo": "Favori Videolarım",
+      "searchInEgitimax": "Egitimax'te Ara"
+    },
+    "build": {
+      "filters": "Filtreler",
+      "pleaseSelectVideoSource": "Lütfen Video Kaynağı Seçin",
+      "error": "Hata",
+      "clear": "Temizle",
+      "search": "Ara",
+      "videoSelector": "Video Seçici",
+      "noData": "Veri Yok",
+      "cancel": "İptal",
+      "save": "Kaydet"
+    },
+    "searchButtonOnPressed": {
+      "id": "ID",
+      "academicYear": "Akademik Yıl",
+      "videoTitle": "Video Başlığı",
+      "branchName": "Branş Adı",
+      "achievementTree": "Kazanım Ağacı",
+      "createdOn": "Oluşturulma Tarihi",
+      "favorite": "Favori",
+      "likes": "Beğeniler",
+      "pleaseSelectSourceType": "Lütfen Kaynak Seçin"
+    },
+    "filterAcademicYears": {
+      "all": "Tümü",
+      "academicYear": "Akademik Yıl",
+      "pleaseSelectAcademicYear": "Lütfen Akademik Yıl Seçin"
+    },
+    "filterGrades": {
+      "all": "Tümü",
+      "gradeName": "Sınıf Adı",
+      "pleaseSelectGradeName": "Lütfen Sınıf Adı Seçin"
+    },
+    "filterBranches": {
+      "all": "Tümü",
+      "branchName": "Branş Adı",
+      "pleaseSelectBranchName": "Lütfen Branş Adı Seçin"
+    },
+    "filterVideoText": {
+      "videoKeyWords": "Video Anahtar Kelimeler"
+    },
+    "videoFavoriteGroups": {
+      "all": "Tümü",
+      "favGroup": "Favori Grup"
+    },
+    "videoSources": {
+      "videoResource": "Video Kaynağı"
     }
   }
 

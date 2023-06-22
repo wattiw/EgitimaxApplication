@@ -222,6 +222,7 @@ extension QuestionRepositoryExtension on QuestionRepository {
                   branch_name,
                   created_on,
                   favCount,
+                    likeCount,
                   is_public,
                   user_id,
                   isMyFavorite,
@@ -255,6 +256,7 @@ extension QuestionRepositoryExtension on QuestionRepository {
 				          sudo.branch_id,
                   root.created_on,
                   qufa.favCount,
+                       quli.likeCount,
                   root.is_public,
                   root.user_id,
                   isqufa.isMyFavorite,
@@ -265,6 +267,7 @@ extension QuestionRepositoryExtension on QuestionRepository {
                   left join tbl_util_difficulty dile on root.difficulty_lev=dile.id 
                   left join tbl_learn_main sudo on root.subdom_id=sudo.id 
                   left join (SELECT question_id, IFNULL(COUNT(question_id),0) AS favCount FROM tbl_fav_question GROUP BY question_id) qufa on root.id=qufa.question_id 
+                  left join (SELECT quest_id, IFNULL(COUNT(quest_id),0) AS likeCount FROM tbl_que_question_like GROUP BY quest_id) quli on root.id=quli.quest_id 
                   left join (SELECT question_id, IFNULL(COUNT(question_id),0) AS isMyFavorite FROM tbl_fav_question  WHERE user_id = ${user_id_for_isMyFavorite ?? '0'} GROUP BY question_id) isqufa on root.id=isqufa.question_id                   
                   left join tbl_class_grade  grade on root.grade_id=grade.id
                   left join (SELECT  tbl_fav_group_quest_map.fav_quest_id, GROUP_CONCAT(tbl_fav_group_quest_map.group_id) AS fav_group_ids  FROM tbl_fav_group_quest_map GROUP BY tbl_fav_group_quest_map.fav_quest_id) concatenated_group_ids  on concatenated_group_ids.fav_quest_id=root.id

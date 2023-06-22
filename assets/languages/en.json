@@ -688,6 +688,7 @@
       "achievementTree": "Achievement Tree",
       "createdOn": "Created On",
       "favorite": "Favorite",
+      "likeCount": "Likes",
       "pleaseSelectSourceType": "Please question source type !"
 
     },
@@ -868,6 +869,11 @@
       "pageModelNotSaved": "Page Model Not Saved"
     }
   },
+  "lib.bloc.bloc.lecture.lectureBloc": {
+    "initEvent": {
+      "pleaseSelect": "Please Select"
+    }
+  },
   "lib.screen.common.videoOverView": {
     "build": {
       "viewVideo": "Video Overview",
@@ -893,6 +899,60 @@
       "videoTitle": "Title",
       "videoPreparedBy":"Prepared By",
       "videoDetails": "Video Details"
+    }
+  },
+  "lib.screen.common.videoDataTable": {
+    "_VideoDataTableState": {
+      "myVideo": "My Videos",
+      "myFavoriteVideo": "My Favorite Videos",
+      "searchInEgitimax": "Search In Egitimax"
+    },
+    "build": {
+      "filters": "Filters",
+      "pleaseSelectVideoSource": "Please Select Video Source",
+      "error": "Error",
+      "clear": "Clear",
+      "search": "Search",
+      "videoSelector": "Video Selector",
+      "noData": "No data",
+      "cancel": "Cancel",
+      "save": "Save"
+    },
+    "searchButtonOnPressed": {
+      "id": "Id",
+      "academicYear": "Academic Year",
+      "videoTitle": "Video Title",
+      "branchName": "Branch Name",
+      "achievementTree": "Achievement Tree",
+      "createdOn": "Created On",
+      "favorite": "Favorite",
+      "likes": "Likes",
+      "pleaseSelectSourceType": "Please Select Source"
+    },
+    "filterAcademicYears": {
+      "all": "All",
+      "academicYear": "Academic Year",
+      "pleaseSelectAcademicYear": "Please Select Academic Year"
+    },
+    "filterGrades": {
+      "all": "All",
+      "gradeName": "Grade Name",
+      "pleaseSelectGradeName": "Please Select Grade Name"
+    },
+    "filterBranches": {
+      "all": "All",
+      "branchName": "Branch Name",
+      "pleaseSelectBranchName": "Please Select Branch Name"
+    },
+    "filterVideoText": {
+      "videoKeyWords": "Video Key Words"
+    },
+    "videoFavoriteGroups": {
+      "all": "All",
+      "favGroup": "Favorite Group"
+    },
+    "videoSources": {
+      "videoResource": "Video Resource"
     }
   }
 

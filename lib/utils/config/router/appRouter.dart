@@ -1,5 +1,6 @@
 import 'package:egitimaxapplication/screen/MyHomePage/MyHomePage.dart';
 import 'package:egitimaxapplication/screen/common/questionDataTable.dart';
+import 'package:egitimaxapplication/screen/common/videoDataTable.dart';
 import 'package:egitimaxapplication/screen/lecture/lecturePage.dart';
 import 'package:egitimaxapplication/screen/questionPage/questionPage.dart';
 import 'package:egitimaxapplication/screen/quizPage/quizPage.dart';
@@ -43,6 +44,12 @@ class AppRouter {
           builder: (_) => MainLayout(context: context, loadedStateContainer: QuestionDataTable(userId: BigInt.parse(GeneralAppConstant.TempUserIdSilSonra!),componentTextStyle: const TextStyle(), onSelectedQuestionIdsChanged: (List<BigInt>? selectedQuestionIds) {  },)),
           settings: const RouteSettings(
               name: HeroTagConstant.questionSelector), // use the route name as the Hero tag
+        );
+      case AppRouterConstant.videoSelector:
+        return MaterialPageRoute(
+          builder: (_) => MainLayout(context: context, loadedStateContainer: VideoDataTable(userId: BigInt.parse(GeneralAppConstant.TempUserIdSilSonra!),componentTextStyle: const TextStyle(), onSelectedVideoIdsChanged: (List<BigInt>? selectedQuestionIds) {  },)),
+          settings: const RouteSettings(
+              name: HeroTagConstant.videoSelector), // use the route name as the Hero tag
         );
 
       case AppRouterConstant.lecture:

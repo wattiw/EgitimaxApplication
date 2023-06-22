@@ -7,7 +7,7 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:video_player/video_player.dart';
-import 'dart:ui_web' as ui;
+
 
 class VideoPlayerObject extends StatefulWidget {
   final bool looping;

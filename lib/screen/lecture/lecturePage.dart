@@ -13,6 +13,7 @@ import 'package:egitimaxapplication/screen/common/learnLevels.dart';
 import 'package:egitimaxapplication/screen/common/questionDataTable.dart';
 import 'package:egitimaxapplication/screen/common/questionOverView.dart';
 import 'package:egitimaxapplication/screen/common/userInteractiveMessage.dart';
+import 'package:egitimaxapplication/screen/common/videoDataTable.dart';
 import 'package:egitimaxapplication/screen/common/videoOverView.dart';
 import 'package:egitimaxapplication/screen/lecture/stepsValidator.dart';
 import 'package:egitimaxapplication/utils/config/language/appLocalizations.dart';
@@ -587,11 +588,44 @@ class _LecturePageState extends State<LecturePage> {
                 insteadOfNull: '');
             Map<String, String> key3_1 = {};
             key3_1['flow_item'] = videoTitle;
-            cells[key3_1] = Text(videoTitle);
+            cells[key3_1] = TextButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return VideoOverView(
+                      videoId: flow.videoId ?? BigInt.parse('0'),
+                      userId: widget.userId,
+                    );
+                  },
+                );
+              },
+              style: ButtonStyle(
+                textStyle: MaterialStateProperty.all<TextStyle>(
+                  TextStyle(
+                      fontSize:
+                      theme.dataTableTheme.dataTextStyle?.fontSize),
+                ),
+              ),
+              child: Tooltip(
+                message: videoTitle ?? "",
+                child: Wrap(
+                  children: [
+                    Text(
+                      videoTitle!= null && videoTitle.length > 20
+                          ? "${videoTitle.substring(0, 20)}..."
+                          : videoTitle ?? "",
+                    ),
+                  ],
+                ),
+              ),
+            );
 
             Map<String, String> key3_2 = {};
             key3_2['flow_type'] = 'Video';
             cells[key3_2] = const Text('Video');
+
+
           } else if (flow.quizId != null && flow.quizId != BigInt.parse('0')) {
             Map<String, String> key4 = {};
             key4['flow_id'] = flow.quizId.toString();
@@ -881,38 +915,6 @@ class _LecturePageState extends State<LecturePage> {
             MaterialPageRoute(
               builder: (_) => MainLayout(
                   context: context,
-                  loadedStateContainer: VideoOverView(
-                    userId: widget.userId,
-                    videoId: BigInt.parse('16'),
-                  )),
-              settings: const RouteSettings(
-                  name: HeroTagConstant
-                      .questionSelector), // use the route name as the Hero tag
-            ),
-          );
-        },
-        icon: const Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Icon(Icons.remove_red_eye_outlined),
-            SizedBox(width: 3),
-            // Adjust the spacing between the icon and text
-            Text('Video Overview'),
-          ],
-        ),
-        tooltip: AppLocalization.instance.translate(
-            'lib.screen.lecturePage.lecturePage',
-            'getStepTwoLayout',
-            'addQuestion'),
-      ),
-      IconButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => MainLayout(
-                  context: context,
                   loadedStateContainer: QuestionDataTable(
                     userId: widget.userId,
                     componentTextStyle: componentTextStyle,
@@ -1017,19 +1019,82 @@ class _LecturePageState extends State<LecturePage> {
             MaterialPageRoute(
               builder: (_) => MainLayout(
                   context: context,
-                  loadedStateContainer: QuestionDataTable(
+                  loadedStateContainer: VideoDataTable(
                     userId: widget.userId,
                     componentTextStyle: componentTextStyle,
-                    selectedQuestionIds: List.empty(growable: true),
+                    selectedVideoIds: List.empty(growable: true),
                     onSelectedRowsChanged: (selectedRows, selectedKeys) {},
-                    onSelectedQuestionIdsChanged:
-                        (List<BigInt>? selectedQuestionIds) {
-                      int c00 = 0;
+                    onSelectedVideoIdsChanged:
+                        (List<BigInt>? selectedVideoIds) {
+                          var flows=lecturePageModel.setLectureObjects?.tblCrsCourseMain!.tblCrsCourseFlows;
+
+                          if (flows==null || flows!.isEmpty) {
+                            lecturePageModel.setLectureObjects?.tblCrsCourseMain!
+                                .tblCrsCourseFlows = List.empty(growable: true);
+                          }
+
+                          if (selectedVideoIds != null) {
+                            for (var idVideo in selectedVideoIds) {
+                              BigInt id = BigInt.parse('0');
+                              BigInt? courseId = lecturePageModel
+                                  .setLectureObjects?.tblCrsCourseMain !=
+                                  null
+                                  ? lecturePageModel
+                                  .setLectureObjects?.tblCrsCourseMain!.id
+                                  : BigInt.parse('0');
+                              int? orderNo = lecturePageModel.setLectureObjects
+                                  ?.tblCrsCourseMain!.tblCrsCourseFlows !=
+                                  null
+                                  ? (lecturePageModel
+                                  .setLectureObjects
+                                  ?.tblCrsCourseMain!
+                                  .tblCrsCourseFlows!.where((element) => element.orderNo!=0)
+                                  .length ??
+                                  0) +
+                                  1
+                                  : 1;
+                              BigInt? videoId = idVideo;
+                              BigInt? quizId = BigInt.parse('0');
+                              BigInt? docId = BigInt.parse('0');
+                              BigInt? questId =  BigInt.parse('0');
+                              int? isActive = 0;
+
+
+                              bool isExistQuestion=false;
+
+                              if(flows!=null)
+                              {
+                                if(flows!.where((element) => element.videoId==idVideo).isNotEmpty)
+                                {
+                                  isExistQuestion=true;
+                                }
+                              }
+
+
+                              if(!isExistQuestion)
+                              {
+                                lecturePageModel.setLectureObjects?.tblCrsCourseMain!
+                                    .tblCrsCourseFlows!
+                                    .add(TblCrsCourseFlow(
+                                    id: id,
+                                    courseId: courseId,
+                                    orderNo: orderNo,
+                                    videoId: videoId,
+                                    quizId: quizId,
+                                    docId: docId,
+                                    questId: questId,
+                                    isActive: isActive));
+                              }
+
+                            }
+                          }
+
+                          setState(() {});
                     },
                   )),
               settings: const RouteSettings(
                   name: HeroTagConstant
-                      .questionSelector), // use the route name as the Hero tag
+                      .videoSelector), // use the route name as the Hero tag
             ),
           );
         },

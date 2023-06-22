@@ -566,6 +566,9 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                   height: 10,
                 ),
                 if (isFilterActive) cIB,
+                const SizedBox(
+                  height: 10,
+                ),
                 Wrap(
                   children: [
                     Align(
@@ -789,10 +792,31 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
               } else if (keyMap.entries.first.key == "achievementTree") {
                 var reversedAchievementTree =
                     keyMap.entries.first.value.split('>>').toList();
+
+                List<String> reversedAchievementTreeNew = [];
+                reversedAchievementTree.forEach((achievement) {
+                  List<String> parts = achievement.split(":");
+                  if (parts.length > 1) {
+                    reversedAchievementTreeNew.add(parts[1]);
+                  }
+                });
+
+
                 var reversedString =
-                    reversedAchievementTree.reversed.toList().join('>>');
+                reversedAchievementTreeNew.reversed.toList().join('>>');
                 modifiedRow[keyMap] = Text(reversedString);
-              } else {
+              } else if(keyMap.entries.first.key == "favCount")
+                {
+                  String ifNullToZero=keyMap.entries.first.value=='null' || keyMap.entries.first.value==null || keyMap.entries.first.value=='' ? '0' :keyMap.entries.first.value ;
+                  modifiedRow[keyMap] = Text(ifNullToZero);
+                }
+              else if(keyMap.entries.first.key == "likeCount")
+              {
+                String ifNullToZero=keyMap.entries.first.value=='null' || keyMap.entries.first.value==null || keyMap.entries.first.value=='' ? '0' :keyMap.entries.first.value ;
+                modifiedRow[keyMap] = Text(ifNullToZero);
+              }
+
+              else {
                 modifiedRow[keyMap] = widget;
               }
             });
@@ -841,6 +865,10 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                 'lib.screen.common.questionDataTable',
                 'searchButtonOnPressed',
                 'favorite'),
+            AppLocalization.instance.translate(
+                'lib.screen.common.questionDataTable',
+                'searchButtonOnPressed',
+                'likeCount'),
           ];
           dataTableColumnNames = [
             'id',
@@ -850,7 +878,8 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
             'branch_name',
             'achievementTree',
             'created_on',
-            'favCount'
+            'favCount',
+            'likeCount'
           ];
           dataTableKeyColumnName = 'id';
           dataTableDisableColumnFilter = ['id'];
@@ -1284,7 +1313,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
             isFilterActive = false;
           }
 
-          if (filterTitle.toString().toLowerCase().contains('favorite')) {
+          if (value.toString().toLowerCase().contains('favorite')) {
             isFavoriteGroupVisible = true;
           } else {
             isFavoriteGroupVisible = false;

@@ -1,4 +1,4 @@
-/*
+
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:egitimaxapplication/model/common/dataTableData.dart';
 import 'package:egitimaxapplication/repository/appRepositories.dart';
@@ -115,7 +115,7 @@ class _VideoDataTableState extends State<VideoDataTable> {
   String? filterTitle; // Başlangıç başlık değeri
 
   TextEditingController filterVideoTextController = TextEditingController();
-  TextEditingController ageController = TextEditingController();
+
 
   bool isFilterExpanded = false;
 
@@ -144,7 +144,6 @@ class _VideoDataTableState extends State<VideoDataTable> {
   @override
   void dispose() {
     filterVideoTextController.dispose();
-    ageController.dispose();
     super.dispose();
   }
 
@@ -209,24 +208,6 @@ class _VideoDataTableState extends State<VideoDataTable> {
                                 }
                               },
                             ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            FutureBuilder<CommonDropdownButtonFormField>(
-                              future: filterDifficultyLevels(),
-                              builder: (BuildContext context,
-                                  AsyncSnapshot<CommonDropdownButtonFormField>
-                                      snapshot) {
-                                if (snapshot.hasData) {
-                                  return snapshot.data!;
-                                } else if (snapshot.hasError) {
-                                  return Text(
-                                      '${AppLocalization.instance.translate('lib.screen.common.videoDataTable', 'build', 'error')}: ${snapshot.error}');
-                                } else {
-                                  return const CircularProgressIndicator(); // or any other loading indicator
-                                }
-                              },
-                            ),
                           ],
                         ),
                       if (deviceType != DeviceType.mobileSmall &&
@@ -248,27 +229,6 @@ class _VideoDataTableState extends State<VideoDataTable> {
                                   } else if (snapshot.hasError) {
                                     return Text(
                                         '${AppLocalization.instance.translate('lib.screen.common.VideoDataTable', 'build', 'error')}: ${snapshot.error}');
-                                  } else {
-                                    return const CircularProgressIndicator(); // or any other loading indicator
-                                  }
-                                },
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Expanded(
-                              child:
-                                  FutureBuilder<CommonDropdownButtonFormField>(
-                                future: filterDifficultyLevels(),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<CommonDropdownButtonFormField>
-                                        snapshot) {
-                                  if (snapshot.hasData) {
-                                    return snapshot.data!;
-                                  } else if (snapshot.hasError) {
-                                    return Text(
-                                        '${AppLocalization.instance.translate('lib.screen.common.videoDataTable', 'build', 'error')}: ${snapshot.error}');
                                   } else {
                                     return const CircularProgressIndicator(); // or any other loading indicator
                                   }
@@ -567,6 +527,9 @@ class _VideoDataTableState extends State<VideoDataTable> {
                   height: 10,
                 ),
                 if (isFilterActive) cIB,
+                const SizedBox(
+                  height: 10,
+                ),
                 Wrap(
                   children: [
                     Align(
@@ -692,7 +655,7 @@ class _VideoDataTableState extends State<VideoDataTable> {
     dataTableRows = null;
     final theme = Theme.of(context);
     if (videoSourceName != null) {
-      var VideoRepository = await appRepositories.videoRepository();
+      var videoRepository = await appRepositories.videoRepository();
 
       var dataSet = await videoRepository.getVideoDataTableData(['*'],
           getNoSqlData: 0,
@@ -707,11 +670,10 @@ class _VideoDataTableState extends State<VideoDataTable> {
                   : favoriteGroupId
               : null,
           academic_year: academicYearId == 0 ? null : academicYearId,
-          difficulty_lev: difficultyId == 0 ? null : difficultyId,
           grade_id: gradeId == 0 ? null : gradeId,
           branch_id: branchId == 0 ? null : branchId,
           learn_id: selectedLearn == 0 ? null : selectedLearn,
-          video_text: filterVideoTextController.text == '' ||
+          title: filterVideoTextController.text == '' ||
                   filterVideoTextController.text.isEmpty
               ? null
               : filterVideoTextController.text);
@@ -743,7 +705,7 @@ class _VideoDataTableState extends State<VideoDataTable> {
                     BigInt.parse(idCell.key.entries.first.value.toString());
               }
 
-              if (keyMap.entries.first.key == "video_text") {
+              if (keyMap.entries.first.key == "title") {
                 modifiedRow[keyMap] = MouseRegion(
                   onHover: (event) {
                     // Handle hover event
@@ -758,7 +720,7 @@ class _VideoDataTableState extends State<VideoDataTable> {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return Container() ;// VideoOverView( videoId: idValue, userId: userId, );
+                          return VideoOverView(videoId:idValue ,userId: userId,);// VideoOverView( videoId: idValue, userId: userId, );
                         },
                       );
                     },
@@ -787,10 +749,29 @@ class _VideoDataTableState extends State<VideoDataTable> {
               } else if (keyMap.entries.first.key == "achievementTree") {
                 var reversedAchievementTree =
                     keyMap.entries.first.value.split('>>').toList();
+
+                List<String> reversedAchievementTreeNew = [];
+                reversedAchievementTree.forEach((achievement) {
+                  List<String> parts = achievement.split(":");
+                  if (parts.length > 1) {
+                    reversedAchievementTreeNew.add(parts[1]);
+                  }
+                });
+
                 var reversedString =
-                    reversedAchievementTree.reversed.toList().join('>>');
+                reversedAchievementTreeNew.reversed.toList().join('>>');
                 modifiedRow[keyMap] = Text(reversedString);
-              } else {
+              } else if(keyMap.entries.first.key == "favCount")
+              {
+                String ifNullToZero=keyMap.entries.first.value=='null' || keyMap.entries.first.value==null || keyMap.entries.first.value=='' ? '0' :keyMap.entries.first.value ;
+                modifiedRow[keyMap] = Text(ifNullToZero);
+              }
+              else if(keyMap.entries.first.key == "likeCount")
+              {
+                String ifNullToZero=keyMap.entries.first.value=='null' || keyMap.entries.first.value==null || keyMap.entries.first.value=='' ? '0' :keyMap.entries.first.value ;
+                modifiedRow[keyMap] = Text(ifNullToZero);
+              }
+              else {
                 modifiedRow[keyMap] = widget;
               }
             });
@@ -818,11 +799,7 @@ class _VideoDataTableState extends State<VideoDataTable> {
             AppLocalization.instance.translate(
                 'lib.screen.common.videoDataTable',
                 'searchButtonOnPressed',
-                'Video'),
-            AppLocalization.instance.translate(
-                'lib.screen.common.videoDataTable',
-                'searchButtonOnPressed',
-                'difficultyLevel'),
+                'videoTitle'),
             AppLocalization.instance.translate(
                 'lib.screen.common.videoDataTable',
                 'searchButtonOnPressed',
@@ -839,24 +816,26 @@ class _VideoDataTableState extends State<VideoDataTable> {
                 'lib.screen.common.videoDataTable',
                 'searchButtonOnPressed',
                 'favorite'),
+            AppLocalization.instance.translate(
+                'lib.screen.common.videoDataTable',
+                'searchButtonOnPressed',
+                'likes'),
           ];
           dataTableColumnNames = [
             'id',
             'acad_year',
-            'video_text',
-            'dif_level',
+            'title',
             'branch_name',
             'achievementTree',
             'created_on',
-            'favCount'
+            'favCount',
+            'likeCount'
           ];
           dataTableKeyColumnName = 'id';
           dataTableDisableColumnFilter = ['id'];
           dataTableHideColumn = [
-            'dif_level',
             'branch_name',
-            'learn_data',
-            'created_on'
+            'learn_data'
           ];
           dataTableRows =
               modifiedRows; //dataTableData.rowsAsWidget; // Map Is List<Map<Map<columnName, columnValueAsString>, Widget(Show Your Widget With Cell Value Bind)>>?
@@ -866,7 +845,7 @@ class _VideoDataTableState extends State<VideoDataTable> {
     } else {
       UIMessage.showError(
           AppLocalization.instance.translate(
-              'lib.screen.common.VideoDataTable',
+              'lib.screen.common.videoDataTable',
               'searchButtonOnPressed',
               'pleaseSelectSourceType'),
           gravity: ToastGravity.CENTER);
@@ -1119,78 +1098,6 @@ class _VideoDataTableState extends State<VideoDataTable> {
     );
   }
 
-  Future<CommonDropdownButtonFormField> filterDifficultyLevels() async {
-    var difficultyDataSet = difficultiesRootDataSet ??
-        await appRepositories
-            .tblUtilDifficulty('Video/GetObject', ['id', 'dif_level']);
-
-    difficultiesRootDataSet ??= difficultyDataSet;
-
-    var difficulties = difficultiesRoot ??
-        difficultyDataSet.toKeyValuePairsWithTypes<int, String>('data', 'id',
-            valueColumn: 'dif_level');
-    //Add NotSelectableItem
-    difficulties[0] = AppLocalization.instance.translate(
-        'lib.screen.common.videoDataTable', 'filterDifficultyLevels', 'all');
-
-    difficultiesRoot ??= difficulties;
-
-    var defaultDifficulty = true
-        ? 0
-        : difficultyId ??
-            difficultyDataSet.firstValue('data', 'id',
-                filterColumn: 'dif_level',
-                filterValue: 'dif_medium',
-                insteadOfNull: difficulties.entries.first.key);
-    difficultyId ??= defaultDifficulty;
-
-    return CommonDropdownButtonFormField(
-      isExpandedObject: true,
-      isSearchEnable: true,
-      items: difficulties,
-      label: AppLocalization.instance.translate(
-          'lib.screen.common.videoDataTable',
-          'filterDifficultyLevels',
-          'difficultyLevel'),
-      dropdownDecoratorProps: DropDownDecoratorProps(
-        dropdownSearchDecoration: InputDecoration(
-          labelText: AppLocalization.instance.translate(
-              'lib.screen.common.videoDataTable',
-              'filterDifficultyLevels',
-              'difficultyLevel'),
-          hintText: AppLocalization.instance.translate(
-              'lib.screen.common.videoDataTable',
-              'filterDifficultyLevels',
-              'pleaseSelectDifficultyLevel'),
-          contentPadding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-          isDense: true,
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.grey),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.blue),
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
-        baseStyle: widget.componentTextStyle ?? const TextStyle(fontSize: 10),
-      ),
-      onSelectedItemChanged: (selectedItem) {
-        difficultyId = difficulties.entries
-            .map((entry) => entry)
-            .toList()
-            .firstWhere((item) => selectedItem == item.key)
-            .key;
-      },
-      selectedItem: difficulties.entries
-          .map((entry) => entry)
-          .toList()
-          .firstWhere((item) => difficultyId == item.key)
-          .value,
-      componentTextStyle: widget.componentTextStyle,
-    );
-  }
-
   DropdownSearch<dynamic> emptySearchableDropDown() {
     return DropdownSearch<dynamic>(
       enabled: false,
@@ -1227,7 +1134,7 @@ class _VideoDataTableState extends State<VideoDataTable> {
 
   Future<CommonDropdownButtonFormField> videoFavoriteGroups() async {
     var userFavoriteGroupsDataSet = favoriteGroupsRootDataSet ??
-        await appRepositories.tblFavGroupQuest(
+        await appRepositories.tblFavGroupVid(
             'Video/GetObject', ['id', 'group_name', 'user_id'],
             user_id: widget.userId);
     favoriteGroupsRootDataSet ??= userFavoriteGroupsDataSet;
@@ -1282,7 +1189,7 @@ class _VideoDataTableState extends State<VideoDataTable> {
             isFilterActive = false;
           }
 
-          if (filterTitle.toString().toLowerCase().contains('favorite')) {
+          if (value.toString().toLowerCase().contains('favorite')) {
             isFavoriteGroupVisible = true;
           } else {
             isFavoriteGroupVisible = false;
@@ -1299,4 +1206,4 @@ class _VideoDataTableState extends State<VideoDataTable> {
     );
   }
 }
-*/
+
