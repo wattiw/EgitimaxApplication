@@ -38,6 +38,7 @@ class Assets {
   static const String layoutMainLayout = 'lib/utils/widget/layout/mainLayout.dart';
   static const String lectureLectureBloc = 'lib/bloc/bloc/lecture/lectureBloc.dart';
   static const String lectureLectureEvent = 'lib/bloc/event/lecture/lectureEvent.dart';
+  static const String lectureLectureObjectsSummary = 'lib/screen/lecture/lectureObjectsSummary.dart';
   static const String lectureLecturePage = 'lib/screen/lecture/lecturePage.dart';
   static const String lectureLecturePageModel = 'lib/model/lecture/lecturePageModel.dart';
   static const String lectureLectureRepository = 'lib/repository/lecture/lectureRepository.dart';

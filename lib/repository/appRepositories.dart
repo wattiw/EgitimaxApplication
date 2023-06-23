@@ -257,6 +257,20 @@ extension AppRepositoriesExtension on AppRepositories {
         query: joinedQuery, parameters: parameters, isProcedure: true);
   }
 
+  Future<Map<String, dynamic>> getLearnInfoById(
+      String controllerAndAction, List<String> columns,
+      {int? learn_id,
+        int? getNoSqlData}) async {
+
+    var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
+    String query = "select $columnJoinedString from (SELECT getLearnInfoById(${learn_id.toString()}) as levels) rt";
+
+    List<SqlParameter> parameters = List.empty(growable: true);
+
+      return getDataSet(controllerAndAction,
+        query: query, parameters: parameters);
+  }
+
   Future<Map<String, dynamic>> tblLearnMain(
       String controllerAndAction, List<String> columns,
       {int? branch_id,

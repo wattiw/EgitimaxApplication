@@ -15,6 +15,7 @@ import 'package:egitimaxapplication/screen/common/questionOverView.dart';
 import 'package:egitimaxapplication/screen/common/userInteractiveMessage.dart';
 import 'package:egitimaxapplication/screen/common/videoDataTable.dart';
 import 'package:egitimaxapplication/screen/common/videoOverView.dart';
+import 'package:egitimaxapplication/screen/lecture/lectureObjectsSummary.dart';
 import 'package:egitimaxapplication/screen/lecture/stepsValidator.dart';
 import 'package:egitimaxapplication/utils/config/language/appLocalizations.dart';
 import 'package:egitimaxapplication/utils/constant/language/appLocalizationConstant.dart';
@@ -40,6 +41,8 @@ class LecturePage extends StatefulWidget {
   final BigInt userId;
   final BigInt? lectureId;
 
+
+
   @override
   _LecturePageState createState() => _LecturePageState();
 }
@@ -58,6 +61,8 @@ class _LecturePageState extends State<LecturePage> {
 
   bool isWelcomeMsgCollapsed = false;
   bool isGoodbyeMsgCollapsed = false;
+
+  CommonDataTable?  lectureFlowDataTable;
 
   @override
   void initState() {
@@ -1204,31 +1209,30 @@ class _LecturePageState extends State<LecturePage> {
     ];
 
 
+    lectureFlowDataTable=CommonDataTable(
+      toolBarButtons: toolBarButtons,
+      dataTableColumnAlias: dataTableColumnAlias,
+      dataTableColumnNames: dataTableColumnNames,
+      dataTableDisableColumnFilter: disabledColumFilters,
+      dataTableHideColumn: dataTableHideColumn,
+      columnDataTypes: columnDataTypes,
+      dataTableRows: dataTableRows,
+      dataTableKeyColumnName: 'orderNo',
+      dataTableSelectedKeys:List.empty(),
+      showCheckboxColumn: false,
+    );
 
     return Container(
       alignment: Alignment.centerLeft,
-      child: Column(
-        children: [
-          CommonDataTable(
-            toolBarButtons: toolBarButtons,
-            dataTableColumnAlias: dataTableColumnAlias,
-            dataTableColumnNames: dataTableColumnNames,
-            dataTableDisableColumnFilter: disabledColumFilters,
-            dataTableHideColumn: dataTableHideColumn,
-            columnDataTypes: columnDataTypes,
-            dataTableRows: dataTableRows,
-            dataTableKeyColumnName: 'orderNo',
-            dataTableSelectedKeys:List.empty(),
-            showCheckboxColumn: false,
-          ),
-        ],
-      ),
+      child:lectureFlowDataTable,
     );
   }
 
   Future<Widget> getStepThreeLayout(BuildContext context) async {
     final screenWidth = MediaQuery.of(context).size.width;
-    return Container();
+
+
+    return Center(child: LectureObjectsSummary( lectureObjects: lecturePageModel.setLectureObjects!,lectureFlowDataTable:lectureFlowDataTable ),);
   }
 
   void lectureBlocAddEvent(int? activeCurrentStep) {
