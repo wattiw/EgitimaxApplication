@@ -17,6 +17,7 @@ class QuestionOverView extends StatefulWidget {
   bool isLiked = false;
   bool isDisLiked = false;
   int likeCount = 0;
+  Function(BigInt? questionId)? onAddedQuestion;
   AppRepositories appRepositories = AppRepositories();
   QuestionRepository questionRepository = QuestionRepository();
   Map<String, dynamic>? qovDataSet;
@@ -25,6 +26,7 @@ class QuestionOverView extends StatefulWidget {
   QuestionOverView({
     required this.questionId,
     required this.userId,
+    this.onAddedQuestion
   });
 
   @override
@@ -110,25 +112,41 @@ class _QuestionOverViewState extends State<QuestionOverView> {
                   },
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    if (false)
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Row(
-                          children: [
-                            Icon(Icons.close),
-                            SizedBox(width: 8),
-                            // Adding some spacing between the icon and text
-                            Text('Close'),
-                          ],
-                        ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Row(
+                        children: [
+                          Icon(Icons.close),
+                          SizedBox(width: 8),
+                          // Adding some spacing between the icon and text
+                          Text(AppLocalization.instance.translate(
+                              'lib.screen.common.questionOverView', 'build', 'cancel')),
+                        ],
                       ),
-                    const SizedBox(
-                      height: 15,
-                    )
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        if(widget.onAddedQuestion!=null)
+                        {
+                          widget.onAddedQuestion!(widget.questionId);
+                        }
+
+                        Navigator.pop(context);
+                      },
+                      child:  Row(
+                        children: [
+                          Icon(Icons.add),
+                          SizedBox(width: 8),
+                          // Adding some spacing between the icon and text
+                          Text(AppLocalization.instance.translate(
+                              'lib.screen.common.questionOverView', 'build', 'add')),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 5),

@@ -131,6 +131,14 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
       dataTableRows; // Map Is List<Map<Map<columnName, columnValueAsString>, Widget(Show Your Widget With Cell Value Bind)>>?
   List<ColumnDataType> columnDataTypes = List.empty(growable: true);
 
+  void addSelectedIdFromOverView(BigInt id)
+  {
+    widget.selectedQuestionIds!.add(id);
+    setState(() {
+
+    });
+  }
+
   @override
   void initState() {
     widget.selectedRowsKeys ??= [];
@@ -161,7 +169,6 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
             Expanded(
               child: Text(
                 '${filterTitle == null || filterTitle == '' ? '${AppLocalization.instance.translate('lib.screen.common.questionDataTable', 'build', 'filters')} :' : ''}${filterTitle ?? AppLocalization.instance.translate('lib.screen.common.questionDataTable', 'build', 'pleaseSelectQuestionSource')}',
-                style: widget.componentTextStyle,
               ),
             ),
             Flexible(
@@ -763,6 +770,12 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                           return QuestionOverView(
                             questionId: idValue,
                             userId: userId,
+                            onAddedQuestion: (questionId){
+                              if(questionId!=null)
+                              {
+                                addSelectedIdFromOverView(questionId);
+                              }
+                            },
                           );
                         },
                       );

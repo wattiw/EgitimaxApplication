@@ -781,7 +781,9 @@
       "addFav": "Add Favorite",
       "shareQuestion": "Share Question",
       "share": "Share",
-      "likes": "Likes"
+      "likes": "Likes",
+      "cancel": "Cancel",
+      "add": "Add"
 
     }
   },
@@ -816,7 +818,20 @@
       "delete": "Delete",
       "selectAction": "Select Action",
       "addQuestion": "Add Question",
-      "addVideo": "Add Video"
+      "addVideo": "Add Video",
+      "flowItemTypeQuestion": "Question",
+      "flowItemTypeNoItem": "No Item",
+      "flowItemTypeDocument": "Document",
+      "flowItemTypeQuiz": "Quiz",
+      "flowItemTypeVideo": "Video",
+      "id": "Id",
+      "courseId": "Course Id",
+      "orderNo": "Order No",
+      "flowId": "Flow Id",
+      "flowItem": "Flow Item",
+      "flowType": "Flow Type",
+      "isActive": "Is Active",
+      "actions": "Actions"
     },
     "_buildStepper": {
       "next": "Next",
@@ -827,7 +842,7 @@
       "initializing": "initializing..."
     },
     "_buildLoading": {
-      "loading": "loading..."
+      "loading": "Loading..."
     },
     "_buildError": {
       "unknownError": "Unknown Error"

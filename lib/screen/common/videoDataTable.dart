@@ -42,6 +42,7 @@ class VideoDataTable extends StatefulWidget {
 class _VideoDataTableState extends State<VideoDataTable> {
   AppRepositories appRepositories = AppRepositories();
 
+
   BigInt? userId;
   bool isFilterActive = false;
 
@@ -132,6 +133,14 @@ class _VideoDataTableState extends State<VideoDataTable> {
       dataTableRows; // Map Is List<Map<Map<columnName, columnValueAsString>, Widget(Show Your Widget With Cell Value Bind)>>?
   List<ColumnDataType> columnDataTypes = List.empty(growable: true);
 
+  void addSelectedIdFromOverView(BigInt id)
+  {
+    widget.selectedVideoIds!.add(id);
+    setState(() {
+
+    });
+  }
+
   @override
   void initState() {
     widget.selectedRowsKeys ??= [];
@@ -161,7 +170,6 @@ class _VideoDataTableState extends State<VideoDataTable> {
             Expanded(
               child: Text(
                 '${filterTitle == null || filterTitle == '' ? '${AppLocalization.instance.translate('lib.screen.common.videoDataTable', 'build', 'filters')} :' : ''}${filterTitle ?? AppLocalization.instance.translate('lib.screen.common.videoDataTable', 'build', 'pleaseSelectVideoSource')}',
-                style: widget.componentTextStyle,
               ),
             ),
             Flexible(
@@ -650,6 +658,7 @@ class _VideoDataTableState extends State<VideoDataTable> {
   }
 
   Future<void> searchButtonOnPressed(BigInt userId) async {
+
     dataTableRoot = null;
     dataTableDataRoot = null;
     dataTableRows = null;
@@ -720,7 +729,13 @@ class _VideoDataTableState extends State<VideoDataTable> {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return VideoOverView(videoId:idValue ,userId: userId,);// VideoOverView( videoId: idValue, userId: userId, );
+                          return VideoOverView(videoId:idValue ,userId: userId,
+                          onAddedVideo: (videoId){
+                            if(videoId!=null)
+                              {
+                                addSelectedIdFromOverView(videoId);
+                              }
+                          },);
                         },
                       );
                     },

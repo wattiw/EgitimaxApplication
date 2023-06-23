@@ -623,7 +623,10 @@ class _LecturePageState extends State<LecturePage> {
 
             Map<String, String> key3_2 = {};
             key3_2['flow_type'] = 'Video';
-            cells[key3_2] = const Text('Video');
+            cells[key3_2] =  Text(AppLocalization.instance.translate(
+                'lib.screen.lecturePage.lecturePage',
+                'getStepTwoLayout',
+                'flowItemTypeVideo'));
 
 
           } else if (flow.quizId != null && flow.quizId != BigInt.parse('0')) {
@@ -642,7 +645,10 @@ class _LecturePageState extends State<LecturePage> {
 
             Map<String, String> key4_2 = {};
             key4_2['flow_type'] = 'Quiz';
-            cells[key4_2] = const Text('Quiz');
+            cells[key4_2] =  Text(AppLocalization.instance.translate(
+                'lib.screen.lecturePage.lecturePage',
+                'getStepTwoLayout',
+                'flowItemTypeQuiz'));
           } else if (flow.docId != null && flow.docId != BigInt.parse('0')) {
             Map<String, String> key5 = {};
             key5['flow_id'] = flow.docId.toString();
@@ -659,7 +665,10 @@ class _LecturePageState extends State<LecturePage> {
 
             Map<String, String> key5_2 = {};
             key5_2['flow_type'] = 'Document';
-            cells[key5_2] = const Text('Document');
+            cells[key5_2] =  Text(AppLocalization.instance.translate(
+                'lib.screen.lecturePage.lecturePage',
+                'getStepTwoLayout',
+                'flowItemTypeDocument'));
           } else if (flow.questId != null &&
               flow.questId != BigInt.parse('0')) {
             Map<String, String> key6 = {};
@@ -709,7 +718,10 @@ class _LecturePageState extends State<LecturePage> {
 
             Map<String, String> key5_2 = {};
             key5_2['flow_type'] = 'Question';
-            cells[key5_2] = const Text('Question');
+            cells[key5_2] =  Text(AppLocalization.instance.translate(
+                'lib.screen.lecturePage.lecturePage',
+                'getStepTwoLayout',
+                'flowItemTypeQuestion'));
           } else {
             Map<String, String> key7 = {};
             key7['flow_id'] = '0';
@@ -717,11 +729,17 @@ class _LecturePageState extends State<LecturePage> {
 
             Map<String, String> key7_1 = {};
             key7_1['flow_item'] = 'NoItem';
-            cells[key7_1] = const Text('No Item');
+            cells[key7_1] =  Text(AppLocalization.instance.translate(
+                'lib.screen.lecturePage.lecturePage',
+                'getStepTwoLayout',
+                'flowItemTypeNoItem'));
 
             Map<String, String> key7_2 = {};
             key7_2['flow_type'] = 'NoItem';
-            cells[key7_2] = const Text('No Item');
+            cells[key7_2] =  Text(AppLocalization.instance.translate(
+                'lib.screen.lecturePage.lecturePage',
+                'getStepTwoLayout',
+                'flowItemTypeNoItem'));
           }
 
           Map<String, String> key8 = {};
@@ -1118,14 +1136,40 @@ class _LecturePageState extends State<LecturePage> {
       )
     ];
     var dataTableColumnAlias = [
-      'Id',
-      'Course Id',
-      'Order No',
-      'Flow Id',
-      'Flow Item',
-      'Flow Type',
-      'Is Active',
-      'Actions'
+      AppLocalization.instance.translate(
+          'lib.screen.lecturePage.lecturePage',
+          'getStepTwoLayout',
+          'id'),
+      AppLocalization.instance.translate(
+          'lib.screen.lecturePage.lecturePage',
+          'getStepTwoLayout',
+          'courseId'),
+      AppLocalization.instance.translate(
+          'lib.screen.lecturePage.lecturePage',
+          'getStepTwoLayout',
+          'orderNo'),
+      AppLocalization.instance.translate(
+          'lib.screen.lecturePage.lecturePage',
+          'getStepTwoLayout',
+          'flowId'),
+      AppLocalization.instance.translate(
+          'lib.screen.lecturePage.lecturePage',
+          'getStepTwoLayout',
+          'flowItem')
+      ,
+      AppLocalization.instance.translate(
+          'lib.screen.lecturePage.lecturePage',
+          'getStepTwoLayout',
+          'flowType'),
+      AppLocalization.instance.translate(
+          'lib.screen.lecturePage.lecturePage',
+          'getStepTwoLayout',
+          'isActive')
+      ,
+      AppLocalization.instance.translate(
+          'lib.screen.lecturePage.lecturePage',
+          'getStepTwoLayout',
+          'actions')
     ];
     var dataTableColumnNames = const [
       'id',

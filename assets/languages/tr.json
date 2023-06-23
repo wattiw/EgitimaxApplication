@@ -777,7 +777,9 @@
       "addFav": "Favorilere Ekle",
       "shareQuestion": "Soruyu Paylaş",
       "share": "Paylaş",
-      "likes": "Beğeniler"
+      "likes": "Beğeniler",
+      "cancel": "İptal",
+      "add": "Ekle"
     }
   },
 
@@ -811,7 +813,20 @@
       "delete": "Sil",
       "selectAction": "İşlem Seç",
       "addQuestion": "Soru Ekle",
-      "addVideo": "Video Ekle"
+      "addVideo": "Video Ekle",
+      "flowItemTypeQuestion": "Soru",
+      "flowItemTypeNoItem": "Öğe Yok",
+      "flowItemTypeDocument": "Doküman",
+      "flowItemTypeQuiz": "Sınav",
+      "flowItemTypeVideo": "Vidyo",
+      "id": "Id",
+      "courseId": "Kurs Id",
+      "orderNo": "Sıra No",
+      "flowId": "Akış Id",
+      "flowItem": "Akış Öğesi",
+      "flowType": "Akış Tipi",
+      "isActive": "Aktif Mi ?",
+      "actions": "İşlemler"
     },
     "_buildStepper": {
       "next": "İleri",
