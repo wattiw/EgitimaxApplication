@@ -825,8 +825,11 @@
       "flowId": "Akış Id",
       "flowItem": "Akış Öğesi",
       "flowType": "Akış Tipi",
+      "flow_achievement_tree": "Akış Kazanım Ağacı",
       "isActive": "Aktif Mi ?",
-      "actions": "İşlemler"
+      "actions": "İşlemler",
+      "maximumQuestionAdded": "Ekleyebileceğiniz maksimum soru sayısına ulaştınız.",
+      "maximumVideoAdded": "Ekleyebileceğiniz maksimum video sayısına ulaştınız."
     },
     "_buildStepper": {
       "next": "İleri",

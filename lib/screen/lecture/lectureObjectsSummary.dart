@@ -122,6 +122,7 @@ class LectureObjectsSummary extends StatelessWidget {
       'flow_id',
       //'flow_item',
       //'flow_type',
+      //'flow_achievement_tree',
       'is_active',
       'actions'
     ];

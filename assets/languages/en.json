@@ -830,8 +830,11 @@
       "flowId": "Flow Id",
       "flowItem": "Flow Item",
       "flowType": "Flow Type",
+      "flow_achievement_tree": "Flow Achievement Tree",
       "isActive": "Is Active",
-      "actions": "Actions"
+      "actions": "Actions",
+      "maximumQuestionAdded": "You have reached the maximum number of questions that can be added.",
+      "maximumVideoAdded": "You have reached the maximum number of video that can be added."
     },
     "_buildStepper": {
       "next": "Next",

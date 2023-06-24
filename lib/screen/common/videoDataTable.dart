@@ -20,6 +20,9 @@ import '../../utils/config/language/appLocalizations.dart';
 
 class VideoDataTable extends StatefulWidget {
   BigInt userId;
+  int? branchId;
+  int? gradeId;
+  int? learnId;
   List<BigInt>? selectedVideoIds;
   List<Map<String, dynamic>>? selectedRows = List.empty(growable: true);
   List<BigInt>? selectedRowsKeys = List.empty(growable: true);
@@ -30,6 +33,9 @@ class VideoDataTable extends StatefulWidget {
 
   VideoDataTable(
       {required this.userId,
+        this.branchId,
+        this.gradeId,
+        this.learnId,
       this.selectedVideoIds,
       required this.componentTextStyle,
       required this.onSelectedVideoIdsChanged,
@@ -146,6 +152,10 @@ class _VideoDataTableState extends State<VideoDataTable> {
     widget.selectedRowsKeys ??= [];
     widget.selectedRows ??= [];
     widget.selectedVideoIds ??= [];
+
+    selectedLearn=widget.learnId;
+    branchId=widget.branchId;
+    gradeId=widget.gradeId;
 
     super.initState();
   }
@@ -975,9 +985,9 @@ class _VideoDataTableState extends State<VideoDataTable> {
 
     var defaultGrade = !isFilterExpanded
         ? null
-        : gradeId ??
+        :  widget.gradeId ?? ( gradeId ??
             userDataSet.firstValue('data', 'grade_id',
-                insteadOfNull: grades.entries.first.key);
+                insteadOfNull: grades.entries.first.key));
     gradeId ??= defaultGrade;
 
     return CommonDropdownButtonFormField(
@@ -1043,8 +1053,8 @@ class _VideoDataTableState extends State<VideoDataTable> {
         user_id: widget.userId);
     var defaultBranch = !isFilterExpanded
         ? null
-        : branchesMapDataSet.firstValue('data', 'branch_id',
-            insteadOfNull: branches.entries.first.key);
+        :  widget.branchId ?? (branchesMapDataSet.firstValue('data', 'branch_id',
+            insteadOfNull: branches.entries.first.key));
 
     branchId ??= defaultBranch;
 

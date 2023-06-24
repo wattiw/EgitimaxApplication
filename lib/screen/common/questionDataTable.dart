@@ -19,6 +19,9 @@ import '../../utils/config/language/appLocalizations.dart';
 
 class QuestionDataTable extends StatefulWidget {
   BigInt userId;
+  int? branchId;
+  int? gradeId;
+  int? learnId;
   List<BigInt>? selectedQuestionIds;
   List<Map<String, dynamic>>? selectedRows = List.empty(growable: true);
   List<BigInt>? selectedRowsKeys = List.empty(growable: true);
@@ -29,6 +32,9 @@ class QuestionDataTable extends StatefulWidget {
 
   QuestionDataTable(
       {required this.userId,
+        this.branchId,
+        this.gradeId,
+        this.learnId,
       this.selectedQuestionIds,
       required this.componentTextStyle,
       required this.onSelectedQuestionIdsChanged,
@@ -145,6 +151,10 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
     widget.selectedRows ??= [];
     widget.selectedQuestionIds ??= [];
 
+    selectedLearn=widget.learnId;
+    branchId=widget.branchId;
+    gradeId=widget.gradeId;
+
     super.initState();
   }
 
@@ -175,7 +185,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                 child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Icon(
+                const Icon(
                   Icons.manage_search,
                 ),
                 SizedBox(width: 5),
@@ -1025,9 +1035,9 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
 
     var defaultGrade = !isFilterExpanded
         ? null
-        : gradeId ??
+        : widget.gradeId ?? (gradeId ??
             userDataSet.firstValue('data', 'grade_id',
-                insteadOfNull: grades.entries.first.key);
+                insteadOfNull: grades.entries.first.key));
     gradeId ??= defaultGrade;
 
     return CommonDropdownButtonFormField(
@@ -1093,8 +1103,8 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
         user_id: widget.userId);
     var defaultBranch = !isFilterExpanded
         ? null
-        : branchesMapDataSet.firstValue('data', 'branch_id',
-            insteadOfNull: branches.entries.first.key);
+        : widget.branchId ?? (branchesMapDataSet.firstValue('data', 'branch_id',
+            insteadOfNull: branches.entries.first.key));
 
     branchId ??= defaultBranch;
 
