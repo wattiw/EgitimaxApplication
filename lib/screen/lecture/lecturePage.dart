@@ -42,8 +42,6 @@ class LecturePage extends StatefulWidget {
   final BigInt userId;
   final BigInt? lectureId;
 
-
-
   @override
   _LecturePageState createState() => _LecturePageState();
 }
@@ -65,7 +63,7 @@ class _LecturePageState extends State<LecturePage> {
 
   List<Map<String, dynamic>>? selectedQuestionRows = List.empty(growable: true);
   List<Map<String, dynamic>>? selectedVideoRows = List.empty(growable: true);
-  CommonDataTable?  lectureFlowDataTable;
+  CommonDataTable? lectureFlowDataTable;
 
   @override
   void initState() {
@@ -553,10 +551,10 @@ class _LecturePageState extends State<LecturePage> {
   }
 
   Future<Widget> getStepTwoLayout(BuildContext context) async {
-
     final theme = Theme.of(context);
 
-    var flows = lecturePageModel.setLectureObjects?.tblCrsCourseMain!.tblCrsCourseFlows;
+    var flows =
+        lecturePageModel.setLectureObjects?.tblCrsCourseMain!.tblCrsCourseFlows;
 
     if (flows!.length > 1) {
       flows = flows.where((element) => element.orderNo != 0).toList();
@@ -568,7 +566,9 @@ class _LecturePageState extends State<LecturePage> {
         List.empty(growable: true);
     if (flows != null && flows.isNotEmpty) {
       for (var flow in flows) {
-        if (flow.orderNo != 0 || (flow.orderNo == 0 && flows.length==1)) // Default Kayıt Filtrelendi
+        if (flow.orderNo != 0 ||
+            (flow.orderNo == 0 &&
+                flows.length == 1)) // Default Kayıt Filtrelendi
         {
           Map<Map<String, String>, Widget> cells = {};
 
@@ -611,8 +611,7 @@ class _LecturePageState extends State<LecturePage> {
               style: ButtonStyle(
                 textStyle: MaterialStateProperty.all<TextStyle>(
                   TextStyle(
-                      fontSize:
-                      theme.dataTableTheme.dataTextStyle?.fontSize),
+                      fontSize: theme.dataTableTheme.dataTextStyle?.fontSize),
                 ),
               ),
               child: Tooltip(
@@ -620,7 +619,7 @@ class _LecturePageState extends State<LecturePage> {
                 child: Wrap(
                   children: [
                     Text(
-                      videoTitle!= null && videoTitle.length > 20
+                      videoTitle != null && videoTitle.length > 20
                           ? "${videoTitle.substring(0, 20)}..."
                           : videoTitle ?? "",
                     ),
@@ -631,41 +630,65 @@ class _LecturePageState extends State<LecturePage> {
 
             Map<String, String> key3_2 = {};
             key3_2['flow_type'] = 'Video';
-            cells[key3_2] =  Text(AppLocalization.instance.translate(
+            cells[key3_2] = Text(AppLocalization.instance.translate(
                 'lib.screen.lecturePage.lecturePage',
                 'getStepTwoLayout',
                 'flowItemTypeVideo'));
 
+            var achievementTree = '';
+            for (var item in selectedVideoRows!.toList()) {
+              if (item['id'] == flow.videoId.toString()) {
+                achievementTree = item['achievementTree'];
 
-            var achievementTree='';
-            for(var item in selectedVideoRows!.toList())
-              {
-                if(item['id']==flow.videoId.toString())
-                  {
-                    achievementTree=item['achievementTree'];
-
-                    var reversedAchievementTree =
+                var reversedAchievementTree =
                     achievementTree.split('>>').toList();
 
-                    List<String> reversedAchievementTreeNew = [];
-                    reversedAchievementTree.forEach((achievement) {
-                      List<String> parts = achievement.split(":");
-                      if (parts.length > 1) {
-                        reversedAchievementTreeNew.add(parts[1]);
-                      }
-                    });
-
-
-                    var reversedString = reversedAchievementTreeNew.reversed.toList().join('>>');
-                    achievementTree=reversedString;
-
+                List<String> reversedAchievementTreeNew = [];
+                reversedAchievementTree.forEach((achievement) {
+                  List<String> parts = achievement.split(":");
+                  if (parts.length > 1) {
+                    reversedAchievementTreeNew.add(parts[1]);
                   }
+                });
+
+                var reversedString =
+                    reversedAchievementTreeNew.reversed.toList().join('>>');
+                achievementTree = reversedString;
               }
+            }
 
             Map<String, String> key3_3 = {};
             key3_3['flow_achievement_tree'] = achievementTree;
-            cells[key3_3] =  Text(achievementTree);
+            cells[key3_3] = Text(achievementTree);
 
+
+
+            var videoAchvIdDataSet = await appRepositories.tblVidVideoAchvMap(
+                'Lecture/GetObject', ['id', 'video_id', 'achv_id'],
+                video_id: flow.videoId);
+            var videoAchvId = videoAchvIdDataSet.firstValue('data', 'achv_id');
+
+            var getAchievementsDataSet = await appRepositories.getLearnInfoById(
+                'Lecture/GetObject', ['levels'],
+                learn_id: videoAchvId, getNoSqlData: 0);
+            String? getAchievements =
+                getAchievementsDataSet.firstValue('data', 'levels',insteadOfNull: '');
+
+            getAchievements??='';
+            getAchievements=getAchievements?.split('|').first ?? '';
+            var lectureLearnIdAsString = lecturePageModel.setLectureObjects?.tblCrsCourseMain?.learnId.toString();
+            lectureLearnIdAsString??='???';
+            bool isCompatibleLectureLearnId=false;
+            if (getAchievements.contains(lectureLearnIdAsString)) {
+              isCompatibleLectureLearnId=true;
+
+            }
+
+            Map<String, String> key3_4 = {};
+            key3_4['compatibleLectureAchievement'] = isCompatibleLectureLearnId ? 'Yes' :'No';
+            cells[key3_4] = Text(isCompatibleLectureLearnId ? AppLocalization.instance.translate(
+                'lib.screen.lecturePage.lecturePage', 'getStepTwoLayout', 'yes') :AppLocalization.instance.translate(
+                'lib.screen.lecturePage.lecturePage', 'getStepTwoLayout', 'no'),style: TextStyle(backgroundColor:  isCompatibleLectureLearnId ? Colors.transparent: Colors.red));
 
           } else if (flow.quizId != null && flow.quizId != BigInt.parse('0')) {
             Map<String, String> key4 = {};
@@ -683,15 +706,20 @@ class _LecturePageState extends State<LecturePage> {
 
             Map<String, String> key4_2 = {};
             key4_2['flow_type'] = 'Quiz';
-            cells[key4_2] =  Text(AppLocalization.instance.translate(
+            cells[key4_2] = Text(AppLocalization.instance.translate(
                 'lib.screen.lecturePage.lecturePage',
                 'getStepTwoLayout',
                 'flowItemTypeQuiz'));
 
-            var achievementTree='';
+            var achievementTree = '';
             Map<String, String> key4_3 = {};
             key4_3['flow_achievement_tree'] = achievementTree;
-            cells[key4_3] =  Text(achievementTree);
+            cells[key4_3] = Text(achievementTree);
+
+            Map<String, String> key4_4 = {};
+            key4_4['compatibleLectureAchievement'] ='No';
+            cells[key4_4] = Text(AppLocalization.instance.translate(
+                'lib.screen.lecturePage.lecturePage', 'getStepTwoLayout', 'no'),style: TextStyle(backgroundColor: Colors.red));
 
           } else if (flow.docId != null && flow.docId != BigInt.parse('0')) {
             Map<String, String> key5 = {};
@@ -709,15 +737,20 @@ class _LecturePageState extends State<LecturePage> {
 
             Map<String, String> key5_2 = {};
             key5_2['flow_type'] = 'Document';
-            cells[key5_2] =  Text(AppLocalization.instance.translate(
+            cells[key5_2] = Text(AppLocalization.instance.translate(
                 'lib.screen.lecturePage.lecturePage',
                 'getStepTwoLayout',
                 'flowItemTypeDocument'));
 
-            var achievementTree='';
+            var achievementTree = '';
             Map<String, String> key5_3 = {};
             key5_3['flow_achievement_tree'] = achievementTree;
-            cells[key5_3] =  Text(achievementTree);
+            cells[key5_3] = Text(achievementTree);
+
+            Map<String, String> key5_4 = {};
+            key5_4['compatibleLectureAchievement'] ='No';
+            cells[key5_4] = Text(AppLocalization.instance.translate(
+                'lib.screen.lecturePage.lecturePage', 'getStepTwoLayout', 'no'),style: TextStyle(backgroundColor: Colors.red),);
 
           } else if (flow.questId != null &&
               flow.questId != BigInt.parse('0')) {
@@ -748,8 +781,7 @@ class _LecturePageState extends State<LecturePage> {
               style: ButtonStyle(
                 textStyle: MaterialStateProperty.all<TextStyle>(
                   TextStyle(
-                      fontSize:
-                      theme.dataTableTheme.dataTextStyle?.fontSize),
+                      fontSize: theme.dataTableTheme.dataTextStyle?.fontSize),
                 ),
               ),
               child: Tooltip(
@@ -757,7 +789,7 @@ class _LecturePageState extends State<LecturePage> {
                 child: Wrap(
                   children: [
                     Text(
-                      questionTitle!= null && questionTitle.length > 20
+                      questionTitle != null && questionTitle.length > 20
                           ? "${questionTitle.substring(0, 20)}..."
                           : questionTitle ?? "",
                     ),
@@ -768,22 +800,18 @@ class _LecturePageState extends State<LecturePage> {
 
             Map<String, String> key6_2 = {};
             key6_2['flow_type'] = 'Question';
-            cells[key6_2] =  Text(AppLocalization.instance.translate(
+            cells[key6_2] = Text(AppLocalization.instance.translate(
                 'lib.screen.lecturePage.lecturePage',
                 'getStepTwoLayout',
                 'flowItemTypeQuestion'));
 
-            var achievementTree='';
-            for(var item in selectedQuestionRows!.toList())
-            {
-              if(item['id']==flow.questId.toString())
-              {
-                achievementTree=item['achievementTree'];
-
-                achievementTree=item['achievementTree'];
+            var achievementTree = '';
+            for (var item in selectedQuestionRows!.toList()) {
+              if (item['id'] == flow.questId.toString()) {
+                achievementTree = item['achievementTree'];
 
                 var reversedAchievementTree =
-                achievementTree.split('>>').toList();
+                    achievementTree.split('>>').toList();
 
                 List<String> reversedAchievementTreeNew = [];
                 reversedAchievementTree.forEach((achievement) {
@@ -793,17 +821,42 @@ class _LecturePageState extends State<LecturePage> {
                   }
                 });
 
-
-                var reversedString = reversedAchievementTreeNew.reversed.toList().join('>>');
-                achievementTree=reversedString;
-
+                var reversedString =
+                    reversedAchievementTreeNew.reversed.toList().join('>>');
+                achievementTree = reversedString;
               }
             }
 
             Map<String, String> key6_3 = {};
             key6_3['flow_achievement_tree'] = achievementTree;
-            cells[key6_3] =  Text(achievementTree);
+            cells[key6_3] = Text(achievementTree);
 
+            var questionAchvIdDataSet = await appRepositories.tblQueQuestAchvMap(
+                'Lecture/GetObject', ['id', 'quest_id', 'achv_id'],
+                quest_id: flow.questId);
+            var questionAchvId = questionAchvIdDataSet.firstValue('data', 'achv_id');
+
+            var getAchievementsDataSet = await appRepositories.getLearnInfoById(
+                'Lecture/GetObject', ['levels'],
+                learn_id: questionAchvId, getNoSqlData: 0);
+            String? getAchievements =
+            getAchievementsDataSet.firstValue('data', 'levels',insteadOfNull: '');
+
+            getAchievements??='';
+            getAchievements=getAchievements?.split('|').first ?? '';
+            var lectureLearnIdAsString = lecturePageModel.setLectureObjects?.tblCrsCourseMain?.learnId.toString();
+            lectureLearnIdAsString??='???';
+            bool isCompatibleLectureLearnId=false;
+            if (getAchievements.contains(lectureLearnIdAsString)) {
+              isCompatibleLectureLearnId=true;
+
+            }
+
+            Map<String, String> key6_4 = {};
+            key6_4['compatibleLectureAchievement'] = isCompatibleLectureLearnId ? 'Yes' :'No';
+            cells[key6_4] = Text(isCompatibleLectureLearnId ? AppLocalization.instance.translate(
+                'lib.screen.lecturePage.lecturePage', 'getStepTwoLayout', 'yes') :AppLocalization.instance.translate(
+                'lib.screen.lecturePage.lecturePage', 'getStepTwoLayout', 'no'),style: TextStyle(backgroundColor:  isCompatibleLectureLearnId ? Colors.transparent: Colors.red));
           } else {
             Map<String, String> key7 = {};
             key7['flow_id'] = '0';
@@ -811,22 +864,27 @@ class _LecturePageState extends State<LecturePage> {
 
             Map<String, String> key7_1 = {};
             key7_1['flow_item'] = 'NoItem';
-            cells[key7_1] =  Text(AppLocalization.instance.translate(
+            cells[key7_1] = Text(AppLocalization.instance.translate(
                 'lib.screen.lecturePage.lecturePage',
                 'getStepTwoLayout',
                 'flowItemTypeNoItem'));
 
             Map<String, String> key7_2 = {};
             key7_2['flow_type'] = 'NoItem';
-            cells[key7_2] =  Text(AppLocalization.instance.translate(
+            cells[key7_2] = Text(AppLocalization.instance.translate(
                 'lib.screen.lecturePage.lecturePage',
                 'getStepTwoLayout',
                 'flowItemTypeNoItem'));
 
-            var achievementTree='';
+            var achievementTree = '';
             Map<String, String> key7_3 = {};
             key7_3['flow_achievement_tree'] = achievementTree;
-            cells[key7_3] =  Text(achievementTree);
+            cells[key7_3] = Text(achievementTree);
+
+            Map<String, String> key7_4 = {};
+            key7_4['compatibleLectureAchievement'] ='No';
+            cells[key7_4] = Text(AppLocalization.instance.translate(
+                'lib.screen.lecturePage.lecturePage', 'getStepTwoLayout', 'no'),style: TextStyle(backgroundColor: Colors.red));
           }
 
           Map<String, String> key8 = {};
@@ -860,7 +918,11 @@ class _LecturePageState extends State<LecturePage> {
                               ],
                             ),
                           ),
-                        if (flows!.where((element) => element.orderNo!=0).length != flow.orderNo && flow.orderNo != 0)
+                        if (flows!
+                                    .where((element) => element.orderNo != 0)
+                                    .length !=
+                                flow.orderNo &&
+                            flow.orderNo != 0)
                           PopupMenuItem<String>(
                             padding: const EdgeInsets.all(3.0),
                             value: 'move_down',
@@ -902,15 +964,16 @@ class _LecturePageState extends State<LecturePage> {
                       if (flow.orderNo != 1) {
                         int currentOrder = flow.orderNo ?? 0;
 
-
-                        var replacedElement=lecturePageModel.setLectureObjects?.tblCrsCourseMain!
-                            .tblCrsCourseFlows!
-                            .where((element) =>element.orderNo == (currentOrder - 1))
+                        var replacedElement = lecturePageModel.setLectureObjects
+                            ?.tblCrsCourseMain!.tblCrsCourseFlows!
+                            .where((element) =>
+                                element.orderNo == (currentOrder - 1))
                             .first;
 
                         lecturePageModel.setLectureObjects?.tblCrsCourseMain!
-                            .tblCrsCourseFlows!.removeWhere((element) => element.orderNo==(currentOrder - 1));
-
+                            .tblCrsCourseFlows!
+                            .removeWhere((element) =>
+                                element.orderNo == (currentOrder - 1));
 
                         lecturePageModel.setLectureObjects?.tblCrsCourseMain!
                             .tblCrsCourseFlows!
@@ -918,31 +981,30 @@ class _LecturePageState extends State<LecturePage> {
                             .first
                             .updateOrderNo((currentOrder - 1));
 
-                        if(replacedElement!=null)
-                        {
-                          replacedElement?.orderNo=currentOrder;
+                        if (replacedElement != null) {
+                          replacedElement?.orderNo = currentOrder;
 
                           lecturePageModel.setLectureObjects?.tblCrsCourseMain!
-                              .tblCrsCourseFlows!.add(replacedElement!);
+                              .tblCrsCourseFlows!
+                              .add(replacedElement!);
                         }
 
-                        setState(() {
-
-                        });
-
+                        setState(() {});
                       }
                     } else if (value == 'move_down') {
                       if (flow.orderNo != flows!.length) {
                         int currentOrder = flow.orderNo ?? 0;
 
-                        var replacedElement=lecturePageModel.setLectureObjects?.tblCrsCourseMain!
-                            .tblCrsCourseFlows!
-                            .where((element) =>element.orderNo == (currentOrder + 1))
+                        var replacedElement = lecturePageModel.setLectureObjects
+                            ?.tblCrsCourseMain!.tblCrsCourseFlows!
+                            .where((element) =>
+                                element.orderNo == (currentOrder + 1))
                             .first;
 
                         lecturePageModel.setLectureObjects?.tblCrsCourseMain!
-                            .tblCrsCourseFlows!.removeWhere((element) => element.orderNo==(currentOrder + 1));
-
+                            .tblCrsCourseFlows!
+                            .removeWhere((element) =>
+                                element.orderNo == (currentOrder + 1));
 
                         lecturePageModel.setLectureObjects?.tblCrsCourseMain!
                             .tblCrsCourseFlows!
@@ -950,44 +1012,41 @@ class _LecturePageState extends State<LecturePage> {
                             .first
                             .updateOrderNo((currentOrder + 1));
 
-                        if(replacedElement!=null)
-                          {
-                            replacedElement?.orderNo=currentOrder;
+                        if (replacedElement != null) {
+                          replacedElement?.orderNo = currentOrder;
 
-                            lecturePageModel.setLectureObjects?.tblCrsCourseMain!
-                                .tblCrsCourseFlows!.add(replacedElement!);
-                          }
-                        setState(() {
-
-                        });
-
+                          lecturePageModel.setLectureObjects?.tblCrsCourseMain!
+                              .tblCrsCourseFlows!
+                              .add(replacedElement!);
+                        }
+                        setState(() {});
                       }
                     } else if (value == 'delete') {
                       lecturePageModel.setLectureObjects?.tblCrsCourseMain!
                           .tblCrsCourseFlows!
-                          .removeWhere((element) => element.orderNo == flow.orderNo);
+                          .removeWhere(
+                              (element) => element.orderNo == flow.orderNo);
 
                       lecturePageModel.setLectureObjects?.tblCrsCourseMain!
                           .tblCrsCourseFlows!
-                          .where((item) => item.orderNo != 0)// remove orderno=0 dumy record
+                          .where((item) =>
+                              item.orderNo != 0) // remove orderno=0 dumy record
                           .toList()
-                          .sort((a, b) => a.orderNo!.compareTo(b.orderNo!));// remove orderno=0 dumy record
-
+                          .sort((a, b) => a.orderNo!.compareTo(
+                              b.orderNo!)); // remove orderno=0 dumy record
 
                       int newOrder = 1;
                       lecturePageModel.setLectureObjects?.tblCrsCourseMain!
-                          .tblCrsCourseFlows! .where((item) => item.orderNo != 0)// remove orderno=0 dumy record
+                          .tblCrsCourseFlows!
+                          .where((item) =>
+                              item.orderNo != 0) // remove orderno=0 dumy record
                           .toList()
                           .forEach((element) {
                         element.orderNo = newOrder;
                         newOrder++;
                       });
 
-
-                      setState(() {
-
-                      });
-
+                      setState(() {});
                     }
                   },
                   child: Row(
@@ -1010,130 +1069,133 @@ class _LecturePageState extends State<LecturePage> {
           );
 
           dataTableRows.add(cells);
-        }
-        else
-          {}
+        } else {}
       }
     } else {}
-
-
 
     var toolBarButtons = [
       IconButton(
         onPressed: () {
-          var totalQuestion=lecturePageModel.setLectureObjects?.tblCrsCourseMain!.tblCrsCourseFlows!.where((element) => element.questId!>BigInt.parse('0') &&  element.questId!=null).length ?? 0;
-          if(totalQuestion<3)
-            {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => MainLayout(
-                      context: context,
-                      loadedStateContainer: QuestionDataTable(
-                        branchId: lecturePageModel.setLectureObjects?.tblCrsCourseMain!.branchId,
-                        gradeId: lecturePageModel.setLectureObjects?.tblCrsCourseMain!.gradeId,
-                        learnId: lecturePageModel.setLectureObjects?.tblCrsCourseMain!.learnId,
-                        userId: widget.userId,
-                        componentTextStyle: componentTextStyle,
-                        selectedQuestionIds: List.empty(growable: true),
-                        onSelectedRowsChanged: (selectedRows, selectedKeys) {
+          var totalQuestion = lecturePageModel
+                  .setLectureObjects?.tblCrsCourseMain!.tblCrsCourseFlows!
+                  .where((element) =>
+                      element.questId! > BigInt.parse('0') &&
+                      element.questId != null)
+                  .length ??
+              0;
+          if (totalQuestion < 3) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => MainLayout(
+                    context: context,
+                    loadedStateContainer: QuestionDataTable(
+                      branchId: lecturePageModel
+                          .setLectureObjects?.tblCrsCourseMain!.branchId,
+                      gradeId: lecturePageModel
+                          .setLectureObjects?.tblCrsCourseMain!.gradeId,
+                      learnId: lecturePageModel
+                          .setLectureObjects?.tblCrsCourseMain!.learnId,
+                      userId: widget.userId,
+                      componentTextStyle: componentTextStyle,
+                      selectedQuestionIds: List.empty(growable: true),
+                      onSelectedRowsChanged: (selectedRows, selectedKeys) {
+                        selectedQuestionRows = selectedRows;
+                      },
+                      onSelectedQuestionIdsChanged:
+                          (List<BigInt>? selectedQuestionIds) {
+                        var flows = lecturePageModel.setLectureObjects
+                            ?.tblCrsCourseMain!.tblCrsCourseFlows;
 
-                          selectedQuestionRows=selectedRows;
+                        if (flows == null || flows!.isEmpty) {
+                          lecturePageModel.setLectureObjects?.tblCrsCourseMain!
+                              .tblCrsCourseFlows = List.empty(growable: true);
+                        }
 
-                        },
-                        onSelectedQuestionIdsChanged:
-                            (List<BigInt>? selectedQuestionIds) {
+                        if (selectedQuestionIds != null) {
+                          //Rule in constant
+                          List<BigInt> firstThreeIds = selectedQuestionIds
+                                      .length >
+                                  (GeneralAppConstant
+                                          .LectureMaxQuestionQuantity -
+                                      totalQuestion)
+                              ? selectedQuestionIds.sublist(
+                                  0,
+                                  ((((GeneralAppConstant
+                                                  .LectureMaxQuestionQuantity ??
+                                              1) -
+                                          totalQuestion) -
+                                      1)))
+                              : selectedQuestionIds.toList();
 
+                          selectedQuestionIds = firstThreeIds;
 
+                          for (var question in selectedQuestionIds) {
+                            BigInt id = BigInt.parse('0');
+                            BigInt? courseId = lecturePageModel
+                                        .setLectureObjects?.tblCrsCourseMain !=
+                                    null
+                                ? lecturePageModel
+                                    .setLectureObjects?.tblCrsCourseMain!.id
+                                : BigInt.parse('0');
+                            int? orderNo = lecturePageModel.setLectureObjects
+                                        ?.tblCrsCourseMain!.tblCrsCourseFlows !=
+                                    null
+                                ? (lecturePageModel
+                                            .setLectureObjects
+                                            ?.tblCrsCourseMain!
+                                            .tblCrsCourseFlows!
+                                            .where((element) =>
+                                                element.orderNo != 0)
+                                            .length ??
+                                        0) +
+                                    1
+                                : 1;
+                            BigInt? videoId = BigInt.parse('0');
+                            BigInt? quizId = BigInt.parse('0');
+                            BigInt? docId = BigInt.parse('0');
+                            BigInt? questId = question;
+                            int? isActive = 0;
 
-                          var flows=lecturePageModel.setLectureObjects?.tblCrsCourseMain!.tblCrsCourseFlows;
+                            bool isExistQuestion = false;
 
-                          if (flows==null || flows!.isEmpty) {
-                            lecturePageModel.setLectureObjects?.tblCrsCourseMain!
-                                .tblCrsCourseFlows = List.empty(growable: true);
-                          }
-
-                          if (selectedQuestionIds != null) {
-
-                            //Rule in constant
-                            List<BigInt> firstThreeIds = selectedQuestionIds.length >(GeneralAppConstant.LectureMaxQuestionQuantity-totalQuestion)
-                                ? selectedQuestionIds.sublist(0,(((( GeneralAppConstant.LectureMaxQuestionQuantity ?? 1)-totalQuestion)-1)))
-                                : selectedQuestionIds.toList();
-
-                            selectedQuestionIds=firstThreeIds;
-
-                            for (var question in selectedQuestionIds) {
-                              BigInt id = BigInt.parse('0');
-                              BigInt? courseId = lecturePageModel
-                                  .setLectureObjects?.tblCrsCourseMain !=
-                                  null
-                                  ? lecturePageModel
-                                  .setLectureObjects?.tblCrsCourseMain!.id
-                                  : BigInt.parse('0');
-                              int? orderNo = lecturePageModel.setLectureObjects
-                                  ?.tblCrsCourseMain!.tblCrsCourseFlows !=
-                                  null
-                                  ? (lecturePageModel
-                                  .setLectureObjects
-                                  ?.tblCrsCourseMain!
-                                  .tblCrsCourseFlows!.where((element) => element.orderNo!=0)
-                                  .length ??
-                                  0) +
-                                  1
-                                  : 1;
-                              BigInt? videoId = BigInt.parse('0');
-                              BigInt? quizId = BigInt.parse('0');
-                              BigInt? docId = BigInt.parse('0');
-                              BigInt? questId = question;
-                              int? isActive = 0;
-
-
-                              bool isExistQuestion=false;
-
-                              if(flows!=null)
-                              {
-                                if(flows!.where((element) => element.questId==questId).isNotEmpty)
-                                {
-                                  isExistQuestion=true;
-                                }
+                            if (flows != null) {
+                              if (flows!
+                                  .where(
+                                      (element) => element.questId == questId)
+                                  .isNotEmpty) {
+                                isExistQuestion = true;
                               }
+                            }
 
-
-                              if(!isExistQuestion)
-                              {
-                                lecturePageModel.setLectureObjects?.tblCrsCourseMain!
-                                    .tblCrsCourseFlows!
-                                    .add(TblCrsCourseFlow(
-                                    id: id,
-                                    courseId: courseId,
-                                    orderNo: orderNo,
-                                    videoId: videoId,
-                                    quizId: quizId,
-                                    docId: docId,
-                                    questId: questId,
-                                    isActive: isActive));
-                              }
-
+                            if (!isExistQuestion) {
+                              lecturePageModel.setLectureObjects
+                                  ?.tblCrsCourseMain!.tblCrsCourseFlows!
+                                  .add(TblCrsCourseFlow(
+                                      id: id,
+                                      courseId: courseId,
+                                      orderNo: orderNo,
+                                      videoId: videoId,
+                                      quizId: quizId,
+                                      docId: docId,
+                                      questId: questId,
+                                      isActive: isActive));
                             }
                           }
+                        }
 
-                          setState(() {});
-                        },
-                      )),
-                  settings: const RouteSettings(
-                      name: HeroTagConstant
-                          .questionSelector), // use the route name as the Hero tag
-                ),
-              );
-            }
-          else
-            {
-              UIMessage.showMessage(context, '${AppLocalization.instance.translate(
-                  'lib.screen.lecturePage.lecturePage',
-                  'getStepTwoLayout',
-                  'maximumQuestionAdded')} [${GeneralAppConstant.LectureMaxQuestionQuantity.toString()}]');
-            }
-
+                        setState(() {});
+                      },
+                    )),
+                settings: const RouteSettings(
+                    name: HeroTagConstant
+                        .questionSelector), // use the route name as the Hero tag
+              ),
+            );
+          } else {
+            UIMessage.showMessage(context,
+                '${AppLocalization.instance.translate('lib.screen.lecturePage.lecturePage', 'getStepTwoLayout', 'maximumQuestionAdded')} [${GeneralAppConstant.LectureMaxQuestionQuantity.toString()}]');
+          }
         },
         icon: Row(
           mainAxisSize: MainAxisSize.max,
@@ -1155,95 +1217,109 @@ class _LecturePageState extends State<LecturePage> {
       ),
       IconButton(
         onPressed: () {
-
-          var totalVideo=lecturePageModel.setLectureObjects?.tblCrsCourseMain!.tblCrsCourseFlows!.where((element) => element.videoId!>BigInt.parse('0') && element.videoId!=null).length ?? 0;
-          if(totalVideo<3)
-          {
+          var totalVideo = lecturePageModel
+                  .setLectureObjects?.tblCrsCourseMain!.tblCrsCourseFlows!
+                  .where((element) =>
+                      element.videoId! > BigInt.parse('0') &&
+                      element.videoId != null)
+                  .length ??
+              0;
+          if (totalVideo < 3) {
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (_) => MainLayout(
                     context: context,
                     loadedStateContainer: VideoDataTable(
-                      branchId: lecturePageModel.setLectureObjects?.tblCrsCourseMain!.branchId,
-                      gradeId: lecturePageModel.setLectureObjects?.tblCrsCourseMain!.gradeId,
-                      learnId: lecturePageModel.setLectureObjects?.tblCrsCourseMain!.learnId,
+                      branchId: lecturePageModel
+                          .setLectureObjects?.tblCrsCourseMain!.branchId,
+                      gradeId: lecturePageModel
+                          .setLectureObjects?.tblCrsCourseMain!.gradeId,
+                      learnId: lecturePageModel
+                          .setLectureObjects?.tblCrsCourseMain!.learnId,
                       userId: widget.userId,
                       componentTextStyle: componentTextStyle,
                       selectedVideoIds: List.empty(growable: true),
                       onSelectedRowsChanged: (selectedRows, selectedKeys) {
-                        selectedVideoRows=selectedRows;
+                        selectedVideoRows = selectedRows;
                       },
                       onSelectedVideoIdsChanged:
                           (List<BigInt>? selectedVideoIds) {
-                        var flows=lecturePageModel.setLectureObjects?.tblCrsCourseMain!.tblCrsCourseFlows;
+                        var flows = lecturePageModel.setLectureObjects
+                            ?.tblCrsCourseMain!.tblCrsCourseFlows;
 
-                        if (flows==null || flows!.isEmpty) {
+                        if (flows == null || flows!.isEmpty) {
                           lecturePageModel.setLectureObjects?.tblCrsCourseMain!
                               .tblCrsCourseFlows = List.empty(growable: true);
                         }
 
                         if (selectedVideoIds != null) {
-
                           //Rule in constant
-                          List<BigInt> firstThreeIds = selectedVideoIds.length > (GeneralAppConstant.LectureMaxVideoQuantity-totalVideo)
-                              ? selectedVideoIds.sublist(0,(((( GeneralAppConstant.LectureMaxVideoQuantity ?? 1)-totalVideo)-1)))
+                          List<BigInt> firstThreeIds = selectedVideoIds.length >
+                                  (GeneralAppConstant.LectureMaxVideoQuantity -
+                                      totalVideo)
+                              ? selectedVideoIds.sublist(
+                                  0,
+                                  ((((GeneralAppConstant
+                                                  .LectureMaxVideoQuantity ??
+                                              1) -
+                                          totalVideo) -
+                                      1)))
                               : selectedVideoIds.toList();
 
-                          selectedVideoIds=firstThreeIds;
+                          selectedVideoIds = firstThreeIds;
 
                           for (var idVideo in selectedVideoIds) {
                             BigInt id = BigInt.parse('0');
                             BigInt? courseId = lecturePageModel
-                                .setLectureObjects?.tblCrsCourseMain !=
-                                null
+                                        .setLectureObjects?.tblCrsCourseMain !=
+                                    null
                                 ? lecturePageModel
-                                .setLectureObjects?.tblCrsCourseMain!.id
+                                    .setLectureObjects?.tblCrsCourseMain!.id
                                 : BigInt.parse('0');
                             int? orderNo = lecturePageModel.setLectureObjects
-                                ?.tblCrsCourseMain!.tblCrsCourseFlows !=
-                                null
+                                        ?.tblCrsCourseMain!.tblCrsCourseFlows !=
+                                    null
                                 ? (lecturePageModel
-                                .setLectureObjects
-                                ?.tblCrsCourseMain!
-                                .tblCrsCourseFlows!.where((element) => element.orderNo!=0)
-                                .length ??
-                                0) +
-                                1
+                                            .setLectureObjects
+                                            ?.tblCrsCourseMain!
+                                            .tblCrsCourseFlows!
+                                            .where((element) =>
+                                                element.orderNo != 0)
+                                            .length ??
+                                        0) +
+                                    1
                                 : 1;
                             BigInt? videoId = idVideo;
                             BigInt? quizId = BigInt.parse('0');
                             BigInt? docId = BigInt.parse('0');
-                            BigInt? questId =  BigInt.parse('0');
+                            BigInt? questId = BigInt.parse('0');
                             int? isActive = 0;
 
+                            bool isExistQuestion = false;
 
-                            bool isExistQuestion=false;
-
-                            if(flows!=null)
-                            {
-                              if(flows!.where((element) => element.videoId==idVideo).isNotEmpty)
-                              {
-                                isExistQuestion=true;
+                            if (flows != null) {
+                              if (flows!
+                                  .where(
+                                      (element) => element.videoId == idVideo)
+                                  .isNotEmpty) {
+                                isExistQuestion = true;
                               }
                             }
 
-
-                            if(!isExistQuestion)
-                            {
-                              lecturePageModel.setLectureObjects?.tblCrsCourseMain!
-                                  .tblCrsCourseFlows!
+                            if (!isExistQuestion) {
+                              lecturePageModel.setLectureObjects
+                                  ?.tblCrsCourseMain!.tblCrsCourseFlows!
                                   .add(TblCrsCourseFlow(
-                                  id: id,
-                                  courseId: courseId,
-                                  orderNo: orderNo,
-                                  videoId: videoId,
-                                  quizId: quizId,
-                                  docId: docId,
-                                  questId: questId,
-                                  isActive: isActive));
+                                      id: id,
+                                      courseId: courseId,
+                                      orderNo: orderNo,
+                                      videoId: videoId,
+                                      quizId: quizId,
+                                      docId: docId,
+                                      questId: questId,
+                                      isActive: isActive));
                             }
-
                           }
                         }
 
@@ -1255,17 +1331,10 @@ class _LecturePageState extends State<LecturePage> {
                         .videoSelector), // use the route name as the Hero tag
               ),
             );
+          } else {
+            UIMessage.showMessage(context,
+                '${AppLocalization.instance.translate('lib.screen.lecturePage.lecturePage', 'getStepTwoLayout', 'maximumVideoAdded')} [${GeneralAppConstant.LectureMaxVideoQuantity.toString()}]');
           }
-          else
-          {
-
-            UIMessage.showMessage(context, '${AppLocalization.instance.translate(
-                'lib.screen.lecturePage.lecturePage',
-                'getStepTwoLayout',
-                'maximumVideoAdded')} [${GeneralAppConstant.LectureMaxVideoQuantity.toString()}]');
-          }
-
-
         },
         icon: Row(
           mainAxisSize: MainAxisSize.max,
@@ -1288,41 +1357,25 @@ class _LecturePageState extends State<LecturePage> {
     ];
     var dataTableColumnAlias = [
       AppLocalization.instance.translate(
-          'lib.screen.lecturePage.lecturePage',
-          'getStepTwoLayout',
-          'id'),
+          'lib.screen.lecturePage.lecturePage', 'getStepTwoLayout', 'id'),
       AppLocalization.instance.translate(
-          'lib.screen.lecturePage.lecturePage',
-          'getStepTwoLayout',
-          'courseId'),
+          'lib.screen.lecturePage.lecturePage', 'getStepTwoLayout', 'courseId'),
       AppLocalization.instance.translate(
-          'lib.screen.lecturePage.lecturePage',
-          'getStepTwoLayout',
-          'orderNo'),
+          'lib.screen.lecturePage.lecturePage', 'getStepTwoLayout', 'orderNo'),
       AppLocalization.instance.translate(
-          'lib.screen.lecturePage.lecturePage',
-          'getStepTwoLayout',
-          'flowId'),
+          'lib.screen.lecturePage.lecturePage', 'getStepTwoLayout', 'flowId'),
       AppLocalization.instance.translate(
-          'lib.screen.lecturePage.lecturePage',
-          'getStepTwoLayout',
-          'flowItem'),
+          'lib.screen.lecturePage.lecturePage', 'getStepTwoLayout', 'flowItem'),
       AppLocalization.instance.translate(
-          'lib.screen.lecturePage.lecturePage',
-          'getStepTwoLayout',
-          'flowType'),
+          'lib.screen.lecturePage.lecturePage', 'getStepTwoLayout', 'flowType'),
+      AppLocalization.instance.translate('lib.screen.lecturePage.lecturePage',
+          'getStepTwoLayout', 'flow_achievement_tree'),
+      AppLocalization.instance.translate('lib.screen.lecturePage.lecturePage',
+          'getStepTwoLayout', 'compatibleLectureAchievement'),
       AppLocalization.instance.translate(
-          'lib.screen.lecturePage.lecturePage',
-          'getStepTwoLayout',
-          'flow_achievement_tree'),
+          'lib.screen.lecturePage.lecturePage', 'getStepTwoLayout', 'isActive'),
       AppLocalization.instance.translate(
-          'lib.screen.lecturePage.lecturePage',
-          'getStepTwoLayout',
-          'isActive'),
-      AppLocalization.instance.translate(
-          'lib.screen.lecturePage.lecturePage',
-          'getStepTwoLayout',
-          'actions')
+          'lib.screen.lecturePage.lecturePage', 'getStepTwoLayout', 'actions')
     ];
     var dataTableColumnNames = const [
       'id',
@@ -1332,6 +1385,7 @@ class _LecturePageState extends State<LecturePage> {
       'flow_item',
       'flow_type',
       'flow_achievement_tree',
+      'compatibleLectureAchievement',
       'is_active',
       'actions'
     ];
@@ -1343,6 +1397,7 @@ class _LecturePageState extends State<LecturePage> {
       'flow_item',
       'flow_type',
       'flow_achievement_tree',
+      'compatibleLectureAchievement',
       'is_active',
       'actions'
     ];
@@ -1355,12 +1410,12 @@ class _LecturePageState extends State<LecturePage> {
       ColumnDataType('flow_item', String),
       ColumnDataType('flow_type', String),
       ColumnDataType('flow_achievement_tree', String),
+      ColumnDataType('compatibleLectureAchievement', String),
       ColumnDataType('is_active', int),
       ColumnDataType('actions', String),
     ];
 
-
-    lectureFlowDataTable=CommonDataTable(
+    lectureFlowDataTable = CommonDataTable(
       toolBarButtons: toolBarButtons,
       dataTableColumnAlias: dataTableColumnAlias,
       dataTableColumnNames: dataTableColumnNames,
@@ -1369,21 +1424,24 @@ class _LecturePageState extends State<LecturePage> {
       columnDataTypes: columnDataTypes,
       dataTableRows: dataTableRows,
       dataTableKeyColumnName: 'orderNo',
-      dataTableSelectedKeys:List.empty(),
+      dataTableSelectedKeys: List.empty(),
       showCheckboxColumn: false,
     );
 
     return Container(
       alignment: Alignment.centerLeft,
-      child:lectureFlowDataTable,
+      child: lectureFlowDataTable,
     );
   }
 
   Future<Widget> getStepThreeLayout(BuildContext context) async {
     final screenWidth = MediaQuery.of(context).size.width;
 
-
-    return Center(child: LectureObjectsSummary( lectureObjects: lecturePageModel.setLectureObjects!,lectureFlowDataTable:lectureFlowDataTable ),);
+    return Center(
+      child: LectureObjectsSummary(
+          lectureObjects: lecturePageModel.setLectureObjects!,
+          lectureFlowDataTable: lectureFlowDataTable),
+    );
   }
 
   void lectureBlocAddEvent(int? activeCurrentStep) {

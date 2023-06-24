@@ -826,10 +826,13 @@
       "flowItem": "Akış Öğesi",
       "flowType": "Akış Tipi",
       "flow_achievement_tree": "Akış Kazanım Ağacı",
+      "compatibleLectureAchievement": "Uyumlu mu ?",
       "isActive": "Aktif Mi ?",
       "actions": "İşlemler",
       "maximumQuestionAdded": "Ekleyebileceğiniz maksimum soru sayısına ulaştınız.",
-      "maximumVideoAdded": "Ekleyebileceğiniz maksimum video sayısına ulaştınız."
+      "maximumVideoAdded": "Ekleyebileceğiniz maksimum video sayısına ulaştınız.",
+      "yes": "Evet",
+      "no": "Hayır"
     },
     "_buildStepper": {
       "next": "İleri",

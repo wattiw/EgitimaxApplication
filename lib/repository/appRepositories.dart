@@ -117,6 +117,24 @@ class AppRepositories implements AppRepositoriesBase {
 extension AppRepositoriesExtension on AppRepositories {
 
 
+  Future<Map<String, dynamic>> procAchievementMeter(
+      String controllerAndAction, String video_ids,String question_ids,
+      {int? getNoSqlData}) async {
+    String queryPart = 'proc_achievement_meter';
+
+    List<String> queryParts = queryPart.split('\n');
+    String joinedQuery = queryParts.join(' ');
+
+    List<SqlParameter> parameters = List.empty(growable: true);
+
+    parameters.add(SqlParameter('@video_ids', video_ids));
+    parameters.add(SqlParameter('@quest_ids', question_ids));
+
+
+    return getDataSet(controllerAndAction,
+        query: joinedQuery, parameters: parameters, isProcedure: true);
+  }
+
   Future<Map<String, dynamic>> userTotalLikesOrDislikes(String controllerAndAction,
       List<String> columns,BigInt user_id,int like_type,
       {int? getNoSqlData }) async {

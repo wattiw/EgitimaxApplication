@@ -16,6 +16,7 @@ class Assets {
   static const String commonIsPublicCheckBox = 'lib/screen/common/isPublicCheckBox.dart';
   static const String commonKeyValuePairs = 'lib/screen/common/keyValuePairs.dart';
   static const String commonLearnLevels = 'lib/screen/common/learnLevels.dart';
+  static const String commonPercentageCircle = 'lib/screen/common/percentageCircle.dart';
   static const String commonQuestionDataTable = 'lib/screen/common/questionDataTable.dart';
   static const String commonQuestionOverView = 'lib/screen/common/questionOverView.dart';
   static const String commonUserInteractiveMessage = 'lib/screen/common/userInteractiveMessage.dart';
