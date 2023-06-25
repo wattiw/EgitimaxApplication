@@ -151,6 +151,7 @@ class _LecturePageState extends State<LecturePage> {
             'lib.screen.lecturePage.lecturePage',
             'lectureOperationsSteps',
             'lectureCreate')),
+        subtitle: const Text('Bu alanlar dolacak'),
         //subtitle: const Text('Fill in the details'),
         content: Container(
           padding: const EdgeInsets.symmetric(horizontal: 1),
@@ -376,7 +377,6 @@ class _LecturePageState extends State<LecturePage> {
                         onChanged: (text) {
                           lecturePageModel.setLectureObjects!.tblCrsCourseMain!
                               .welcomeMsg = text;
-                          setState(() {});
                         },
                       ),
                     ),
@@ -410,7 +410,7 @@ class _LecturePageState extends State<LecturePage> {
                         onChanged: (text) {
                           lecturePageModel.setLectureObjects!.tblCrsCourseMain!
                               .goodbyeMsg = text;
-                          setState(() {});
+
                         },
                       ),
                     ),
