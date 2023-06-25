@@ -490,7 +490,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
                   ? event.quizPageModel.userId
                   : createdBy,
               createdOn:
-                  event.quizPageModel.quizId == 0 ? DateTime.now() : createdOn,
+                  event.quizPageModel.quizId == BigInt.parse('0')  ? DateTime.now() : createdOn,
               updatedBy: event.quizPageModel.userId,
               updatedOn: DateTime.now(),
               userId: isCorporateUser ? mainUserId : event.quizPageModel.userId,

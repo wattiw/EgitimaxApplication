@@ -115,9 +115,9 @@ class LectureBloc extends Bloc<LectureEvent, LectureState> {
         int isApproved =  tblCrsCourseMainDataSet.firstValue('data', 'is_approved', insteadOfNull: 0);
         double aggRating = tblCrsCourseMainDataSet.firstValue('data', 'agg_rating', insteadOfNull: 0.0);
         BigInt createdBy = tblCrsCourseMainDataSet.firstValueWithType<BigInt>('data', 'created_by', insteadOfNull: event.lecturePageModel.userId) ?? event.lecturePageModel.userId;
-        DateTime createdOn =  tblCrsCourseMainDataSet.firstValue('data', 'created_on', insteadOfNull: DateTime.now());
+        DateTime? createdOn =  tblCrsCourseMainDataSet.firstValueWithType<DateTime>('data', 'created_on', insteadOfNull: DateTime.now());
         BigInt updatedBy =tblCrsCourseMainDataSet.firstValueWithType<BigInt>('data', 'created_by', insteadOfNull: event.lecturePageModel.userId) ?? event.lecturePageModel.userId;
-        DateTime updatedOn = tblCrsCourseMainDataSet.firstValue('data', 'updated_on', insteadOfNull: DateTime.now());
+        DateTime? updatedOn = tblCrsCourseMainDataSet.firstValueWithType<DateTime>('data', 'updated_on', insteadOfNull: DateTime.now());
 
         event.lecturePageModel.setLectureObjects!.tblCrsCourseMain =
             TblCrsCourseMain(
@@ -150,13 +150,13 @@ class LectureBloc extends Bloc<LectureEvent, LectureState> {
         for(var flow in tblCrsCourseFlowDataSet.selectDataTable('data'))
           {
             TblCrsCourseFlow newFlow = TblCrsCourseFlow(
-                id: flow['id'],
-                courseId: flow['course_id'],
+                id:BigInt.parse((flow['id'] ?? 0).toString()),
+                courseId: BigInt.parse((flow['course_id'] ?? 0).toString()),
               orderNo: flow['order_no'],
-              videoId: flow['video_id'],
-              quizId: flow['quiz_id'],
-              docId: flow['doc_id'],
-              questId: flow['quest_id'],
+              videoId: BigInt.parse((flow['video_id'] ?? 0).toString()),
+              quizId: BigInt.parse((flow['quiz_id'] ?? 0).toString()),
+              docId: BigInt.parse((flow['doc_id'] ?? 0).toString()),
+              questId: BigInt.parse((flow['quest_id'] ?? 0).toString()),
               isActive: flow['is_active'],
             );
             event.lecturePageModel.setLectureObjects!.tblCrsCourseMain!.tblCrsCourseFlows!.add(newFlow);
@@ -277,6 +277,55 @@ class LectureBloc extends Bloc<LectureEvent, LectureState> {
       emit(SavingPmState());
       await Future.delayed(const Duration(seconds: 1));
       try {
+        var tblUserSubuserDataSet = await appRepositories.tblUserSubuser(
+            'Lecture/GetObject', ['id', 'main_user_id', 'sub_user_id'],
+            sub_user_id: event.lecturePageModel.userId);
+        var mainUserId = tblUserSubuserDataSet.firstValueWithType<BigInt>(
+            'data', 'main_user_id',
+            insteadOfNull: BigInt.parse('0'));
+        bool isCorporateUser;
+        if (mainUserId != BigInt.parse(mainUserId.toString()) &&
+            mainUserId != null) {
+          isCorporateUser = true;
+        } else {
+          isCorporateUser = false;
+        }
+
+        var tblCrsCourseMainDataSet = await appRepositories.tblCrsCourseMain(
+            'Lecture/GetObject', ['id', 'created_by', 'updated_by', 'created_on'],
+            id: event.lecturePageModel.lectureId);
+
+        BigInt? lectureId = tblCrsCourseMainDataSet.firstValueWithType<BigInt>(
+            'data', 'id',
+            insteadOfNull: 0); //  if Question not exist to insert new one.
+        event.lecturePageModel.lectureId = lectureId;
+
+        BigInt? createdBy = tblCrsCourseMainDataSet.firstValueWithType<BigInt>(
+            'data', 'created_by',
+            insteadOfNull: BigInt.parse('0'));
+
+        BigInt? updatedBy = tblCrsCourseMainDataSet.firstValueWithType<BigInt>(
+            'data', 'updated_by',
+            insteadOfNull: BigInt.parse('0'));
+
+        DateTime? createdOn = tblCrsCourseMainDataSet.firstValueWithType<DateTime>(
+            'data', 'created_on',
+            insteadOfNull: DateTime.now());
+
+        event.lecturePageModel.setLectureObjects?.tblCrsCourseMain?.createdBy= createdBy == BigInt.parse('0')
+            ? event.lecturePageModel.userId
+            : createdBy;
+
+        event.lecturePageModel.setLectureObjects?.tblCrsCourseMain?.createdOn=event.lecturePageModel.lectureId == BigInt.parse('0') ? DateTime.now() : createdOn;
+
+        event.lecturePageModel.setLectureObjects?.tblCrsCourseMain?.updatedBy=event.lecturePageModel.userId;
+        event.lecturePageModel.setLectureObjects?.tblCrsCourseMain?.updatedOn= DateTime.now();
+        event.lecturePageModel.setLectureObjects?.tblCrsCourseMain?.userId= isCorporateUser ? mainUserId : event.lecturePageModel.userId;
+
+        var IsSaved =  await lectureRepository.setDataSet(setObject: event.lecturePageModel.setLectureObjects!);
+        int bekle = 0;
+
+
         emit(SavedPmState(lecturePageModel: event.lecturePageModel));
       } catch (e) {
         emit(ErrorPmState(errorMessage: e.toString()));

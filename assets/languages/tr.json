@@ -970,6 +970,25 @@
     "videoSources": {
       "videoResource": "Video Kaynağı"
     }
+  },
+  "lib.screen.lecture.lectureObjectsSummary": {
+    "prepareWidget": {
+      "yes": "Evet",
+      "no": "Hayır",
+      "lectureTitle": "Ders Başlığı",
+      "preparedBy": "Hazırlayan",
+      "descriptions": "Açıklamalar",
+      "grade": "Sınıf",
+      "branch": "Branş",
+      "domain": "Alan",
+      "subdomain": "Alt Alan",
+      "achievement": "Kazanım",
+      "subject": "Konu",
+      "isPublic": "Herkese Açık",
+      "openingMessage": "Açılış Mesajı",
+      "closingMessage": "Kapanış Mesajı",
+      "achievementMeter": "Kazanımetre"
+    }
   }
 
 

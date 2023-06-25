@@ -28,7 +28,8 @@ class LectureObjectsSummary extends StatelessWidget {
         return Column(
           children: [
             Card(
-              elevation: 4,
+              color: Colors.white,
+              elevation: 0,
               margin: const EdgeInsets.all(8),
               child: Padding(
                 padding: const EdgeInsets.all(8),
@@ -45,7 +46,7 @@ class LectureObjectsSummary extends StatelessWidget {
                             child: snapshot.data ?? Container(),
                           );
                         } else if (snapshot.hasError) {
-                          return const Text('Nasip');
+                          return  Text(snapshot.error.toString());
                         } else {
                           return const CircularProgressIndicator(); // or any other loading indicator
                         }
@@ -111,12 +112,20 @@ class LectureObjectsSummary extends StatelessWidget {
       }
     }
 
-    var isPublic =lectureObjects.tblCrsCourseMain?.isPublic == 1 ? 'Yes' : 'No';
+    var isPublic =lectureObjects.tblCrsCourseMain?.isPublic == 1 ?
+    AppLocalization.instance.translate(
+        'lib.screen.lecture.lectureObjectsSummary',
+        'prepareWidget',
+        'yes'): AppLocalization.instance.translate(
+        'lib.screen.lecture.lectureObjectsSummary',
+        'prepareWidget',
+        'no');
 
     var openingMessage = lectureObjects.tblCrsCourseMain?.welcomeMsg ?? '';
     var closingMessage = lectureObjects.tblCrsCourseMain?.goodbyeMsg ?? '';
 
     lectureFlowDataTable?.dataTableHideColumn = const [
+      'TableMenu',
       'id',
       'course_id',
       //'order_no',
@@ -129,7 +138,7 @@ class LectureObjectsSummary extends StatelessWidget {
       'actions'
     ];
     lectureFlowDataTable?.toolBarButtons=null;
-
+    lectureFlowDataTable?.showDataTableMenu=false;
     var flows = lectureObjects.tblCrsCourseMain?.tblCrsCourseFlows;
     var videoResult = '';
     var questResult = '';
@@ -160,8 +169,11 @@ class LectureObjectsSummary extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: [
-        const Text(
-          'Lecture Title:',
+         Text(
+          '${AppLocalization.instance.translate(
+              'lib.screen.lecture.lectureObjectsSummary',
+              'prepareWidget',
+              'lectureTitle')}:',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         Text(lectureTitle)
@@ -171,8 +183,11 @@ class LectureObjectsSummary extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: [
-        const Text(
-          'Prepared By:',
+         Text(
+          '${AppLocalization.instance.translate(
+              'lib.screen.lecture.lectureObjectsSummary',
+              'prepareWidget',
+              'preparedBy')}:',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         Text(preparedBy)
@@ -182,8 +197,11 @@ class LectureObjectsSummary extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: [
-        const Text(
-          'Descriptions:',
+         Text(
+          '${AppLocalization.instance.translate(
+              'lib.screen.lecture.lectureObjectsSummary',
+              'prepareWidget',
+              'descriptions')}:',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         Text(descriptions)
@@ -193,8 +211,11 @@ class LectureObjectsSummary extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: [
-        const Text(
-          'Grade:',
+         Text(
+          '${AppLocalization.instance.translate(
+              'lib.screen.lecture.lectureObjectsSummary',
+              'prepareWidget',
+              'grade')}:',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         Text(gradeName)
@@ -204,8 +225,11 @@ class LectureObjectsSummary extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: [
-        const Text(
-          'Branch:',
+         Text(
+          '${AppLocalization.instance.translate(
+              'lib.screen.lecture.lectureObjectsSummary',
+              'prepareWidget',
+              'branch')}:',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         Text(branchName)
@@ -214,13 +238,13 @@ class LectureObjectsSummary extends StatelessWidget {
 
     var libType = {
       "ct_dom": AppLocalization.instance
-          .translate('lib.screen.common.videoOverView', 'build', 'domain'),
+          .translate('lib.screen.lecture.lectureObjectsSummary', 'prepareWidget', 'domain'),
       "ct_subdom": AppLocalization.instance
-          .translate('lib.screen.common.videoOverView', 'build', 'subdomain'),
+          .translate('lib.screen.lecture.lectureObjectsSummary', 'prepareWidget', 'subdomain'),
       "ct_achv": AppLocalization.instance
-          .translate('lib.screen.common.videoOverView', 'build', 'achievement'),
+          .translate('lib.screen.lecture.lectureObjectsSummary', 'prepareWidget', 'achievement'),
       "ct_subject": AppLocalization.instance
-          .translate('lib.screen.common.videoOverView', 'build', 'subject')
+          .translate('lib.screen.lecture.lectureObjectsSummary', 'prepareWidget', 'subject')
     };
     for (var item in learnLevelsKeyValuePairs.entries.toList().reversed.toList()) {
 
@@ -244,15 +268,19 @@ class LectureObjectsSummary extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: [
-        const Text(
-          'Is Public:',
+         Text(
+          '${AppLocalization.instance.translate(
+              'lib.screen.lecture.lectureObjectsSummary',
+              'prepareWidget',
+              'isPublic')}:',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         Text(isPublic)
       ],
     ));
     var c1 = Card(
-      elevation: 4,
+      color: Colors.white,
+      elevation: 0,
       margin: const EdgeInsets.all(8),
       child: Padding(
         padding: const EdgeInsets.all(8),
@@ -268,8 +296,11 @@ class LectureObjectsSummary extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: [
-        const Text(
-          'Opening Message:',
+         Text(
+          '${AppLocalization.instance.translate(
+              'lib.screen.lecture.lectureObjectsSummary',
+              'prepareWidget',
+              'openingMessage')}:',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         Text(openingMessage)
@@ -279,15 +310,19 @@ class LectureObjectsSummary extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: [
-        const Text(
-          'Closing Message:',
+         Text(
+          '${AppLocalization.instance.translate(
+              'lib.screen.lecture.lectureObjectsSummary',
+              'prepareWidget',
+              'closingMessage')}:',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         Text(closingMessage)
       ],
     ));
     var c2 = Card(
-      elevation: 4,
+      color: Colors.white,
+      elevation: 0,
       margin: const EdgeInsets.all(8),
       child: Padding(
         padding: const EdgeInsets.all(8),
@@ -306,7 +341,8 @@ class LectureObjectsSummary extends StatelessWidget {
     ));
 
     var c3 = Card(
-      elevation: 4,
+      color: Colors.white,
+      elevation: 0,
       margin: const EdgeInsets.all(8),
       child: Padding(
         padding: const EdgeInsets.all(8),
@@ -320,11 +356,11 @@ class LectureObjectsSummary extends StatelessWidget {
     List<Card> cardFour = List.empty(growable: true);
 
 
+    List<ListTile> achievementMeterItems=List.empty(growable: true);
     int totolAchievement=0;
     int compatibleAchievement=0;
     for(var achitem in achievementMeterDataSet.selectDataTable('data'))
       {
-
 
         var isContain=achitem['is_contain'];
         var code=achitem['item_code'];
@@ -345,6 +381,11 @@ class LectureObjectsSummary extends StatelessWidget {
               ),
             );
 
+            achievementMeterItems.add(ListTile(
+              tileColor: achitem['is_contain']==1 ? Colors.greenAccent.shade700 : Colors.red.shade600,
+              title: Text(achitem['item_code'],style: const TextStyle(fontSize: 10),),
+              subtitle: Text(achitem['name'],style: const TextStyle(fontSize: 10),),
+            ));
             cardFour.add(item);
 
           }
@@ -362,9 +403,11 @@ class LectureObjectsSummary extends StatelessWidget {
     }
 
 
-    cardFour.add(
+
+
+   cardFour.add(
       Card(
-        color: Colors.transparent,
+        color: Colors.white,
         child: PercentageCircle(
           percentage: percentageOfAchievement != null && !percentageOfAchievement.isNaN ? percentageOfAchievement : 0.0,
         ),
@@ -373,12 +416,18 @@ class LectureObjectsSummary extends StatelessWidget {
 
     cardFour=cardFour.reversed.toList();
 
-    var c4 = percentageOfAchievement!=null ?  Column(
+    if(percentageOfAchievement!=null)
+      {
+        percentageOfAchievement=0;
+      }
+
+    var c4 =Column(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        const Card(
-          elevation: 4,
+         Card(
+           color: Colors.white,
+          elevation: 0,
           margin: EdgeInsets.all(8),
           child: Padding(
             padding: EdgeInsets.all(8),
@@ -386,24 +435,76 @@ class LectureObjectsSummary extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text('Achievement Meter'),
+                Text(AppLocalization.instance.translate(
+                    'lib.screen.lecture.lectureObjectsSummary',
+                    'prepareWidget',
+                    'achievementMeter')),
               ],
             )
           ),
         ),
         Card(
-          elevation: 4,
+          color: Colors.white,
+          elevation: 0,
           margin: const EdgeInsets.all(8),
           child: Padding(
             padding: const EdgeInsets.all(8),
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
-                children:percentageOfAchievement!=null ? cardFour : [Container()]),
+                children:cardFour),
           ),
         ),
       ],
-    ) : Container();
+    );
+
+
+    var achievementMeterWidget=Card(
+      elevation: 4,
+      child: Row(
+        children: [
+          Expanded(
+            flex: 3,
+            child: Container(
+              height: 200,
+              color: Colors.blue,
+              child: Center(
+                child: PercentageCircle(
+                  percentage: percentageOfAchievement != null && !percentageOfAchievement.isNaN ? percentageOfAchievement : 0.0,
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Container(
+              padding: EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Item Listesi',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: achievementMeterItems.length,
+                      itemBuilder: (context, index) {
+                        return achievementMeterItems[index];
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,

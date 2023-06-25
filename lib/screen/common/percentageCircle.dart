@@ -10,7 +10,7 @@ class PercentageCircle extends StatefulWidget {
 }
 
 class _PercentageCircleState extends State<PercentageCircle> {
-  double maxSize = 400.0; // Maksimum boyut
+  double maxSize = 300.0; // Maksimum boyut
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +18,23 @@ class _PercentageCircleState extends State<PercentageCircle> {
     Color redColor = Colors.red;
 
     double size = widget.percentage * maxSize / 100.0;
+
+    if (widget.percentage == 0) {
+      return Container(
+        width: size,
+        height: size,
+        child: const Center(
+          child: Text(
+            '0%',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      );
+    }
 
     return Container(
       width: size,
@@ -63,16 +80,18 @@ class CirclePainter extends CustomPainter {
       ..color = greenColor
       ..style = PaintingStyle.fill;
 
-    canvas.drawCircle(center, radius, greenPaint);
+    if (percentage > 0) {
+      canvas.drawCircle(center, radius, greenPaint);
 
-    double sweepAngle = 2 * percentage * 3.14 / 100;
-    canvas.drawArc(
-      Rect.fromCircle(center: center, radius: radius),
-      -3.14 / 2,
-      sweepAngle,
-      true,
-      redPaint,
-    );
+      double sweepAngle = 2 * percentage * 3.14 / 100;
+      canvas.drawArc(
+        Rect.fromCircle(center: center, radius: radius),
+        -3.14 / 2,
+        sweepAngle,
+        true,
+        redPaint,
+      );
+    }
   }
 
   @override

@@ -402,7 +402,8 @@ class _CommonDataTableState extends State<CommonDataTable> {
                 },
                 style: theme.dataTableTheme.dataTextStyle,
                 decoration: InputDecoration(
-                  hintText: AppLocalization.instance.translate('lib.screen.common.commonDataTable','filters', 'search'),
+                  hintText: AppLocalization.instance.translate(
+                      'lib.screen.common.commonDataTable', 'filters', 'search'),
                   prefixIcon: IconButton(
                     onPressed: () {
                       setState(() {
@@ -516,7 +517,9 @@ class _CommonDataTableState extends State<CommonDataTable> {
       }
 
       widget.filteredRowData!.sort((a, b) {
-        var foundedColumnName = ((a.cells[newIndexAsPerColName].child as Container).child!.key as ValueKey);
+        var foundedColumnName =
+            ((a.cells[newIndexAsPerColName].child as Container).child!.key
+                as ValueKey);
         var foundedColumnNameAsString = foundedColumnName.value.toString();
 
         if (foundedColumnNameAsString != columnName) {
@@ -537,15 +540,21 @@ class _CommonDataTableState extends State<CommonDataTable> {
         var bValue = '';
 
         if (a.cells[newIndexAsPerColName].child.key is ValueKey) {
-          aValue = (a.cells[newIndexAsPerColName].child.key as ValueKey).value.toString();
+          aValue = (a.cells[newIndexAsPerColName].child.key as ValueKey)
+              .value
+              .toString();
         } else if (a.cells[newIndexAsPerColName].child is Container) {
-          aValue = (a.cells[newIndexAsPerColName].child as Container).key.toString();
+          aValue =
+              (a.cells[newIndexAsPerColName].child as Container).key.toString();
         }
 
         if (b.cells[newIndexAsPerColName].child.key is ValueKey) {
-          bValue = (b.cells[newIndexAsPerColName].child.key as ValueKey).value.toString();
+          bValue = (b.cells[newIndexAsPerColName].child.key as ValueKey)
+              .value
+              .toString();
         } else if (b.cells[newIndexAsPerColName].child is Container) {
-          bValue = (b.cells[newIndexAsPerColName].child as Container).key.toString();
+          bValue =
+              (b.cells[newIndexAsPerColName].child as Container).key.toString();
         }
 
         try {
@@ -580,12 +589,13 @@ class _CommonDataTableState extends State<CommonDataTable> {
             }
           }
         } catch (e) {
-          return sortAscending ? aValue.compareTo(bValue) : bValue.compareTo(aValue);
+          return sortAscending
+              ? aValue.compareTo(bValue)
+              : bValue.compareTo(aValue);
         }
       });
     });
   }
-
 
   void onSelectedRow(bool value, String? index) {
     if (index != null) {
@@ -660,10 +670,17 @@ class _CommonDataTableState extends State<CommonDataTable> {
     }
 
     //Add column chooser
-    List<DataColumn> columnChooserAddedColList =
-        addDataTableMenuToDataTableColumns(colList);
+    bool addTableMenu = true;
+    for (DataColumn dc in colList) {
+      if (dc.tooltip == 'Table Menu') {
+        addTableMenu = false;
+      }
+    }
 
+
+    List<DataColumn> columnChooserAddedColList = addDataTableMenuToDataTableColumns(colList);
     return columnChooserAddedColList;
+
   }
 
   List<DataColumn> addDataTableMenuToDataTableColumns(
@@ -1133,7 +1150,10 @@ class _ColumnChooserButtonState extends State<ColumnChooserButton> {
             Padding(
               padding: const EdgeInsets.only(left: 5),
               child: PopupMenuButton<String>(
-                tooltip: AppLocalization.instance.translate('lib.screen.common.commonDataTable','columnChooserButton', 'choseColumn'),
+                tooltip: AppLocalization.instance.translate(
+                    'lib.screen.common.commonDataTable',
+                    'columnChooserButton',
+                    'choseColumn'),
                 icon: Row(
                   children: [
                     Icon(
@@ -1142,7 +1162,10 @@ class _ColumnChooserButtonState extends State<ColumnChooserButton> {
                     ),
                     const SizedBox(width: 3),
                     Text(
-                      AppLocalization.instance.translate('lib.screen.common.commonDataTable','columnChooserButton', 'choseColumn'),
+                      AppLocalization.instance.translate(
+                          'lib.screen.common.commonDataTable',
+                          'columnChooserButton',
+                          'choseColumn'),
                       style: TextStyle(
                         color: textColor.resolve({}),
                       ),
@@ -1243,7 +1266,10 @@ class _ColumnFilterChooserButton extends State<ColumnFilterChooserButton> {
             Padding(
               padding: const EdgeInsets.only(left: 5),
               child: PopupMenuButton<String>(
-                tooltip: AppLocalization.instance.translate('lib.screen.common.commonDataTable','columnFilterChooserButton', 'choseFilterColumn'),
+                tooltip: AppLocalization.instance.translate(
+                    'lib.screen.common.commonDataTable',
+                    'columnFilterChooserButton',
+                    'choseFilterColumn'),
                 icon: Row(
                   children: [
                     Icon(
@@ -1252,7 +1278,10 @@ class _ColumnFilterChooserButton extends State<ColumnFilterChooserButton> {
                     ),
                     const SizedBox(width: 3),
                     Text(
-                      AppLocalization.instance.translate('lib.screen.common.commonDataTable','columnFilterChooserButton', 'choseFilterColumn'),
+                      AppLocalization.instance.translate(
+                          'lib.screen.common.commonDataTable',
+                          'columnFilterChooserButton',
+                          'choseFilterColumn'),
                       style: TextStyle(
                         color: textColor.resolve({}),
                       ),
@@ -1317,7 +1346,8 @@ class EditButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return CommonButton(
       icon: Icons.edit,
-      text:  AppLocalization.instance.translate('lib.screen.common.commonDataTable','editButton', 'edit'),
+      text: AppLocalization.instance
+          .translate('lib.screen.common.commonDataTable', 'editButton', 'edit'),
       onPressed: onPressed,
     );
   }
@@ -1332,7 +1362,8 @@ class DeleteButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return CommonButton(
       icon: Icons.delete,
-      text: AppLocalization.instance.translate('lib.screen.common.commonDataTable','deleteButton', 'delete'),
+      text: AppLocalization.instance.translate(
+          'lib.screen.common.commonDataTable', 'deleteButton', 'delete'),
       onPressed: onPressed,
     );
   }
@@ -1347,7 +1378,8 @@ class SaveButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return CommonButton(
       icon: Icons.save,
-      text: AppLocalization.instance.translate('lib.screen.common.commonDataTable','saveButton', 'save'),
+      text: AppLocalization.instance
+          .translate('lib.screen.common.commonDataTable', 'saveButton', 'save'),
       onPressed: onPressed,
     );
   }
@@ -1362,7 +1394,8 @@ class ExportButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return CommonButton(
       icon: Icons.output,
-      text:  AppLocalization.instance.translate('lib.screen.common.commonDataTable','exportButton', 'export'),
+      text: AppLocalization.instance.translate(
+          'lib.screen.common.commonDataTable', 'exportButton', 'export'),
       onPressed: onPressed,
     );
   }

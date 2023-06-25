@@ -975,6 +975,26 @@
     "videoSources": {
       "videoResource": "Video Resource"
     }
+  },
+  "lib.screen.lecture.lectureObjectsSummary": {
+    "prepareWidget": {
+      "yes": "Yes",
+      "no": "No",
+      "lectureTitle": "Lecture Title",
+      "preparedBy": "Prepared By",
+      "descriptions": "Descriptions",
+      "grade": "Grade",
+      "branch": "Branch",
+      "domain": "Domain",
+      "subdomain": "Subdomain",
+      "achievement": "Achievement",
+      "subject": "Subject",
+      "isPublic": "Is Public",
+      "openingMessage": "Opening Message",
+      "closingMessage": "Closing Message",
+      "achievementMeter": "Achievement Meter"
+
+    }
   }
 
 
