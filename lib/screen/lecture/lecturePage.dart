@@ -940,7 +940,6 @@ class _LecturePageState extends State<LecturePage> {
                               ],
                             ),
                           ),
-                        if (flow.orderNo != 1 && flow.orderNo != 0)
                           PopupMenuItem<String>(
                             padding: const EdgeInsets.all(3.0),
                             value: 'delete',

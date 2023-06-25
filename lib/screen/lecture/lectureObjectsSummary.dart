@@ -30,9 +30,9 @@ class LectureObjectsSummary extends StatelessWidget {
             Card(
               color: Colors.white,
               elevation: 0,
-              margin: const EdgeInsets.all(8),
+              margin: const EdgeInsets.all(1),
               child: Padding(
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(1),
                 child: Wrap(
                   crossAxisAlignment: WrapCrossAlignment.start,
                   children: [
@@ -281,9 +281,9 @@ class LectureObjectsSummary extends StatelessWidget {
     var c1 = Card(
       color: Colors.white,
       elevation: 0,
-      margin: const EdgeInsets.all(8),
+      margin: const EdgeInsets.all(1),
       child: Padding(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(1),
         child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
@@ -323,9 +323,9 @@ class LectureObjectsSummary extends StatelessWidget {
     var c2 = Card(
       color: Colors.white,
       elevation: 0,
-      margin: const EdgeInsets.all(8),
+      margin: const EdgeInsets.all(1),
       child: Padding(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(1),
         child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
@@ -343,9 +343,9 @@ class LectureObjectsSummary extends StatelessWidget {
     var c3 = Card(
       color: Colors.white,
       elevation: 0,
-      margin: const EdgeInsets.all(8),
+      margin: const EdgeInsets.all(1),
       child: Padding(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(1),
         child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
@@ -428,9 +428,9 @@ class LectureObjectsSummary extends StatelessWidget {
          Card(
            color: Colors.white,
           elevation: 0,
-          margin: EdgeInsets.all(8),
+          margin: EdgeInsets.all(1),
           child: Padding(
-            padding: EdgeInsets.all(8),
+            padding: EdgeInsets.all(1),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -446,9 +446,9 @@ class LectureObjectsSummary extends StatelessWidget {
         Card(
           color: Colors.white,
           elevation: 0,
-          margin: const EdgeInsets.all(8),
+          margin: const EdgeInsets.all(1),
           child: Padding(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(1),
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
