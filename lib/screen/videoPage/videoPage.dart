@@ -295,6 +295,10 @@ class _VideoPageState extends State<VideoPage> {
             'lib.screen.videoPage.videoPage',
             'videoOperationsSteps',
             'videoUpload')),
+        subtitle: Text(AppLocalization.instance.translate(
+            'lib.screen.videoPage.videoPage',
+            'videoOperationsSteps',
+            'videoUploadDetails')),
         //subtitle: const Text('Fill in the details'),
         content: Container(
           padding: const EdgeInsets.symmetric(horizontal: 1),
@@ -315,6 +319,10 @@ class _VideoPageState extends State<VideoPage> {
             'lib.screen.videoPage.videoPage',
             'videoOperationsSteps',
             'videoAchievements')),
+        subtitle: Text(AppLocalization.instance.translate(
+            'lib.screen.videoPage.videoPage',
+            'videoOperationsSteps',
+            'videoAchievementsDetails')),
         //subtitle: const Text('Fill in the details'),
         content: Container(
           padding: const EdgeInsets.symmetric(horizontal: 1),
@@ -342,6 +350,10 @@ class _VideoPageState extends State<VideoPage> {
             'lib.screen.videoPage.videoPage',
             'videoOperationsSteps',
             'summaryAndSubmit')),
+        subtitle: Text(AppLocalization.instance.translate(
+            'lib.screen.videoPage.videoPage',
+            'videoOperationsSteps',
+            'summaryAndSubmitDetails')),
         //subtitle: const Text('Please check and submit !'),
         content: Container(
           padding: const EdgeInsets.symmetric(horizontal: 1),

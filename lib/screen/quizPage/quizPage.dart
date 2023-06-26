@@ -164,6 +164,10 @@ class _QuizPageState extends State<QuizPage> {
             'lib.screen.quizPage.quizPage',
             'quizOperationsSteps',
             'quizCreate')),
+        subtitle: Text(AppLocalization.instance.translate(
+            'lib.screen.quizPage.quizPage',
+            'quizOperationsSteps',
+            'quizCreateDetails')),
         //subtitle: const Text('Fill in the details'),
         content: Container(
           padding: const EdgeInsets.symmetric(horizontal: 1),
@@ -184,6 +188,10 @@ class _QuizPageState extends State<QuizPage> {
             'lib.screen.quizPage.quizPage',
             'quizOperationsSteps',
             'addSectionAdnQuestion')),
+        subtitle: Text(AppLocalization.instance.translate(
+            'lib.screen.quizPage.quizPage',
+            'quizOperationsSteps',
+            'addSectionAdnQuestionDetails')),
         //subtitle: const Text('Fill in the details'),
         content: Container(
           padding: const EdgeInsets.symmetric(horizontal: 1),
@@ -197,6 +205,10 @@ class _QuizPageState extends State<QuizPage> {
             'lib.screen.quizPage.quizPage',
             'quizOperationsSteps',
             'summaryAndSubmit')),
+        subtitle: Text(AppLocalization.instance.translate(
+            'lib.screen.quizPage.quizPage',
+            'quizOperationsSteps',
+            'summaryAndSubmitDetails')),
         //subtitle: const Text('Please check and submit !'),
         content: Container(
           padding: const EdgeInsets.symmetric(horizontal: 1),

@@ -221,7 +221,10 @@
     "questionOperationsSteps": {
       "questionText": "Soru Metni",
       "subjectAndAchievements": "Konu ve Kazanımlar",
-      "summaryAndSubmit": "Özet ve Gönder"
+      "summaryAndSubmit": "Özet ve Gönder",
+      "questionTextDetails": "Lütfen soruyu tanımlayın.",
+      "subjectAndAchievementsDetails": "Lütfen konuyu ve kazanımları tanımlayın.",
+      "summaryAndSubmitDetails": "Lütfen kontrol edin ve gönderin."
     },
     "_buildStepper": {
       "next": "İleri",
@@ -388,7 +391,10 @@
     "videoOperationsSteps": {
       "videoUpload": "Video Yükle",
       "videoAchievements": "Video Kazanımları",
-      "summaryAndSubmit": "Özet ve Gönder"
+      "summaryAndSubmit": "Özet ve Gönder",
+      "videoUploadDetails": "Lütfen video yükleyin ve detayları doldurun.",
+      "videoAchievementsDetails": "Lütfen başarıları tanımlayın.",
+      "summaryAndSubmitDetails": "Lütfen kontrol edin ve gönderin."
     },
     "getStepOneLayout": {
       "videoPlayer": "Video Oynatıcı",
@@ -505,7 +511,10 @@
     "quizOperationsSteps": {
       "quizCreate": "Quiz Oluştur",
       "addSectionAdnQuestion": "Bölüm ve Soru Ekle",
-      "summaryAndSubmit": "Özet ve Gönder"
+      "summaryAndSubmit": "Özet ve Gönder",
+      "quizCreateDetails": "Lütfen tüm alanları tanımlayın.",
+      "addSectionAdnQuestionDetails": "Lütfen bölüm ve bölüm sorusu ekleyin.",
+      "summaryAndSubmitDetails": "Lütfen kontrol edin ve gönderin."
     },
     "getStepOneLayout": {
       "title": "Başlık",
@@ -791,8 +800,11 @@
     },
     "lectureOperationsSteps": {
       "lectureCreate": "Ders Oluştur",
+      "lectureCreateDetails": "Lütfen tüm alanları tanımlayın.",
       "createFlow": "Ders Akışı Oluştur",
+      "createFlowDetails": "Lütfen video ve soru ekleyin.",
       "summaryAndSubmit": "Özet ve Gönder",
+      "summaryAndSubmitDetails": "Lütfen tüm girdileri kontrol edin ve gönderin.",
       "error": "Hata"
     },
     "getStepOneLayout": {
@@ -832,7 +844,8 @@
       "maximumQuestionAdded": "Ekleyebileceğiniz maksimum soru sayısına ulaştınız.",
       "maximumVideoAdded": "Ekleyebileceğiniz maksimum video sayısına ulaştınız.",
       "yes": "Evet",
-      "no": "Hayır"
+      "no": "Hayır",
+      "clearAllFlows": "Akışları Temizle"
     },
     "_buildStepper": {
       "next": "İleri",
@@ -987,7 +1000,8 @@
       "isPublic": "Herkese Açık",
       "openingMessage": "Açılış Mesajı",
       "closingMessage": "Kapanış Mesajı",
-      "achievementMeter": "Kazanımetre"
+      "achievementMeter": "Kazanımetre",
+      "achievementMeterDescriptions": "Kazanımetre, video başarıları ile soru başarılarının ne kadarının kapsadığının bir göstergesidir."
     }
   }
 

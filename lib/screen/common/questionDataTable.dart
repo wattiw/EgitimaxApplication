@@ -628,13 +628,10 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                                   widget.selectedRowsKeys =
                                       widget.selectedQuestionIds;
                                   if (widget.onSelectedRowsChanged != null) {
-                                    widget.onSelectedRowsChanged!(selectedRows,
-                                        widget.selectedQuestionIds);
+                                   // widget.onSelectedRowsChanged!(selectedRows,widget.selectedQuestionIds);
                                   }
-                                  if (widget.onSelectedQuestionIdsChanged !=
-                                      null) {
-                                    widget.onSelectedQuestionIdsChanged!(
-                                        widget.selectedQuestionIds);
+                                  if (widget.onSelectedQuestionIdsChanged != null) {
+                                   // widget.onSelectedQuestionIdsChanged!(widget.selectedQuestionIds);
                                   }
                                 },
                               )

@@ -47,7 +47,7 @@ class LecturePage extends StatefulWidget {
 }
 
 class _LecturePageState extends State<LecturePage> {
-  int _activeCurrentStep = 1;
+  int _activeCurrentStep = 2;
   late LectureBloc lectureBloc;
   late LecturePageModel lecturePageModel;
   LectureRepository lectureRepository = LectureRepository();
@@ -151,7 +151,10 @@ class _LecturePageState extends State<LecturePage> {
             'lib.screen.lecturePage.lecturePage',
             'lectureOperationsSteps',
             'lectureCreate')),
-        subtitle: const Text('Bu alanlar dolacak'),
+        subtitle: Text(AppLocalization.instance.translate(
+            'lib.screen.lecturePage.lecturePage',
+            'lectureOperationsSteps',
+            'lectureCreateDetails')),
         //subtitle: const Text('Fill in the details'),
         content: Container(
           padding: const EdgeInsets.symmetric(horizontal: 1),
@@ -172,6 +175,10 @@ class _LecturePageState extends State<LecturePage> {
             'lib.screen.lecturePage.lecturePage',
             'lectureOperationsSteps',
             'createFlow')),
+        subtitle: Text(AppLocalization.instance.translate(
+            'lib.screen.lecturePage.lecturePage',
+            'lectureOperationsSteps',
+            'createFlowDetails')),
         //subtitle: const Text('Fill in the details'),
         content: Container(
           padding: const EdgeInsets.symmetric(horizontal: 1),
@@ -200,6 +207,10 @@ class _LecturePageState extends State<LecturePage> {
             'lib.screen.lecturePage.lecturePage',
             'lectureOperationsSteps',
             'summaryAndSubmit')),
+        subtitle: Text(AppLocalization.instance.translate(
+            'lib.screen.lecturePage.lecturePage',
+            'lectureOperationsSteps',
+            'summaryAndSubmitDetails')),
         //subtitle: const Text('Please check and submit !'),
         content: Container(
           padding: const EdgeInsets.symmetric(horizontal: 1),
@@ -657,6 +668,59 @@ class _LecturePageState extends State<LecturePage> {
               }
             }
 
+            if(achievementTree=='' || achievementTree==null)
+              {
+
+                List<String> achievementTreeList=List.empty(growable: true);
+
+                var learnIdDataSet=await appRepositories.tblVidVideoMain('Lecture/GetObject', ['id','subdom_id'],id:flow.videoId ,getNoSqlData: 0);
+
+
+                var libType = {
+                  "ct_dom": AppLocalization.instance
+                      .translate('lib.screen.lecture.lectureObjectsSummary', 'prepareWidget', 'domain'),
+                  "ct_subdom": AppLocalization.instance
+                      .translate('lib.screen.lecture.lectureObjectsSummary', 'prepareWidget', 'subdomain'),
+                  "ct_achv": AppLocalization.instance
+                      .translate('lib.screen.lecture.lectureObjectsSummary', 'prepareWidget', 'achievement'),
+                  "ct_subject": AppLocalization.instance
+                      .translate('lib.screen.lecture.lectureObjectsSummary', 'prepareWidget', 'subject')
+                };
+
+                var getLearnLevelsDataSet = await appRepositories.getLearnInfoById(
+                    'Lecture/GetObject', ['*'],
+                    learn_id: learnIdDataSet.firstValue('data', 'subdom_id',insteadOfNull: 0));
+                var learnLevels =
+                getLearnLevelsDataSet.firstValue('data', 'levels', insteadOfNull: '');
+                String input = learnLevels;
+                Map<String, String> learnLevelsKeyValuePairs = {};
+                // Splitting the string using '|'
+                List<String> parts = input.split('|');
+                if (parts.length >= 2) {
+                  // Getting the second part and splitting it using ';'
+                  List<String> subParts = parts[1].split(';');
+
+                  for (String subPart in subParts) {
+                    List<String> items = subPart.split(':');
+                    if (items.length >= 2) {
+                      String key = items[0].trim();
+                      String value = items[1].trim();
+                      learnLevelsKeyValuePairs[key] = value;
+                    }
+                  }
+                }
+
+                for (var item in learnLevelsKeyValuePairs.entries.toList().reversed.toList()) {
+
+                  if(item.key!='ct_achv')
+                  {
+                    achievementTreeList.add(item.value);
+                  }
+                }
+
+                achievementTree=achievementTreeList.join('>>');
+              }
+
             Map<String, String> key3_3 = {};
             key3_3['flow_achievement_tree'] = achievementTree;
             cells[key3_3] = Text(achievementTree);
@@ -688,7 +752,7 @@ class _LecturePageState extends State<LecturePage> {
             key3_4['compatibleLectureAchievement'] = isCompatibleLectureLearnId ? 'Yes' :'No';
             cells[key3_4] = Text(isCompatibleLectureLearnId ? AppLocalization.instance.translate(
                 'lib.screen.lecturePage.lecturePage', 'getStepTwoLayout', 'yes') :AppLocalization.instance.translate(
-                'lib.screen.lecturePage.lecturePage', 'getStepTwoLayout', 'no'),style: TextStyle(backgroundColor:  isCompatibleLectureLearnId ? Colors.transparent: Colors.red));
+                'lib.screen.lecturePage.lecturePage', 'getStepTwoLayout', 'no'),style: TextStyle(color:  isCompatibleLectureLearnId ? Colors.green: Colors.red));
 
           } else if (flow.quizId != null && flow.quizId != BigInt.parse('0')) {
             Map<String, String> key4 = {};
@@ -719,7 +783,7 @@ class _LecturePageState extends State<LecturePage> {
             Map<String, String> key4_4 = {};
             key4_4['compatibleLectureAchievement'] ='No';
             cells[key4_4] = Text(AppLocalization.instance.translate(
-                'lib.screen.lecturePage.lecturePage', 'getStepTwoLayout', 'no'),style: TextStyle(backgroundColor: Colors.red));
+                'lib.screen.lecturePage.lecturePage', 'getStepTwoLayout', 'no'),style: TextStyle(color: Colors.red));
 
           } else if (flow.docId != null && flow.docId != BigInt.parse('0')) {
             Map<String, String> key5 = {};
@@ -750,7 +814,7 @@ class _LecturePageState extends State<LecturePage> {
             Map<String, String> key5_4 = {};
             key5_4['compatibleLectureAchievement'] ='No';
             cells[key5_4] = Text(AppLocalization.instance.translate(
-                'lib.screen.lecturePage.lecturePage', 'getStepTwoLayout', 'no'),style: TextStyle(backgroundColor: Colors.red),);
+                'lib.screen.lecturePage.lecturePage', 'getStepTwoLayout', 'no'),style: TextStyle(color: Colors.red),);
 
           } else if (flow.questId != null &&
               flow.questId != BigInt.parse('0')) {
@@ -827,6 +891,59 @@ class _LecturePageState extends State<LecturePage> {
               }
             }
 
+            if(achievementTree=='' || achievementTree==null)
+            {
+
+              List<String> achievementTreeList=List.empty(growable: true);
+
+              var learnIdDataSet=await appRepositories.tblQueQuestionMain('Lecture/GetObject', ['id','subdom_id'],id:flow.questId ,getNoSqlData: 0);
+
+
+              var libType = {
+                "ct_dom": AppLocalization.instance
+                    .translate('lib.screen.lecture.lectureObjectsSummary', 'prepareWidget', 'domain'),
+                "ct_subdom": AppLocalization.instance
+                    .translate('lib.screen.lecture.lectureObjectsSummary', 'prepareWidget', 'subdomain'),
+                "ct_achv": AppLocalization.instance
+                    .translate('lib.screen.lecture.lectureObjectsSummary', 'prepareWidget', 'achievement'),
+                "ct_subject": AppLocalization.instance
+                    .translate('lib.screen.lecture.lectureObjectsSummary', 'prepareWidget', 'subject')
+              };
+
+              var getLearnLevelsDataSet = await appRepositories.getLearnInfoById(
+                  'Lecture/GetObject', ['*'],
+                  learn_id: learnIdDataSet.firstValue('data', 'subdom_id',insteadOfNull: 0));
+              var learnLevels =
+              getLearnLevelsDataSet.firstValue('data', 'levels', insteadOfNull: '');
+              String input = learnLevels;
+              Map<String, String> learnLevelsKeyValuePairs = {};
+              // Splitting the string using '|'
+              List<String> parts = input.split('|');
+              if (parts.length >= 2) {
+                // Getting the second part and splitting it using ';'
+                List<String> subParts = parts[1].split(';');
+
+                for (String subPart in subParts) {
+                  List<String> items = subPart.split(':');
+                  if (items.length >= 2) {
+                    String key = items[0].trim();
+                    String value = items[1].trim();
+                    learnLevelsKeyValuePairs[key] = value;
+                  }
+                }
+              }
+
+              for (var item in learnLevelsKeyValuePairs.entries.toList().reversed.toList()) {
+
+                if(item.key!='ct_achv')
+                {
+                  achievementTreeList.add(item.value);
+                }
+              }
+
+              achievementTree=achievementTreeList.join('>>');
+            }
+
             Map<String, String> key6_3 = {};
             key6_3['flow_achievement_tree'] = achievementTree;
             cells[key6_3] = Text(achievementTree);
@@ -856,7 +973,7 @@ class _LecturePageState extends State<LecturePage> {
             key6_4['compatibleLectureAchievement'] = isCompatibleLectureLearnId ? 'Yes' :'No';
             cells[key6_4] = Text(isCompatibleLectureLearnId ? AppLocalization.instance.translate(
                 'lib.screen.lecturePage.lecturePage', 'getStepTwoLayout', 'yes') :AppLocalization.instance.translate(
-                'lib.screen.lecturePage.lecturePage', 'getStepTwoLayout', 'no'),style: TextStyle(backgroundColor:  isCompatibleLectureLearnId ? Colors.transparent: Colors.red));
+                'lib.screen.lecturePage.lecturePage', 'getStepTwoLayout', 'no'),style: TextStyle(color:  isCompatibleLectureLearnId ? Colors.green: Colors.red));
           } else {
             Map<String, String> key7 = {};
             key7['flow_id'] = '0';
@@ -884,7 +1001,7 @@ class _LecturePageState extends State<LecturePage> {
             Map<String, String> key7_4 = {};
             key7_4['compatibleLectureAchievement'] ='No';
             cells[key7_4] = Text(AppLocalization.instance.translate(
-                'lib.screen.lecturePage.lecturePage', 'getStepTwoLayout', 'no'),style: TextStyle(backgroundColor: Colors.red));
+                'lib.screen.lecturePage.lecturePage', 'getStepTwoLayout', 'no'),style: TextStyle(color: Colors.red));
           }
 
           Map<String, String> key8 = {};
@@ -940,6 +1057,7 @@ class _LecturePageState extends State<LecturePage> {
                               ],
                             ),
                           ),
+                          if(flow.orderNo!=0)
                           PopupMenuItem<String>(
                             padding: const EdgeInsets.all(3.0),
                             value: 'delete',
@@ -1352,6 +1470,32 @@ class _LecturePageState extends State<LecturePage> {
             'lib.screen.lecturePage.lecturePage',
             'getStepTwoLayout',
             'addVideo'),
+      ),
+      IconButton(
+        onPressed: () {
+          lecturePageModel
+              .setLectureObjects?.tblCrsCourseMain!.tblCrsCourseFlows!.removeWhere((element) => element.orderNo!=0);
+          setState(() {
+
+          });
+        },
+        icon: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            const Icon(Icons.delete_forever_outlined),
+            const SizedBox(width: 3),
+            // Adjust the spacing between the icon and text
+            Text(AppLocalization.instance.translate(
+                'lib.screen.lecturePage.lecturePage',
+                'getStepTwoLayout',
+                'clearAllFlows')),
+          ],
+        ),
+        tooltip: AppLocalization.instance.translate(
+            'lib.screen.lecturePage.lecturePage',
+            'getStepTwoLayout',
+            'clearAllFlows'),
       )
     ];
     var dataTableColumnAlias = [
@@ -1425,6 +1569,12 @@ class _LecturePageState extends State<LecturePage> {
       dataTableKeyColumnName: 'orderNo',
       dataTableSelectedKeys: List.empty(),
       showCheckboxColumn: false,
+        onChangedDisabledFilters:(disabledColumns){
+
+        if(disabledColumns!=null) {
+          dataTableHideColumn=disabledColumns ;
+        }
+        }
     );
 
     return Container(
@@ -1435,6 +1585,7 @@ class _LecturePageState extends State<LecturePage> {
 
   Future<Widget> getStepThreeLayout(BuildContext context) async {
     final screenWidth = MediaQuery.of(context).size.width;
+
 
     return Center(
       child: LectureObjectsSummary(

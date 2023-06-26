@@ -590,13 +590,11 @@ class _VideoDataTableState extends State<VideoDataTable> {
                                   widget.selectedRowsKeys =
                                       widget.selectedVideoIds;
                                   if (widget.onSelectedRowsChanged != null) {
-                                    widget.onSelectedRowsChanged!(selectedRows,
-                                        widget.selectedVideoIds);
+                                    //widget.onSelectedRowsChanged!(selectedRows, widget.selectedVideoIds);
                                   }
                                   if (widget.onSelectedVideoIdsChanged !=
                                       null) {
-                                    widget.onSelectedVideoIdsChanged!(
-                                        widget.selectedVideoIds);
+                                   // widget.onSelectedVideoIdsChanged!(widget.selectedVideoIds);
                                   }
                                 },
                               )

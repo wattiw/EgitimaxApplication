@@ -594,6 +594,10 @@ class _QuestionPageState extends State<QuestionPage> {
             'lib.screen.questionPage.questionPage',
             'questionOperationsSteps',
             'questionText')),
+        subtitle: Text(AppLocalization.instance.translate(
+            'lib.screen.questionPage.questionPage',
+            'questionOperationsSteps',
+            'questionTextDetails')),
         //subtitle: const Text('Fill in the details'),
         content: Container(
           padding: const EdgeInsets.symmetric(horizontal: 1),
@@ -614,6 +618,10 @@ class _QuestionPageState extends State<QuestionPage> {
             'lib.screen.questionPage.questionPage',
             'questionOperationsSteps',
             'subjectAndAchievements')),
+        subtitle: Text(AppLocalization.instance.translate(
+            'lib.screen.questionPage.questionPage',
+            'questionOperationsSteps',
+            'subjectAndAchievementsDetails')),
         //subtitle: const Text('Fill in the details'),
         content: Container(
           padding: const EdgeInsets.symmetric(horizontal: 1),
@@ -627,6 +635,10 @@ class _QuestionPageState extends State<QuestionPage> {
             'lib.screen.questionPage.questionPage',
             'questionOperationsSteps',
             'summaryAndSubmit')),
+        subtitle: Text(AppLocalization.instance.translate(
+            'lib.screen.questionPage.questionPage',
+            'questionOperationsSteps',
+            'summaryAndSubmitDetails')),
         //subtitle: const Text('Please check and submit !'),
         content: Container(
           padding: const EdgeInsets.symmetric(horizontal: 1),

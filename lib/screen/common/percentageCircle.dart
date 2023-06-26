@@ -10,14 +10,14 @@ class PercentageCircle extends StatefulWidget {
 }
 
 class _PercentageCircleState extends State<PercentageCircle> {
-  double maxSize = 300.0; // Maksimum boyut
+  double maxSize = 200.0; // Maksimum boyut
 
   @override
   Widget build(BuildContext context) {
-    Color greenColor = Colors.green;
-    Color redColor = Colors.red;
+    Color greenColor =  Color(int.parse('0xFF20C966')) ;
+    Color redColor =  Color(int.parse('0xFFF6CECC'));
 
-    double size = widget.percentage * maxSize / 100.0;
+    double size = maxSize;//widget.percentage * maxSize / 100.0;
 
     if (widget.percentage == 0) {
       return Container(

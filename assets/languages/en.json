@@ -219,7 +219,10 @@
     "questionOperationsSteps": {
       "questionText": "Question Text",
       "subjectAndAchievements": "Subject and Achievements",
-      "summaryAndSubmit": "Summary And Submit"
+      "summaryAndSubmit": "Summary And Submit",
+      "questionTextDetails": "Please define question.",
+      "subjectAndAchievementsDetails": "Please define subject and achievements",
+      "summaryAndSubmitDetails": "Please check and submit."
     },
     "_buildStepper": {
       "next": "Next",
@@ -387,7 +390,10 @@
     "videoOperationsSteps": {
       "videoUpload": "Video Upload",
       "videoAchievements": "Video Achievements",
-      "summaryAndSubmit": "Summary And submit"
+      "summaryAndSubmit": "Summary And submit",
+      "videoUploadDetails": "Please upload video and fill the details",
+      "videoAchievementsDetails": "Please define achievements",
+      "summaryAndSubmitDetails": "Please check and submit."
     },
     "getStepOneLayout": {
       "videoPlayer": "Video Player",
@@ -503,7 +509,10 @@
     "quizOperationsSteps": {
       "quizCreate": "Quiz Create",
       "addSectionAdnQuestion": "Add Section and Section Question",
-      "summaryAndSubmit": "Summary And Submit"
+      "summaryAndSubmit": "Summary And Submit",
+      "quizCreateDetails": "Please define all fields.",
+      "addSectionAdnQuestionDetails": "Please add section and section question.",
+      "summaryAndSubmitDetails": "Please check and submit"
     },
     "getStepOneLayout": {
       "title": "Title",
@@ -796,8 +805,11 @@
     },
     "lectureOperationsSteps": {
       "lectureCreate": "Lecture",
+      "lectureCreateDetails": "Please define all fields.",
       "createFlow": "Lecture Flow",
+      "createFlowDetails": "Please add video and question.",
       "summaryAndSubmit": "Summary And Submit",
+      "summaryAndSubmitDetails": "Please check all inputs and submit.",
       "error": "Error"
     },
     "getStepOneLayout": {
@@ -837,7 +849,8 @@
       "maximumQuestionAdded": "You have reached the maximum number of questions that can be added.",
       "maximumVideoAdded": "You have reached the maximum number of video that can be added.",
       "yes": "Yes",
-      "no": "No"
+      "no": "No",
+      "clearAllFlows": "Clear Flows"
     },
     "_buildStepper": {
       "next": "Next",
@@ -992,7 +1005,8 @@
       "isPublic": "Is Public",
       "openingMessage": "Opening Message",
       "closingMessage": "Closing Message",
-      "achievementMeter": "Achievement Meter"
+      "achievementMeter": "Achievement Meter",
+      "achievementMeterDescriptions": "It is a demonstration of how much the video achievements of the question achievements cover."
 
     }
   }

@@ -138,7 +138,9 @@ class LectureObjectsSummary extends StatelessWidget {
       'actions'
     ];
     lectureFlowDataTable?.toolBarButtons=null;
-    lectureFlowDataTable?.showDataTableMenu=false;
+
+
+
     var flows = lectureObjects.tblCrsCourseMain?.tblCrsCourseFlows;
     var videoResult = '';
     var questResult = '';
@@ -335,10 +337,14 @@ class LectureObjectsSummary extends StatelessWidget {
 
     List<Container> cardThree = List.empty(growable: true);
 
-    cardThree.add( Container(
-      alignment: Alignment.centerLeft,
-      child: lectureFlowDataTable,
-    ));
+    if(lectureFlowDataTable!=null && lectureFlowDataTable!.dataTableRows!=null && lectureFlowDataTable!.dataTableRows!.isNotEmpty)
+      {
+        cardThree.add( Container(
+          alignment: Alignment.centerLeft,
+          child:lectureFlowDataTable,
+        ));
+      }
+
 
     var c3 = Card(
       color: Colors.white,
@@ -374,18 +380,13 @@ class LectureObjectsSummary extends StatelessWidget {
                 compatibleAchievement++;
               }
             var item= Card(
-              color: achitem['is_contain']==1 ? Colors.greenAccent.shade700 : Colors.red.shade600,
+              color: achitem['is_contain']==1 ? Color(int.parse('0xFFCDF3DD')) :  Color(int.parse('0xFFF6CECC')),
               child: ListTile(
                 title: Text(achitem['item_code'],style: const TextStyle(fontSize: 10),),
                 subtitle: Text(achitem['name'],style: const TextStyle(fontSize: 10),),
               ),
             );
 
-            achievementMeterItems.add(ListTile(
-              tileColor: achitem['is_contain']==1 ? Colors.greenAccent.shade700 : Colors.red.shade600,
-              title: Text(achitem['item_code'],style: const TextStyle(fontSize: 10),),
-              subtitle: Text(achitem['name'],style: const TextStyle(fontSize: 10),),
-            ));
             cardFour.add(item);
 
           }
@@ -431,14 +432,28 @@ class LectureObjectsSummary extends StatelessWidget {
           margin: EdgeInsets.all(1),
           child: Padding(
             padding: EdgeInsets.all(1),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.start,
+            child: Column(
               children: [
-                Text(AppLocalization.instance.translate(
-                    'lib.screen.lecture.lectureObjectsSummary',
-                    'prepareWidget',
-                    'achievementMeter')),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(AppLocalization.instance.translate(
+                        'lib.screen.lecture.lectureObjectsSummary',
+                        'prepareWidget',
+                        'achievementMeter'),style: TextStyle(fontWeight: FontWeight.bold),),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(AppLocalization.instance.translate(
+                        'lib.screen.lecture.lectureObjectsSummary',
+                        'prepareWidget',
+                        'achievementMeterDescriptions'),style: const TextStyle(fontSize: 10),),
+                  ],
+                ),
               ],
             )
           ),
@@ -456,54 +471,6 @@ class LectureObjectsSummary extends StatelessWidget {
           ),
         ),
       ],
-    );
-
-
-    var achievementMeterWidget=Card(
-      elevation: 4,
-      child: Row(
-        children: [
-          Expanded(
-            flex: 3,
-            child: Container(
-              height: 200,
-              color: Colors.blue,
-              child: Center(
-                child: PercentageCircle(
-                  percentage: percentageOfAchievement != null && !percentageOfAchievement.isNaN ? percentageOfAchievement : 0.0,
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Container(
-              padding: EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Item Listesi',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: achievementMeterItems.length,
-                      itemBuilder: (context, index) {
-                        return achievementMeterItems[index];
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
     );
 
     return Column(
