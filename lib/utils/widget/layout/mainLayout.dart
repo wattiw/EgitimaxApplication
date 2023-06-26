@@ -170,13 +170,14 @@ class _MainLayoutState extends State<MainLayout> {
           },
         ),
         drawer: MainDrawer.getDrawer(context),
-        bottomNavigationBar: MainBottomNavigationBar(
+/*        bottomNavigationBar:
+        MainBottomNavigationBar(
           tabs: const [
             Icon(Icons.home),
             Icon(Icons.search),
             Icon(Icons.settings),
           ],
-        ),
+        ),*/
       ),
     );
   }

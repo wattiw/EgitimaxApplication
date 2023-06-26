@@ -1,5 +1,7 @@
 import 'package:egitimaxapplication/utils/config/language/appLocalizations.dart';
+import 'package:egitimaxapplication/utils/config/language/localizationLoader.dart';
 import 'package:egitimaxapplication/utils/constant/appConstant/generalAppConstant.dart';
+import 'package:egitimaxapplication/utils/widget/drawer/mainDrawer.dart';
 import 'package:flutter/material.dart';
 
 class MainAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -22,15 +24,84 @@ class MainAppBar extends StatefulWidget implements PreferredSizeWidget {
   _MainAppBarState createState() => _MainAppBarState();
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight * 2);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
-
 
 class _MainAppBarState extends State<MainAppBar> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     double appBarRowHeight = widget.preferredSize.height / 2;
+
+    return AppBar(
+      leading: IconButton(
+        icon: PopupMenuButton(
+          itemBuilder: (BuildContext context) => widget.menuItems,
+          offset: const Offset(0, kToolbarHeight),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: (appBarRowHeight * 1),
+                width: (appBarRowHeight * 1),
+                child: ClipOval(
+                  child: Image.asset(
+                    GeneralAppConstant.UserProfileImagePath,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        onPressed: () {
+          MainDrawer.getDrawer(context);
+        },
+      ),
+      title: Row(
+        children: [
+          Image.asset(
+            GeneralAppConstant.AppLogoPath,
+            fit: BoxFit.cover,
+            width: 100,
+          ),
+        ],
+      ),
+      actions: [
+        InkWell(
+          onTap:() async {
+            await LocalizationLoader.getNextString().then((newLangCode) {
+              AppLocalization.changeLocale(Locale(newLangCode));
+              setState(() {});
+            });
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(0),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.language_outlined,
+                  color: theme.colorScheme.primary,
+                ),
+                const SizedBox(width: 5,),
+                Text(AppLocalization.instance.translate(AppLocalization.instance.locale.toString().split('/').first.toUpperCase()),style: const TextStyle(fontSize: 10),),
+              ],
+            ),
+          ),
+        ),
+        IconButton(
+          icon: const Icon(
+            Icons.search,
+            color: Colors.grey,
+          ),
+          onPressed: () {
+            // Arama butonuna tıklandığında yapılacak işlemler
+          },
+        ),
+      ],
+    );
     return AppBar(
       titleSpacing: 10.0,
       backgroundColor: theme.colorScheme.background,
@@ -43,42 +114,15 @@ class _MainAppBarState extends State<MainAppBar> {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
-                const SizedBox(width: 15),
-                Padding(
-                  padding: const EdgeInsets.all(5),
-                  child: SizedBox(
-                    child: Image.asset(GeneralAppConstant.AppLogoPath,
-                        fit: BoxFit.cover),
-                  ),
+                SizedBox(
+                  child: Image.asset(GeneralAppConstant.AppLogoPath,
+                      fit: BoxFit.cover),
                 ),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: SizedBox(
-                      child: TextField(
-                        onChanged: widget.onQueryChanged,
-                        decoration: InputDecoration(
-                          hintText: AppLocalization.instance.translate(
-                              'lib.utils.widget.appBar.mainAppBar',
-                              'build',
-                              'searchBarHinttext'),
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                  ),
+                      padding: const EdgeInsets.all(5),
+                      child: SizedBox(child: Container())),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: IconButton(
-                    onPressed: widget.onSearchPressed,
-                    icon: Icon(
-                      Icons.search,
-                      color: theme.colorScheme.primary,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10),
                 PopupMenuButton(
                   itemBuilder: (BuildContext context) => widget.menuItems,
                   offset: const Offset(0, kToolbarHeight),
@@ -91,7 +135,8 @@ class _MainAppBarState extends State<MainAppBar> {
                         height: (appBarRowHeight * 0.75),
                         width: (appBarRowHeight * 0.75),
                         child: ClipOval(
-                          child: Image.asset(GeneralAppConstant.UserProfileImagePath,
+                          child: Image.asset(
+                            GeneralAppConstant.UserProfileImagePath,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -103,170 +148,6 @@ class _MainAppBarState extends State<MainAppBar> {
               ],
             ),
           ),
-          SizedBox(
-            height: appBarRowHeight,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  const SizedBox(width: 10),
-                  InkWell(
-                    onTap: () {},
-                    child: Padding(
-                      padding: const EdgeInsets.all(0),
-                      child: Column(
-                        children: [
-                          Icon(
-                            Icons.home,
-                            color: theme.colorScheme.primary,
-                          ),
-                          Text(AppLocalization.instance.translate(
-                              'lib.utils.widget.appBar.mainAppBar',
-                              'build',
-                              'appBarHomeButtonText')),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  InkWell(
-                    onTap: () {},
-                    child: Padding(
-                      padding: const EdgeInsets.all(0),
-                      child: Column(
-                        children: [
-                          Icon(
-                            Icons.people,
-                            color: theme.colorScheme.primary,
-                          ),
-                          Text(AppLocalization.instance.translate(
-                              'lib.utils.widget.appBar.mainAppBar',
-                              'build',
-                              'appBarNetworkButtonText')),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  InkWell(
-                    onTap: () {},
-                    child: Padding(
-                      padding: const EdgeInsets.all(0),
-                      child: Column(
-                        children: [
-                          Icon(
-                            Icons.school,
-                            color: theme.colorScheme.primary,
-                          ),
-                          Text(AppLocalization.instance.translate(
-                              'lib.utils.widget.appBar.mainAppBar',
-                              'build',
-                              'appBarLessonsButtonText')),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  InkWell(
-                    onTap: () {},
-                    child: Padding(
-                      padding: const EdgeInsets.all(0),
-                      child: Column(
-                        children: [
-                          Icon(
-                            Icons.assignment,
-                            color: theme.colorScheme.primary,
-                          ),
-                          Text(AppLocalization.instance.translate(
-                              'lib.utils.widget.appBar.mainAppBar',
-                              'build',
-                              'appBarTasksButtonText')),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  InkWell(
-                    onTap: () {},
-                    child: Padding(
-                      padding: const EdgeInsets.all(0),
-                      child: Column(
-                        children: [
-                          Icon(
-                            Icons.chat,
-                            color: theme.colorScheme.primary,
-                          ),
-                          Text(AppLocalization.instance.translate(
-                              'lib.utils.widget.appBar.mainAppBar',
-                              'build',
-                              'appBarMessagingButtonText')),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  InkWell(
-                    onTap: () {},
-                    child: Padding(
-                      padding: const EdgeInsets.all(0),
-                      child: Column(
-                        children: [
-                          Icon(
-                            Icons.notifications,
-                            color: theme.colorScheme.primary,
-                          ),
-                          Text(AppLocalization.instance.translate(
-                              'lib.utils.widget.appBar.mainAppBar',
-                              'build',
-                              'appBarNotificationsButtonText')),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  InkWell(
-                    onTap:widget.onChangeLanguage,
-                    child: Padding(
-                      padding: const EdgeInsets.all(0),
-                      child: Column(
-                        children: [
-                          Icon(
-                            Icons.language_outlined,
-                            color: theme.colorScheme.primary,
-                          ),
-                          Text(AppLocalization.instance.translate(AppLocalization.instance.locale.toString())),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  PopupMenuButton(
-                    itemBuilder: (BuildContext context) => widget.menuItems,
-                    offset: const Offset(0, kToolbarHeight),
-                    child: Padding(
-                      padding: const EdgeInsets.all(0),
-                      child: Column(
-                        children: [
-                          Icon(
-                            Icons.settings,
-                            color: theme.colorScheme.primary,
-                          ),
-                          Text(AppLocalization.instance.translate(
-                              'lib.utils.widget.appBar.mainAppBar',
-                              'build',
-                              'appBarSettingsButtonText')),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                ],
-              ),
-            ),
-          ),
         ],
       ),
     );
@@ -274,7 +155,8 @@ class _MainAppBarState extends State<MainAppBar> {
 }
 
 class CustomPopupMenu {
-  static List<PopupMenuEntry> getMenuItems(BuildContext context) {
+  static List<PopupMenuEntry> getMenuItems(
+      BuildContext context) {
     final theme = Theme.of(context);
     return <PopupMenuEntry>[
       PopupMenuItem(

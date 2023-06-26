@@ -13,6 +13,7 @@ class Assets {
   static const String commonCommonTextFormField = 'lib/screen/common/commonTextFormField.dart';
   static const String commonDataTableData = 'lib/model/common/dataTableData.dart';
   static const String commonGetDataSet = 'lib/model/common/getDataSet.dart';
+  static const String commonHtmlEditor = 'lib/screen/common/htmlEditor.dart';
   static const String commonIsPublicCheckBox = 'lib/screen/common/isPublicCheckBox.dart';
   static const String commonKeyValuePairs = 'lib/screen/common/keyValuePairs.dart';
   static const String commonLearnLevels = 'lib/screen/common/learnLevels.dart';
@@ -62,6 +63,7 @@ class Assets {
   static const String questionPageComponentsQuestionFreeTextAnswerQuillHtmlEditor = 'lib/screen/questionPage/questionPageComponents/questionFreeTextAnswerQuillHtmlEditor.dart';
   static const String questionPageComponentsQuestionQuillHtmlEditor = 'lib/screen/questionPage/questionPageComponents/questionQuillHtmlEditor.dart';
   static const String questionPageComponentsQuestionQuillHtmlEditorToolBar = 'lib/screen/questionPage/questionPageComponents/questionQuillHtmlEditorToolBar.dart';
+  static const String questionPageQuestionOptions = 'lib/screen/questionPage/questionOptions.dart';
   static const String questionPageQuestionOptionsPage = 'lib/screen/questionPage/questionOptionsPage.dart';
   static const String questionPageQuestionPage = 'lib/screen/questionPage/questionPage.dart';
   static const String questionPageStepsValidator = 'lib/screen/questionPage/stepsValidator.dart';
