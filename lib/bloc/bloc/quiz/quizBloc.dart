@@ -25,6 +25,19 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
       emit(LoadingState());
       await Future.delayed(const Duration(seconds: 1));
       try {
+
+        //Burada kullanıcın en son giridği seçimleri set etmek için video id en son kullanıcı tarafından girilen video id'e set edilir.
+        //sonra tekrar 0'a set edilir çok önemlidir.
+
+        bool setAgainRootIdAsZero=false;
+        if(event.quizPageModel.quizId==BigInt.parse('0'))
+        {
+          var lastActionIdDataSet=await quizRepository.lastActionId(['*'], event.quizPageModel.userId);
+          event.quizPageModel.quizId=lastActionIdDataSet.firstValueWithType<BigInt>('data', 'id',insteadOfNull: BigInt.parse('0'));
+          setAgainRootIdAsZero=true;
+        }
+
+
         event.quizPageModel.quizMain = QuizMain();
 
         Locale currentLocale = WidgetsBinding.instance.window.locale;
@@ -318,6 +331,12 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
             tblLearnBranch.toKeyValuePairsWithTypes<int, String>('data', 'id',
                 valueColumn: 'branch_name');
 
+        if(setAgainRootIdAsZero)
+        {
+          event.quizPageModel.quizId=BigInt.parse('0');
+          setAgainRootIdAsZero=false;
+        }
+
         emit(LoadedState(quizPageModel: event.quizPageModel));
         await Future.delayed(const Duration(seconds: 1));
       } catch (e) {
@@ -409,7 +428,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
             'data', 'main_user_id',
             insteadOfNull: BigInt.parse('0'));
         bool isCorporateUser;
-        if (mainUserId != BigInt.parse(mainUserId.toString()) &&
+        if (event.quizPageModel.userId != BigInt.parse(mainUserId.toString()) &&
             mainUserId != null) {
           isCorporateUser = true;
         } else {

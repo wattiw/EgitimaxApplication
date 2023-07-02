@@ -22,6 +22,17 @@ class QuestionBloc extends Bloc<QuestionEvent, QuestionState> {
       await Future.delayed(const Duration(seconds: 1));
       try {
 
+        //Burada kullanıcın en son giridği seçimleri set etmek için video id en son kullanıcı tarafından girilen video id'e set edilir.
+        //sonra tekrar 0'a set edilir çok önemlidir.
+
+        bool setAgainRootIdAsZero=false;
+        if(event.questionPageModel.questionId==BigInt.parse('0'))
+        {
+          var lastActionIdDataSet=await questionRepository.lastActionId(['*'], event.questionPageModel.userId);
+          event.questionPageModel.questionId=lastActionIdDataSet.firstValueWithType<BigInt>('data', 'id',insteadOfNull: BigInt.parse('0'));
+          setAgainRootIdAsZero=true;
+        }
+
         Locale currentLocale = WidgetsBinding.instance.window.locale;
         String languageCode = currentLocale.languageCode; // 'tr'
         String countryCode = currentLocale.languageCode; // 'TR'
@@ -437,6 +448,12 @@ class QuestionBloc extends Bloc<QuestionEvent, QuestionState> {
           }
 
 
+        if(setAgainRootIdAsZero)
+        {
+          event.questionPageModel.questionId=BigInt.parse('0');
+          setAgainRootIdAsZero=false;
+        }
+
 
         emit(LoadedState(questionPageModel: event.questionPageModel));
         await Future.delayed(const Duration(seconds: 1));
@@ -521,7 +538,7 @@ class QuestionBloc extends Bloc<QuestionEvent, QuestionState> {
         var tblUserSubuserDataSet=await appRepositories.tblUserSubuser('Question/GetObject',['id','main_user_id','sub_user_id'],sub_user_id: event.questionPageModel.userId);
         var mainUserId=tblUserSubuserDataSet.firstValueWithType<BigInt>('data', 'main_user_id',insteadOfNull: BigInt.parse('0'));
         bool isCorporateUser;
-        if (mainUserId!=BigInt.parse(mainUserId.toString()) && mainUserId!=null) {
+        if (event.questionPageModel.userId!=BigInt.parse(mainUserId.toString()) && mainUserId!=null) {
           isCorporateUser = true;
         } else {
           isCorporateUser = false;
@@ -557,7 +574,7 @@ class QuestionBloc extends Bloc<QuestionEvent, QuestionState> {
           createdBy: createdBy == BigInt.parse('0')
               ? event.questionPageModel.userId
               : createdBy,
-          createdOn: event.questionPageModel.questionId==0 ? DateTime.now() :createdOn,
+          createdOn: event.questionPageModel.questionId==BigInt.parse('0') ? DateTime.now() :createdOn,
           updatedBy: event.questionPageModel.userId,
           updatedOn: DateTime.now(),
         );

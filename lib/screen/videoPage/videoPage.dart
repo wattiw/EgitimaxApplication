@@ -53,6 +53,7 @@ class _VideoPageState extends State<VideoPage> {
   bool onlyCallNoAction = true; // Dont change
   bool videoProcessing = false; // Dont change
 
+
   void showVideoDeleteConfirmationDialog(BuildContext context) {
     UserInteractiveMessage(
       title: AppLocalization.instance.translate(
@@ -117,20 +118,22 @@ class _VideoPageState extends State<VideoPage> {
       bool? isUploadOrDelete, bool onlyCallNoAction) async {
     if (!onlyCallNoAction) {
       if (videoPageModel.videoPlayerController == null) {
-        var _videoData = await FilePickerHelper.pickFile();
+        var videoData = await FilePickerHelper.pickFile();
+
+        videoPageModel.fileNameOfUploaded=videoData!.fileName;
 
         bool showDurationAlert = false;
 
-        var duration = await _videoData!.getDuration();
+        var duration = await videoData!.getDuration();
 
         videoPageModel.videoDuration = duration;
 
-        if (_videoData != null && duration != null) {
+        if (videoData != null && duration != null) {
           if (duration > 180 || duration < 60) {
             showDurationAlert = true;
           }
         } else {
-          if (_videoData != null && duration == null) {
+          if (videoData != null && duration == null) {
             showDurationAlert = true;
           }
         }
@@ -144,11 +147,11 @@ class _VideoPageState extends State<VideoPage> {
               gravity: ToastGravity.CENTER);
         } else {}
 
-        videoPageModel.videoData = _videoData?.data;
+        videoPageModel.videoData = videoData?.data;
         var videoNoSqlId = await videoRepository.uploadVideo(
             videoPageModel.videoData,
             fileName:
-                'UserId_${videoPageModel.userId}_${_videoData!.fileName}');
+                'UserId_${videoPageModel.userId}_${videoData!.fileName}');
         videoObjectId = videoNoSqlId;
         videoPageModel.videoObjectId = videoNoSqlId;
 
@@ -399,10 +402,10 @@ class _VideoPageState extends State<VideoPage> {
                 if (videoPageModel.videoPlayerController != null)
                   Row(
                     children: [
-                      Text(AppLocalization.instance.translate(
+                      Text('${AppLocalization.instance.translate(
                           'lib.screen.videoPage.videoPage',
                           'getStepOneLayout',
-                          'videoUploaded')),
+                          'videoUploaded')} ${videoPageModel.fileNameOfUploaded ?? ''}'),
                       IconButton(
                           onPressed:
                               videoProcessing ? null : _handleUploadButtonPressed,

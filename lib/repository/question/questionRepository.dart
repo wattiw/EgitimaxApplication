@@ -96,6 +96,20 @@ class QuestionRepository {
 
 extension QuestionRepositoryExtension on QuestionRepository {
 
+  Future<Map<String, dynamic>> lastActionId(
+      List<String> columns,BigInt user_id,
+      {int? getNoSqlData }) async {
+    var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
+    String query = "SELECT $columnJoinedString FROM ( SELECT id,user_id FROM tbl_que_question_main order by updated_on DESC LIMIT 1 ) RTX";
+
+    List<SqlParameter> parameters = List.empty(growable: true);
+    if (user_id != null) {
+      parameters.add(SqlParameter('@user_id', user_id));
+    }
+    return getDataSet(query: query, parameters: parameters,getNoSqlData: getNoSqlData);
+  }
+
+
   Future<Map<String, dynamic>> getTotalLikes(
       List<String> columns,BigInt question_id,
       {int? getNoSqlData }) async {

@@ -24,6 +24,7 @@ class VideoPageModel {
   bool isVideoContainerExpanded = false;
   String videoUploadStatusText='';
   String? videoObjectId;
+  String fileNameOfUploaded='';
 
   late bool isEditorMode;
   late BigInt userId;

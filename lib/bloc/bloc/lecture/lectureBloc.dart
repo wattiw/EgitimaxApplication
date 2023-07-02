@@ -21,6 +21,17 @@ class LectureBloc extends Bloc<LectureEvent, LectureState> {
       await Future.delayed(const Duration(seconds: 1));
       try {
 
+        //Burada kullanıcın en son giridği seçimleri set etmek için video id en son kullanıcı tarafından girilen video id'e set edilir.
+        //sonra tekrar 0'a set edilir çok önemlidir.
+
+        bool setAgainRootIdAsZero=false;
+        if(event.lecturePageModel.lectureId==BigInt.parse('0'))
+        {
+          var lastActionIdDataSet=await lectureRepository.lastActionId(['*'], event.lecturePageModel.userId);
+          event.lecturePageModel.lectureId=lastActionIdDataSet.firstValueWithType<BigInt>('data', 'id',insteadOfNull: BigInt.parse('0'));
+          setAgainRootIdAsZero=true;
+        }
+
         Locale currentLocale = WidgetsBinding.instance.window.locale;
         String languageCode = currentLocale.languageCode; // 'tr'
         String countryCode = currentLocale.languageCode; // 'TR'
@@ -193,6 +204,12 @@ class LectureBloc extends Bloc<LectureEvent, LectureState> {
         event.lecturePageModel.branches=tblLearnBranchDataSet.toKeyValuePairsWithTypes<int,String>('data', 'id',valueColumn: 'branch_name');
         event.lecturePageModel.branches[0]=pleaseSelect;
 
+        if(setAgainRootIdAsZero)
+        {
+          event.lecturePageModel.lectureId=BigInt.parse('0');
+          setAgainRootIdAsZero=false;
+        }
+
         emit(LoadedState(lecturePageModel: event.lecturePageModel));
         await Future.delayed(const Duration(seconds: 1));
       } catch (e) {
@@ -284,7 +301,7 @@ class LectureBloc extends Bloc<LectureEvent, LectureState> {
             'data', 'main_user_id',
             insteadOfNull: BigInt.parse('0'));
         bool isCorporateUser;
-        if (mainUserId != BigInt.parse(mainUserId.toString()) &&
+        if (event.lecturePageModel.userId != BigInt.parse(mainUserId.toString()) &&
             mainUserId != null) {
           isCorporateUser = true;
         } else {

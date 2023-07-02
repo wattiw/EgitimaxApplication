@@ -125,6 +125,21 @@ extension VideoRepositoryExtension on VideoRepository {
     }
   }
 
+
+  Future<Map<String, dynamic>> lastActionId(
+      List<String> columns,BigInt user_id,
+      {int? getNoSqlData }) async {
+    var columnJoinedString = columns.toSet().toList().join(',') ?? '*';
+    String query = "SELECT $columnJoinedString FROM ( SELECT id,user_id FROM tbl_vid_video_main order by updated_on DESC LIMIT 1 ) RTX";
+
+    List<SqlParameter> parameters = List.empty(growable: true);
+    if (user_id != null) {
+      parameters.add(SqlParameter('@user_id', user_id));
+    }
+    return getDataSet(query: query, parameters: parameters,getNoSqlData: getNoSqlData);
+  }
+
+
   Future<Map<String, dynamic>> getAchievementsFromSubDomainId(List<String> columns,
       {int? subdom_id, int? country_id,int? getNoSqlData }) async {
     var columnJoinedString=columns.toSet().toList().join(',') ?? '*';
