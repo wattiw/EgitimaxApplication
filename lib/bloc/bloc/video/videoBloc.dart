@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:egitimaxapplication/bloc/event/video/videoEvent.dart';
@@ -68,15 +70,24 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
                 'collectiondata_video', 'VideoId') !=
             null) {
           try {
-            event.videoPageModel.videoData = tblVidVideoMainDataSet.firstValue(
+            var collectionDataVideo =
+                tblVidVideoMainDataSet.selectDataTable('collectiondata_video');
+
+            var videoDataAsString = tblVidVideoMainDataSet.firstValue(
                 'collectiondata_video', 'VideoData');
+
+            var videoMongoId =
+                tblVidVideoMainDataSet.firstValue('collectiondata_video', 'Id');
+
+            var filex = base64.decode(videoDataAsString);
+            event.videoPageModel.videoData = filex;
+            
             event.videoPageModel.videoObjectId =
                 tblVidVideoMainDataSet.firstValue('collectiondata_video', 'Id');
           } catch (e) {
             event.videoPageModel.videoData = null;
             event.videoPageModel.videoObjectId = null;
           }
-
         }
 
         if (event.videoPageModel.videoData == null &&
