@@ -206,7 +206,8 @@
       "branch": "Branş",
       "domain": "Alan",
       "subDomain": "Alt Alan",
-      "learn": "Kazanım Ağacı"
+      "learn": "Kazanım Ağacı",
+      "questionDetails": "Soru Detayları"
     },
     "getSelectedAchievementsTable": {
       "achievementId": "Kazanım No",
@@ -483,7 +484,8 @@
       "branch": "Branş",
       "domain": "Alan",
       "learn": "Kazanım Ağacı",
-      "subDomain": "Alt Alan"
+      "subDomain": "Alt Alan",
+      "videoDetails": "Vidyo Detayları"
 
     }
   },
@@ -674,6 +676,7 @@
   },
   "lib.screen.common.questionDataTable": {
     "_QuestionDataTableState": {
+      "pleaseSelectSource": "Lütfen Kaynak Seçin",
       "myQuestion": "Benim Sorularım",
       "myFavoriteQuestion": "Favori Sorularım",
       "searchInEgitimax": "Eğitimax'ta Ara"
@@ -700,7 +703,8 @@
       "createdOn": "Oluşturulma Tarihi",
       "favorite": "Favori",
       "likeCount": "Beğeniler",
-      "pleaseSelectSourceType": "Lütfen soru kaynak türünü seçin!"
+      "pleaseSelectSourceType": "Lütfen soru kaynak türünü seçin!",
+      "noData": "Kriterlere uygun kayıt bulunamadı."
     },
     "filterAcademicYears": {
       "all": "Hepsi",
@@ -932,6 +936,7 @@
   },
   "lib.screen.common.videoDataTable": {
     "_VideoDataTableState": {
+      "pleaseSelectSource": "Lütfen kaynak seçin",
       "myVideo": "Videolarım",
       "myFavoriteVideo": "Favori Videolarım",
       "searchInEgitimax": "Egitimax'te Ara"
@@ -956,7 +961,8 @@
       "createdOn": "Oluşturulma Tarihi",
       "favorite": "Favori",
       "likes": "Beğeniler",
-      "pleaseSelectSourceType": "Lütfen Kaynak Seçin"
+      "pleaseSelectSourceType": "Lütfen Kaynak Seçin",
+      "noData": "Kriterlere uygun kayıt bulunamadı."
     },
     "filterAcademicYears": {
       "all": "Tümü",

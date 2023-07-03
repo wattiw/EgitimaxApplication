@@ -223,7 +223,7 @@ class _CommonDropdownButtonFormFieldState
                   fillColor:Colors.white,
                   labelText: widget.label,
                   hintText: widget.label,
-                  contentPadding: const EdgeInsets.symmetric(vertical: 1, horizontal: 8),
+                  contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
                   isDense: true,
                   enabledBorder: OutlineInputBorder(
                     borderSide: const BorderSide(color: Colors.grey),
@@ -267,12 +267,14 @@ class _CommonDropdownButtonFormFieldState
     } else {
       return SizedBox(
         width:widget.isExpandedObject==true ? double.infinity:   width * textSize,
-        child: DropdownButtonFormField<int>(
-          decoration:InputDecoration(
+        child:DropdownButtonFormField<int>(
+          decoration:       InputDecoration(
+            filled: true,
+            fillColor:Colors.white,
             labelText: widget.label,
             hintText: widget.label,
-            contentPadding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-            isDense: false,
+            contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+            isDense: true,
             enabledBorder: OutlineInputBorder(
               borderSide: const BorderSide(color: Colors.grey),
               borderRadius: BorderRadius.circular(8),
@@ -282,6 +284,8 @@ class _CommonDropdownButtonFormFieldState
               borderRadius: BorderRadius.circular(8),
             ),
           ),
+          dropdownColor: Colors.white,
+          focusColor:Colors.white,
           icon: const SizedBox.shrink(),
           value: widget.selectedItem,
           items: widget.items!.entries.map((entry) {
@@ -289,7 +293,7 @@ class _CommonDropdownButtonFormFieldState
               value: entry.key,
               child: Text(
                 entry.value,
-                style:widget.componentTextStyle , // Yazı fontu boyutu
+                style: widget.componentTextStyle, // Yazı fontu boyutu
               ),
             );
           }).toList(),
@@ -300,6 +304,7 @@ class _CommonDropdownButtonFormFieldState
           },
           style: widget.componentTextStyle, // Dropdown metin fontu boyutu
         ),
+
       );
     }
   }

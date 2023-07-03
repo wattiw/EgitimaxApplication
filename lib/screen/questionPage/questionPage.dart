@@ -4,6 +4,7 @@ import 'package:egitimaxapplication/bloc/state/question/questionState.dart';
 import 'package:egitimaxapplication/model/question/questionPageModel.dart';
 import 'package:egitimaxapplication/repository/appRepositories.dart';
 import 'package:egitimaxapplication/repository/question/questionRepository.dart';
+import 'package:egitimaxapplication/screen/common/collapsibleItemBuilder.dart';
 import 'package:egitimaxapplication/screen/common/commonDropdownButtonFormField.dart';
 import 'package:egitimaxapplication/screen/common/isPublicCheckBox.dart';
 import 'package:egitimaxapplication/screen/common/keyValuePairs.dart';
@@ -457,19 +458,50 @@ class _QuestionPageState extends State<QuestionPage> {
         data[achCode] = achName;
       }
 
-    List<KeyValuePairs> list = [];
-    data.forEach((key, value) {
-      list.add(KeyValuePairs(keyText: key, valueText: value));
+    List<Wrap> list = [];
+    data.forEach((itemKey, itemValue) {
+      list.add(
+        Wrap(
+            children: [Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  '$itemKey :',
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  softWrap: true,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Expanded(
+                  child: Text(
+                    itemValue,
+                    style: const TextStyle(fontWeight: FontWeight.normal),
+                    softWrap: true,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),]
+        ),
+      );
+
     });
 
-    return SizedBox(
-      width: double.infinity,
-      child: Wrap(
-        spacing: 5.0,
-        runSpacing: 2.0,
-        children: list,
-      ),
+    var result=CollapsibleItemBuilder(items: [
+      CollapsibleItemData(
+          header: Text(AppLocalization.instance.translate(
+              'lib.screen.questionPage.questionPage',
+              'getSelectedOptionsTable',
+              'questionDetails'),style: const TextStyle(fontWeight: FontWeight.bold)),
+          content: Wrap(spacing: 5.0, runSpacing: 2.0, children:list),
+          padding: 3,
+          onStateChanged: (bool ) {  })
+    ],
+      padding: 3,
+      onStateChanged: (bool ) {  },
     );
+    return result;
   }
 
   @override

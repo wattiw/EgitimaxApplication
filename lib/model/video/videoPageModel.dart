@@ -2,6 +2,7 @@
 import 'dart:typed_data';
 
 import 'package:egitimaxapplication/repository/appRepositories.dart';
+import 'package:egitimaxapplication/screen/common/collapsibleItemBuilder.dart';
 import 'package:egitimaxapplication/screen/common/keyValuePairs.dart';
 import 'package:egitimaxapplication/utils/config/language/appLocalizations.dart';
 import 'package:egitimaxapplication/utils/extension/apiDataSetExtension.dart';
@@ -67,7 +68,7 @@ class VideoPageModel {
   Map<int, String> achievements = {};
   Map<String, dynamic> achievementsBulk = {};
 
-  Future<Wrap> toKeyValuePairs () async {
+  Future<CollapsibleItemBuilder> toKeyValuePairs () async {
     final Map<String, String> data = {
       //'Edit Mode': isEditorMode.toString(),
       //'User Id': userId.toString(),
@@ -167,12 +168,50 @@ class VideoPageModel {
     }
 
 
-    List<KeyValuePairs> list = [];
-    data.forEach((key, value) {
-      list.add(KeyValuePairs(keyText: key, valueText: value));
+    List<Wrap> list = [];
+    data.forEach((itemKey, itemValue) {
+      list.add(
+        Wrap(
+          children: [Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                '$itemKey :',
+                style: const TextStyle(fontWeight: FontWeight.bold),
+                softWrap: true,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+              ),
+              Expanded(
+                child: Text(
+                  itemValue,
+                  style: const TextStyle(fontWeight: FontWeight.normal),
+                  softWrap: true,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),]
+        ),
+      );
+
     });
 
-    return  Wrap(spacing: 5.0, runSpacing: 2.0, children:list);
+    var result=CollapsibleItemBuilder(items: [
+      CollapsibleItemData(
+          header: Text(AppLocalization.instance.translate(
+              'lib.model.video.videoPageModel',
+              'toKeyValuePairs',
+              'videoDetails'),style: const TextStyle(fontWeight: FontWeight.bold)),
+          content: Wrap(spacing: 5.0, runSpacing: 2.0, children:list),
+          padding: 3,
+          onStateChanged: (bool ) {  })
+    ],
+      padding: 3,
+      onStateChanged: (bool ) {  },
+    );
+    return result;
   }
 
 

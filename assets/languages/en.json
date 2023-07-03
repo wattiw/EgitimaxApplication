@@ -204,7 +204,8 @@
       "branch": "Branch",
       "domain": "Domain",
       "subDomain": "Sub Domain",
-      "learn": "Achievement Tree"
+      "learn": "Achievement Tree",
+      "questionDetails": "Question Details"
     },
     "getSelectedAchievementsTable": {
       "achievementId": "Achievement Id",
@@ -482,7 +483,8 @@
       "branch": "Branch",
       "domain": "Domain",
       "learn": "Achievement Tree",
-      "subDomain": "Subdomain"
+      "subDomain": "Subdomain",
+      "videoDetails": "Video Details"
     }
   },
   "lib.screen.common.learnLevels": {
@@ -672,6 +674,7 @@
   },
   "lib.screen.common.questionDataTable": {
     "_QuestionDataTableState": {
+      "pleaseSelectSource": "Please Select Source",
       "myQuestion": "My Questions",
       "myFavoriteQuestion": "My Favorite Questions",
       "searchInEgitimax": "Search In Eğitimax"
@@ -698,7 +701,8 @@
       "createdOn": "Created On",
       "favorite": "Favorite",
       "likeCount": "Likes",
-      "pleaseSelectSourceType": "Please question source type !"
+      "pleaseSelectSourceType": "Please question source type !",
+      "noData": "No records found matching the criteria."
 
     },
     "filterAcademicYears": {
@@ -937,6 +941,7 @@
   },
   "lib.screen.common.videoDataTable": {
     "_VideoDataTableState": {
+      "pleaseSelectSource": "Please select source",
       "myVideo": "My Videos",
       "myFavoriteVideo": "My Favorite Videos",
       "searchInEgitimax": "Search In Egitimax"
@@ -961,7 +966,8 @@
       "createdOn": "Created On",
       "favorite": "Favorite",
       "likes": "Likes",
-      "pleaseSelectSourceType": "Please Select Source"
+      "pleaseSelectSourceType": "Please Select Source",
+      "noData": "No records found matching the criteria."
     },
     "filterAcademicYears": {
       "all": "All",

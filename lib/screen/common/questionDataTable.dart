@@ -32,9 +32,9 @@ class QuestionDataTable extends StatefulWidget {
 
   QuestionDataTable(
       {required this.userId,
-        this.branchId,
-        this.gradeId,
-        this.learnId,
+      this.branchId,
+      this.gradeId,
+      this.learnId,
       this.selectedQuestionIds,
       required this.componentTextStyle,
       required this.onSelectedQuestionIdsChanged,
@@ -51,6 +51,10 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
   bool isFilterActive = false;
 
   Map<String, String> questionSourceList = {
+    'pleaseSelectSource': AppLocalization.instance.translate(
+        'lib.screen.common.questionDataTable',
+        '_QuestionDataTableState',
+        'pleaseSelectSource'),
     'myQuestions': AppLocalization.instance.translate(
         'lib.screen.common.questionDataTable',
         '_QuestionDataTableState',
@@ -65,6 +69,10 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
         'searchInEgitimax')
   };
   Map<int, String> questionSourceListAsKey = {
+    -1: AppLocalization.instance.translate(
+        'lib.screen.common.questionDataTable',
+        '_QuestionDataTableState',
+        'pleaseSelectSource'),
     0: AppLocalization.instance.translate('lib.screen.common.questionDataTable',
         '_QuestionDataTableState', 'myQuestion'),
     1: AppLocalization.instance.translate('lib.screen.common.questionDataTable',
@@ -73,6 +81,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
         '_QuestionDataTableState', 'searchInEgitimax')
   };
   Map<int, String> questionSourceListAsKeyValues = {
+    -1: 'pleaseSelectSource',
     0: 'myQuestions',
     1: 'myFavoriteQuestions',
     2: 'egitimaxPublicQuestions'
@@ -137,12 +146,9 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
       dataTableRows; // Map Is List<Map<Map<columnName, columnValueAsString>, Widget(Show Your Widget With Cell Value Bind)>>?
   List<ColumnDataType> columnDataTypes = List.empty(growable: true);
 
-  void addSelectedIdFromOverView(BigInt id)
-  {
+  void addSelectedIdFromOverView(BigInt id) {
     widget.selectedQuestionIds!.add(id);
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   @override
@@ -151,9 +157,10 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
     widget.selectedRows ??= [];
     widget.selectedQuestionIds ??= [];
 
-    selectedLearn=widget.learnId;
-    branchId=widget.branchId;
-    gradeId=widget.gradeId;
+    selectedLearn = widget.learnId;
+    branchId = widget.branchId;
+    gradeId = widget.gradeId;
+    questionSourceId=null;
 
     super.initState();
   }
@@ -628,10 +635,11 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                                   widget.selectedRowsKeys =
                                       widget.selectedQuestionIds;
                                   if (widget.onSelectedRowsChanged != null) {
-                                   // widget.onSelectedRowsChanged!(selectedRows,widget.selectedQuestionIds);
+                                    // widget.onSelectedRowsChanged!(selectedRows,widget.selectedQuestionIds);
                                   }
-                                  if (widget.onSelectedQuestionIdsChanged != null) {
-                                   // widget.onSelectedQuestionIdsChanged!(widget.selectedQuestionIds);
+                                  if (widget.onSelectedQuestionIdsChanged !=
+                                      null) {
+                                    // widget.onSelectedQuestionIdsChanged!(widget.selectedQuestionIds);
                                   }
                                 },
                               )
@@ -707,7 +715,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
     dataTableDataRoot = null;
     dataTableRows = null;
     final theme = Theme.of(context);
-    if (questionSourceName != null) {
+    if (questionSourceName != null && questionSourceId != -1) {
       var questionRepository = await appRepositories.questionRepository();
 
       var dataSet = await questionRepository.getQuestionDataTableData(['*'],
@@ -731,7 +739,9 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                   filterQuestionTextController.text.isEmpty
               ? null
               : filterQuestionTextController.text);
-      if (dataSet != null && dataSet.entries.isNotEmpty) {
+      var firstId=dataSet.firstValueWithType<BigInt>('data', 'id')??BigInt.parse('0');
+
+      if (dataSet != null && dataSet.entries.isNotEmpty && firstId>BigInt.parse('0')) {
         var dataTable = dataSet.getDataTable();
         if (dataTable != null &&
             dataTable.columns != null &&
@@ -777,9 +787,8 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                           return QuestionOverView(
                             questionId: idValue,
                             userId: userId,
-                            onAddedQuestion: (questionId){
-                              if(questionId!=null)
-                              {
+                            onAddedQuestion: (questionId) {
+                              if (questionId != null) {
                                 addSelectedIdFromOverView(questionId);
                               }
                             },
@@ -821,22 +830,24 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                   }
                 });
 
-
                 var reversedString =
-                reversedAchievementTreeNew.reversed.toList().join('>>');
+                    reversedAchievementTreeNew.reversed.toList().join('>>');
                 modifiedRow[keyMap] = Text(reversedString);
-              } else if(keyMap.entries.first.key == "favCount")
-                {
-                  String ifNullToZero=keyMap.entries.first.value=='null' || keyMap.entries.first.value==null || keyMap.entries.first.value=='' ? '0' :keyMap.entries.first.value ;
-                  modifiedRow[keyMap] = Text(ifNullToZero);
-                }
-              else if(keyMap.entries.first.key == "likeCount")
-              {
-                String ifNullToZero=keyMap.entries.first.value=='null' || keyMap.entries.first.value==null || keyMap.entries.first.value=='' ? '0' :keyMap.entries.first.value ;
+              } else if (keyMap.entries.first.key == "favCount") {
+                String ifNullToZero = keyMap.entries.first.value == 'null' ||
+                        keyMap.entries.first.value == null ||
+                        keyMap.entries.first.value == ''
+                    ? '0'
+                    : keyMap.entries.first.value;
                 modifiedRow[keyMap] = Text(ifNullToZero);
-              }
-
-              else {
+              } else if (keyMap.entries.first.key == "likeCount") {
+                String ifNullToZero = keyMap.entries.first.value == 'null' ||
+                        keyMap.entries.first.value == null ||
+                        keyMap.entries.first.value == ''
+                    ? '0'
+                    : keyMap.entries.first.value;
+                modifiedRow[keyMap] = Text(ifNullToZero);
+              } else {
                 modifiedRow[keyMap] = widget;
               }
             });
@@ -912,8 +923,18 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
           dataTableRows =
               modifiedRows; //dataTableData.rowsAsWidget; // Map Is List<Map<Map<columnName, columnValueAsString>, Widget(Show Your Widget With Cell Value Bind)>>?
         }
+
+
+      }
+      else
+      {
+        dataTableRows=null;
+        UIMessage.showMessage(context,
+            AppLocalization.instance.translate('lib.screen.common.questionDataTable',
+                'searchButtonOnPressed', 'noData'));
       }
       setState(() {});
+
     } else {
       UIMessage.showError(
           AppLocalization.instance.translate(
@@ -927,8 +948,8 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
   Future<void> clearButtonOnPressed() async {
     setState(() {
       academicYearId = 0;
-      branchId = 0;
-      gradeId = 0;
+      //branchId = 0;
+      //gradeId = 0;
       difficultyId = 0;
       domainId = 0;
       domainsRoot = null;
@@ -936,8 +957,8 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
       subDomainsRoot = null;
       selectedLearn = null;
       filterQuestionTextController.text = '';
-      isFilterActive = false;
-      isFilterExpanded = false;
+      isFilterActive = true;
+      isFilterExpanded = true;
     });
   }
 
@@ -974,29 +995,6 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
           'lib.screen.common.questionDataTable',
           'filterAcademicYears',
           'academicYear'),
-      dropdownDecoratorProps: DropDownDecoratorProps(
-        dropdownSearchDecoration: InputDecoration(
-          labelText: AppLocalization.instance.translate(
-              'lib.screen.common.questionDataTable',
-              'filterAcademicYears',
-              'academicYear'),
-          hintText: AppLocalization.instance.translate(
-              'lib.screen.common.questionDataTable',
-              'filterAcademicYears',
-              'pleaseSelectAcademicYear'),
-          contentPadding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-          isDense: true,
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.grey),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.blue),
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
-        baseStyle: widget.componentTextStyle ?? const TextStyle(fontSize: 10),
-      ),
       onSelectedItemChanged: (selectedItem) {
         academicYearId = academicYears.entries
             .map((entry) => entry)
@@ -1032,9 +1030,10 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
 
     var defaultGrade = !isFilterExpanded
         ? null
-        : widget.gradeId ?? (gradeId ??
-            userDataSet.firstValue('data', 'grade_id',
-                insteadOfNull: grades.entries.first.key));
+        : widget.gradeId ??
+            (gradeId ??
+                userDataSet.firstValue('data', 'grade_id',
+                    insteadOfNull: grades.entries.first.key));
     gradeId ??= defaultGrade;
 
     return CommonDropdownButtonFormField(
@@ -1043,29 +1042,6 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
       label: AppLocalization.instance.translate(
           'lib.screen.common.questionDataTable', 'filterGrades', 'gradeName'),
       items: grades,
-      dropdownDecoratorProps: DropDownDecoratorProps(
-        dropdownSearchDecoration: InputDecoration(
-          labelText: AppLocalization.instance.translate(
-              'lib.screen.common.questionDataTable',
-              'filterGrades',
-              'gradeName'),
-          hintText: AppLocalization.instance.translate(
-              'lib.screen.common.questionDataTable',
-              'filterGrades',
-              'pleaseSelectGradeName'),
-          contentPadding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-          isDense: true,
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.grey),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.blue),
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
-        baseStyle: widget.componentTextStyle ?? const TextStyle(fontSize: 10),
-      ),
       onSelectedItemChanged: (selectedItem) {
         gradeId = grades.entries
             .map((entry) => entry)
@@ -1100,8 +1076,9 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
         user_id: widget.userId);
     var defaultBranch = !isFilterExpanded
         ? null
-        : widget.branchId ?? (branchesMapDataSet.firstValue('data', 'branch_id',
-            insteadOfNull: branches.entries.first.key));
+        : widget.branchId ??
+            (branchesMapDataSet.firstValue('data', 'branch_id',
+                insteadOfNull: branches.entries.first.key));
 
     branchId ??= defaultBranch;
 
@@ -1113,29 +1090,6 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
           'lib.screen.common.questionDataTable',
           'filterBranches',
           'branchName'),
-      dropdownDecoratorProps: DropDownDecoratorProps(
-        dropdownSearchDecoration: InputDecoration(
-          labelText: AppLocalization.instance.translate(
-              'lib.screen.common.questionDataTable',
-              'filterBranches',
-              'branchName'),
-          hintText: AppLocalization.instance.translate(
-              'lib.screen.common.questionDataTable',
-              'filterBranches',
-              'pleaseSelectBranchName'),
-          contentPadding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-          isDense: true,
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.grey),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.blue),
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
-        baseStyle: widget.componentTextStyle ?? const TextStyle(fontSize: 10),
-      ),
       onSelectedItemChanged: (selectedItem) async {
         branchId = branches.entries
             .map((entry) => entry)
@@ -1203,29 +1157,6 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
           'lib.screen.common.questionDataTable',
           'filterDifficultyLevels',
           'difficultyLevel'),
-      dropdownDecoratorProps: DropDownDecoratorProps(
-        dropdownSearchDecoration: InputDecoration(
-          labelText: AppLocalization.instance.translate(
-              'lib.screen.common.questionDataTable',
-              'filterDifficultyLevels',
-              'difficultyLevel'),
-          hintText: AppLocalization.instance.translate(
-              'lib.screen.common.questionDataTable',
-              'filterDifficultyLevels',
-              'pleaseSelectDifficultyLevel'),
-          contentPadding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-          isDense: true,
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.grey),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.blue),
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
-        baseStyle: widget.componentTextStyle ?? const TextStyle(fontSize: 10),
-      ),
       onSelectedItemChanged: (selectedItem) {
         difficultyId = difficulties.entries
             .map((entry) => entry)
@@ -1280,7 +1211,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
     var userFavoriteGroupsDataSet = favoriteGroupsRootDataSet ??
         await appRepositories.tblFavGroupQuest(
             'Question/GetObject', ['id', 'group_name', 'user_id'],
-            user_id: widget.userId,getNoSqlData: 0);
+            user_id: widget.userId, getNoSqlData: 0);
     favoriteGroupsRootDataSet ??= userFavoriteGroupsDataSet;
 
     var favoriteGroups = favoriteGroupsRoot ??
@@ -1317,34 +1248,46 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
           'lib.screen.common.questionDataTable',
           'questionSources',
           'questionResource'),
-      isSearchEnable: true,
+      isSearchEnable: false,
       selectedItem: questionSourceId,
       items: questionSourceListAsKey,
-      onSelectedItemChanged: (questionSourceId) {
-        var value = questionSourceListAsKeyValues[questionSourceId];
+      onSelectedItemChanged: (selectedSourceId) {
+        questionSourceId = selectedSourceId;
+
+        if (selectedSourceId != -1) {
+        var value = questionSourceListAsKeyValues[selectedSourceId];
         questionSourceName = value;
+          setState(() {
+            filterTitle = questionSourceList[value];
+            questionSourceName = value;
+            if (value != null) {
+              isFilterActive = true;
+            } else {
+              isFilterActive = false;
+            }
 
-        setState(() {
-          filterTitle = questionSourceList[value];
-          questionSourceName = value;
-          if (value != null) {
-            isFilterActive = true;
-          } else {
-            isFilterActive = false;
-          }
+            if (value.toString().toLowerCase().contains('favorite')) {
+              isFavoriteGroupVisible = true;
+            } else {
+              isFavoriteGroupVisible = false;
+            }
 
-          if (value.toString().toLowerCase().contains('favorite')) {
-            isFavoriteGroupVisible = true;
-          } else {
+            if (value == 'egitimaxPublicQuestions') {
+              isFilterExpanded = true;
+            } else {
+              isFilterExpanded = false;
+            }
+          });
+        }
+        else
+          {
             isFavoriteGroupVisible = false;
-          }
-
-          if (value == 'egitimaxPublicQuestions') {
-            isFilterExpanded = true;
-          } else {
             isFilterExpanded = false;
+            isFilterActive=false;
+            setState(() {
+
+            });
           }
-        });
       },
       componentTextStyle: widget.componentTextStyle,
     );

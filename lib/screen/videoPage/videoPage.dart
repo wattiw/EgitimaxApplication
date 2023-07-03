@@ -1,5 +1,6 @@
 import 'package:egitimaxapplication/repository/appRepositories.dart';
 import 'package:egitimaxapplication/repository/video/videoRepository.dart';
+import 'package:egitimaxapplication/screen/common/collapsibleItemBuilder.dart';
 import 'package:egitimaxapplication/screen/common/commonDropdownButtonFormField.dart';
 import 'package:egitimaxapplication/screen/common/commonTextFormField.dart';
 import 'package:egitimaxapplication/screen/common/learnLevels.dart';
@@ -702,10 +703,10 @@ class _VideoPageState extends State<VideoPage> {
               padding: const EdgeInsets.all(8),
               child: SizedBox(
                 width: double.infinity,
-                child: FutureBuilder<Wrap>(
+                child: FutureBuilder<CollapsibleItemBuilder>(
                   future: videoPageModel.toKeyValuePairs(),
                   builder: (BuildContext context,
-                      AsyncSnapshot<Wrap> innerSnapshot) {
+                      AsyncSnapshot<CollapsibleItemBuilder> innerSnapshot) {
                     if (innerSnapshot.connectionState ==
                         ConnectionState.waiting) {
                       return const CircularProgressIndicator();
