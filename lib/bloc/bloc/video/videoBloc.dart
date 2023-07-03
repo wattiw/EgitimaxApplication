@@ -70,18 +70,9 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
                 'collectiondata_video', 'VideoId') !=
             null) {
           try {
-            var collectionDataVideo =
-                tblVidVideoMainDataSet.selectDataTable('collectiondata_video');
+            event.videoPageModel.fileNameOfUploaded = tblVidVideoMainDataSet
+                .firstValue('collectiondata_video', 'Filename');
 
-            var videoDataAsString = tblVidVideoMainDataSet.firstValue(
-                'collectiondata_video', 'VideoData');
-
-            var videoMongoId =
-                tblVidVideoMainDataSet.firstValue('collectiondata_video', 'Id');
-
-            var filex = base64.decode(videoDataAsString);
-            event.videoPageModel.videoData = filex;
-            
             event.videoPageModel.videoObjectId =
                 tblVidVideoMainDataSet.firstValue('collectiondata_video', 'Id');
           } catch (e) {
@@ -325,6 +316,8 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
           event.videoPageModel.videoId = BigInt.parse('0');
           setAgainRootIdAsZero = false;
 
+          event.videoPageModel.videoTitle = '';
+          event.videoPageModel.videoDescriptions = '';
           event.videoPageModel.videoData = null;
           event.videoPageModel.videoObjectId = null;
           event.videoPageModel.videoPlayerController = null;
