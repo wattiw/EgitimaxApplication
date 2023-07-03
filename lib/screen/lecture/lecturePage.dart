@@ -47,7 +47,7 @@ class LecturePage extends StatefulWidget {
 }
 
 class _LecturePageState extends State<LecturePage> {
-  int _activeCurrentStep = 2;
+  int _activeCurrentStep = 0;
   late LectureBloc lectureBloc;
   late LecturePageModel lecturePageModel;
   LectureRepository lectureRepository = LectureRepository();
@@ -145,7 +145,7 @@ class _LecturePageState extends State<LecturePage> {
   List<Step> lectureOperationsSteps(BuildContext context, LectureState state) {
     var vSteps = [
       Step(
-        state: _activeCurrentStep <= 0 ? StepState.editing : StepState.complete,
+        state: _activeCurrentStep <= 0 ? StepState.editing : StepState.indexed,
         isActive: _activeCurrentStep >= 0,
         title: Text(AppLocalization.instance.translate(
             'lib.screen.lecturePage.lecturePage',
@@ -169,7 +169,7 @@ class _LecturePageState extends State<LecturePage> {
         ),
       ),
       Step(
-        state: _activeCurrentStep <= 1 ? StepState.editing : StepState.complete,
+        state: _activeCurrentStep <= 1 ? StepState.editing : StepState.indexed,
         isActive: _activeCurrentStep >= 1,
         title: Text(AppLocalization.instance.translate(
             'lib.screen.lecturePage.lecturePage',
@@ -201,7 +201,7 @@ class _LecturePageState extends State<LecturePage> {
         ),
       ),
       Step(
-        state: _activeCurrentStep <= 2 ? StepState.editing : StepState.complete,
+        state: _activeCurrentStep <= 2 ? StepState.editing : StepState.indexed,
         isActive: _activeCurrentStep >= 2,
         title: Text(AppLocalization.instance.translate(
             'lib.screen.lecturePage.lecturePage',
@@ -279,6 +279,10 @@ class _LecturePageState extends State<LecturePage> {
             },
           ),
           CommonTextFormField(
+            directionText: AppLocalization.instance.translate(
+                'lib.screen.lecturePage.lecturePage',
+                'getStepOneLayout',
+                'titleDirectionText'),
             controller: lectureTitleController,
             labelText: AppLocalization.instance.translate(
                 'lib.screen.lecturePage.lecturePage',
@@ -292,6 +296,10 @@ class _LecturePageState extends State<LecturePage> {
             },
           ),
           CommonTextFormField(
+            directionText: AppLocalization.instance.translate(
+                'lib.screen.lecturePage.lecturePage',
+                'getStepOneLayout',
+                'descriptionsDirectionText'),
             controller: lectureDescriptionController,
             labelText: AppLocalization.instance.translate(
                 'lib.screen.lecturePage.lecturePage',
@@ -374,140 +382,60 @@ class _LecturePageState extends State<LecturePage> {
                     header: Text(AppLocalization.instance.translate(
                         'lib.screen.lecturePage.lecturePage',
                         'getStepOneLayout',
-                        'clickWelcomeMsg')),
+                        'clickWelcomeAndGoodByMsg')),
                     content: Padding(
                       padding: const EdgeInsets.all(15.0),
-                      child: CommonTextFormField(
-                        controller: welcomeMsgTextController,
-                        labelText: AppLocalization.instance.translate(
-                            'lib.screen.lecturePage.lecturePage',
-                            'getStepOneLayout',
-                            'welcomeMsg'),
-                        maxLines: null,
-                        minLines: 1,
-                        onChanged: (text) {
-                          lecturePageModel.setLectureObjects!.tblCrsCourseMain!
-                              .welcomeMsg = text;
-                        },
+                      child: Column(
+                        children: [
+                          CommonTextFormField(
+                            directionText: AppLocalization.instance.translate(
+                                'lib.screen.lecturePage.lecturePage',
+                                'getStepOneLayout',
+                                'welcomeMsgDirectionText'),
+                            controller: welcomeMsgTextController,
+                            labelText: AppLocalization.instance.translate(
+                                'lib.screen.lecturePage.lecturePage',
+                                'getStepOneLayout',
+                                'welcomeMsg'),
+                            maxLines: null,
+                            minLines: 1,
+                            onChanged: (text) {
+                              lecturePageModel.setLectureObjects!.tblCrsCourseMain!
+                                  .welcomeMsg = text;
+                            },
+                          ),
+                          const SizedBox(height: 10,),
+                          CommonTextFormField(
+                            directionText: AppLocalization.instance.translate(
+                                'lib.screen.lecturePage.lecturePage',
+                                'getStepOneLayout',
+                                'goodbyeMsgDirectionText'),
+                            controller: goodbyeMsgTextController,
+                            labelText: AppLocalization.instance.translate(
+                                'lib.screen.lecturePage.lecturePage',
+                                'getStepOneLayout',
+                                'goodbyeMsg'),
+                            maxLines: null,
+                            minLines: 1,
+                            onChanged: (text) {
+                              lecturePageModel.setLectureObjects!.tblCrsCourseMain!
+                                  .goodbyeMsg = text;
+
+                            },
+                          ),
+
+                        ],
                       ),
                     ),
                     padding: 0,
                     onStateChanged: (value) {
                       isWelcomeMsgCollapsed = !isWelcomeMsgCollapsed;
-                    })
+                    }),
               ],
               padding: 0,
               onStateChanged: (value) {
                 isWelcomeMsgCollapsed = !isWelcomeMsgCollapsed;
               }),
-          CollapsibleItemBuilder(
-              items: [
-                CollapsibleItemData(
-                    isExpanded: isGoodbyeMsgCollapsed,
-                    header: Text(AppLocalization.instance.translate(
-                        'lib.screen.lecturePage.lecturePage',
-                        'getStepOneLayout',
-                        'clickGoodbyeMsg')),
-                    content: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: CommonTextFormField(
-                        controller: goodbyeMsgTextController,
-                        labelText: AppLocalization.instance.translate(
-                            'lib.screen.lecturePage.lecturePage',
-                            'getStepOneLayout',
-                            'goodbyeMsg'),
-                        maxLines: null,
-                        minLines: 1,
-                        onChanged: (text) {
-                          lecturePageModel.setLectureObjects!.tblCrsCourseMain!
-                              .goodbyeMsg = text;
-
-                        },
-                      ),
-                    ),
-                    padding: 0,
-                    onStateChanged: (value) {
-                      isGoodbyeMsgCollapsed = !isGoodbyeMsgCollapsed;
-                    })
-              ],
-              padding: 0,
-              onStateChanged: (value) {
-                isGoodbyeMsgCollapsed = !isGoodbyeMsgCollapsed;
-              }),
-          if (false)
-            TextButton(
-              onPressed: () {
-                setState(() {
-                  isWelcomeMsgCollapsed = !isWelcomeMsgCollapsed;
-                });
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(AppLocalization.instance.translate(
-                      'lib.screen.lecturePage.lecturePage',
-                      'getStepOneLayout',
-                      'clickWelcomeMsg')),
-                  Icon(!isWelcomeMsgCollapsed
-                      ? Icons.arrow_drop_up_outlined
-                      : Icons.arrow_drop_down_outlined),
-                ],
-              ),
-            ),
-          if (!isWelcomeMsgCollapsed && false)
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: CommonTextFormField(
-                controller: welcomeMsgTextController,
-                labelText: AppLocalization.instance.translate(
-                    'lib.screen.lecturePage.lecturePage',
-                    'getStepOneLayout',
-                    'welcomeMsg'),
-                maxLines: null,
-                minLines: 1,
-                onChanged: (text) {
-                  lecturePageModel
-                      .setLectureObjects!.tblCrsCourseMain!.welcomeMsg = text;
-                },
-              ),
-            ),
-          if (false)
-            TextButton(
-              onPressed: () {
-                setState(() {
-                  isGoodbyeMsgCollapsed = !isGoodbyeMsgCollapsed;
-                });
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(AppLocalization.instance.translate(
-                      'lib.screen.lecturePage.lecturePage',
-                      'getStepOneLayout',
-                      'clickGoodbyeMsg')),
-                  Icon(!isGoodbyeMsgCollapsed
-                      ? Icons.arrow_drop_up_outlined
-                      : Icons.arrow_drop_down_outlined),
-                ],
-              ),
-            ),
-          if (!isGoodbyeMsgCollapsed && false)
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: CommonTextFormField(
-                controller: goodbyeMsgTextController,
-                labelText: AppLocalization.instance.translate(
-                    'lib.screen.lecturePage.lecturePage',
-                    'getStepOneLayout',
-                    'goodbyeMsg'),
-                maxLines: null,
-                minLines: 1,
-                onChanged: (text) {
-                  lecturePageModel
-                      .setLectureObjects!.tblCrsCourseMain!.goodbyeMsg = text;
-                },
-              ),
-            ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [

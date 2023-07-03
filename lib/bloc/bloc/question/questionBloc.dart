@@ -468,6 +468,8 @@ class QuestionBloc extends Bloc<QuestionEvent, QuestionState> {
             opC.isCorrect=false;
           }
 
+          event.questionPageModel.selectedAchievements= {};
+
           event.questionPageModel.questionId=BigInt.parse('0');
           setAgainRootIdAsZero=false;
         }

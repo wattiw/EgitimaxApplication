@@ -293,7 +293,7 @@ class _VideoPageState extends State<VideoPage> {
   List<Step> videoOperationsSteps(BuildContext context, VideoState state) {
     var vSteps = [
       Step(
-        state: _activeCurrentStep <= 0 ? StepState.editing : StepState.complete,
+        state: _activeCurrentStep <= 0 ? StepState.editing : StepState.indexed,
         isActive: _activeCurrentStep >= 0,
         title: Text(AppLocalization.instance.translate(
             'lib.screen.videoPage.videoPage',
@@ -317,7 +317,7 @@ class _VideoPageState extends State<VideoPage> {
         ),
       ),
       Step(
-        state: _activeCurrentStep <= 1 ? StepState.editing : StepState.complete,
+        state: _activeCurrentStep <= 1 ? StepState.editing : StepState.indexed,
         isActive: _activeCurrentStep >= 1,
         title: Text(AppLocalization.instance.translate(
             'lib.screen.videoPage.videoPage',
@@ -348,7 +348,7 @@ class _VideoPageState extends State<VideoPage> {
         ),
       ),
       Step(
-        state: _activeCurrentStep <= 2 ? StepState.editing : StepState.complete,
+        state: _activeCurrentStep <= 2 ? StepState.editing : StepState.indexed,
         isActive: _activeCurrentStep >= 2,
         title: Text(AppLocalization.instance.translate(
             'lib.screen.videoPage.videoPage',
@@ -403,12 +403,15 @@ class _VideoPageState extends State<VideoPage> {
                 if (videoPageModel.videoPlayerController != null)
                   Row(
                     children: [
-                      Text('${AppLocalization.instance.translate(
-                          'lib.screen.videoPage.videoPage',
-                          'getStepOneLayout',
-                          'videoUploaded')} ${
-                          videoPageModel.fileNameOfUploaded !=null &&
-                              videoPageModel.fileNameOfUploaded !='' ? ' | ${videoPageModel.fileNameOfUploaded}' : ''}'),
+                      Wrap(
+                        children: [
+                          Text(AppLocalization.instance.translate(
+                              'lib.screen.videoPage.videoPage',
+                              'getStepOneLayout',
+                              'videoUploaded')),
+                          Text(videoPageModel.fileNameOfUploaded !=null &&  videoPageModel.fileNameOfUploaded !='' ? ' | ${videoPageModel.fileNameOfUploaded}' : '')
+                        ],
+                      ),
                       IconButton(
                           onPressed:
                               videoProcessing ? null : _handleUploadButtonPressed,
@@ -449,14 +452,24 @@ class _VideoPageState extends State<VideoPage> {
             ),
           ),
 
-          CommonTextFormField(controller: videoTitleController, labelText: AppLocalization.instance.translate(
+          CommonTextFormField(
+            directionText: AppLocalization.instance.translate(
+                'lib.screen.videoPage.videoPage',
+                'getStepOneLayout',
+                'videoTitleDirectionText'),
+            controller: videoTitleController, labelText: AppLocalization.instance.translate(
               'lib.screen.videoPage.videoPage',
               'getStepOneLayout',
               'videoTitle'),maxLines: null,minLines: 1,onChanged: (text) {
             videoPageModel.videoTitle = text;
           },),
 
-          CommonTextFormField(controller: videoDescriptionController, labelText: AppLocalization.instance.translate(
+          CommonTextFormField(
+            directionText: AppLocalization.instance.translate(
+                'lib.screen.videoPage.videoPage',
+                'getStepOneLayout',
+                'videoDescriptionDirectionText'),
+            controller: videoDescriptionController, labelText: AppLocalization.instance.translate(
               'lib.screen.videoPage.videoPage',
               'getStepOneLayout',
               'videoDescription'),maxLines: 3,minLines: 1,onChanged: (text) {

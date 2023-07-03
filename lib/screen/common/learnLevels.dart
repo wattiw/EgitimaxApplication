@@ -64,7 +64,10 @@ class _LearnLevelsState extends State<LearnLevels> {
               if (innerSnapshot.connectionState == ConnectionState.waiting) {
                 return const CircularProgressIndicator();
               } else if (innerSnapshot.hasError) {
-                return Text('Error: ${innerSnapshot.error}');
+                return Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Text(AppLocalization.instance.translate('lib.screen.common.learnLevels','getLearnHierarchies','thereIsNotFurtherLevel')),
+                );
               } else if (innerSnapshot.hasData) {
                 return innerSnapshot.data!;
               } else {

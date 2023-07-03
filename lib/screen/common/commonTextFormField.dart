@@ -1,8 +1,10 @@
+import 'package:egitimaxapplication/utils/config/language/appLocalizations.dart';
 import 'package:flutter/material.dart';
 
 class CommonTextFormField extends StatefulWidget {
   final TextEditingController controller;
   final String labelText;
+  final String? directionText;
   final double contentPaddingVertical;
   final double contentPaddingHorizontal;
   final bool isDense;
@@ -21,6 +23,7 @@ class CommonTextFormField extends StatefulWidget {
     Key? key,
     required this.controller,
     required this.labelText,
+    required this.directionText,
     this.contentPaddingVertical = 12,
     this.contentPaddingHorizontal = 8,
     this.isDense = true,
@@ -48,11 +51,23 @@ class _CommonTextFormFieldState extends State<CommonTextFormField> {
       controller: widget.controller,
       maxLines: widget.maxLines,
       minLines: widget.minLines,
-      onChanged: widget.onChanged,
+      onChanged: (value){
+        if(widget.onChanged!=null)
+          {
+            widget.onChanged!(value);
+          }
+        setState(() {
+
+        });
+
+      },
       validator: widget.validator,
       keyboardType: widget.keyboardType,
       decoration: InputDecoration(
-        labelText: widget.labelText,
+        labelText: widget.controller.text=='' ? (widget.directionText?? widget.labelText) : widget.labelText,
+        //hintText: widget.directionText,
+        labelStyle:widget.controller.text=='' ? const TextStyle(fontSize: 12): null,
+        hintStyle:const TextStyle(fontSize: 10),
         contentPadding: EdgeInsets.symmetric(
           vertical: widget.contentPaddingVertical,
           horizontal: widget.contentPaddingHorizontal,

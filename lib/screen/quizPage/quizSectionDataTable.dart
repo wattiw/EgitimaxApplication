@@ -337,7 +337,13 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
                       builder: (_) => MainLayout(
                           context: context,
                           loadedStateContainer: QuestionDataTable(
-                            userId: widget.quizPageModel.userId,
+                            gradeId: widget.quizPageModel.quizMain!.gradeId,
+                            branchId: widget
+                                .quizPageModel.quizMain!.quizSections!
+                                .firstWhere((element) =>
+                            element.orderNo == section.orderNo).branchId,
+
+                        userId: widget.quizPageModel.userId,
                             componentTextStyle: widget.componentTextStyle,
                             selectedQuestionIds: getSectionQuestionIds(widget
                                     .quizPageModel.quizMain!.quizSections!
@@ -1071,6 +1077,10 @@ class _QuizSectionDataTableEditPopupState
               }),
           const SizedBox(height: 10,),
           CommonTextFormField(
+            directionText: AppLocalization.instance.translate(
+                'lib.screen.quizPage.quizSectionDataTableEditPopup',
+                'build',
+                'sectionDescriptionsDirectionText'),
             controller: _sectionDescController,
             labelText: AppLocalization.instance.translate(
           'lib.screen.quizPage.quizSectionDataTableEditPopup',

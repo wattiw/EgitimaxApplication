@@ -4,6 +4,7 @@ import 'package:egitimaxapplication/bloc/state/quiz/quizState.dart';
 import 'package:egitimaxapplication/model/quiz/quizPageModel.dart';
 import 'package:egitimaxapplication/repository/appRepositories.dart';
 import 'package:egitimaxapplication/repository/quiz/quizRepository.dart';
+import 'package:egitimaxapplication/screen/common/collapsibleItemBuilder.dart';
 import 'package:egitimaxapplication/screen/common/commonDropdownButtonFormField.dart';
 import 'package:egitimaxapplication/screen/common/commonTextFormField.dart';
 import 'package:egitimaxapplication/screen/common/userInteractiveMessage.dart';
@@ -158,7 +159,7 @@ class _QuizPageState extends State<QuizPage> {
   List<Step> quizOperationsSteps(BuildContext context, QuizState state) {
     var vSteps = [
       Step(
-        state: _activeCurrentStep <= 0 ? StepState.editing : StepState.complete,
+        state: _activeCurrentStep <= 0 ? StepState.editing : StepState.indexed,
         isActive: _activeCurrentStep >= 0,
         title: Text( AppLocalization.instance.translate(
             'lib.screen.quizPage.quizPage',
@@ -182,7 +183,7 @@ class _QuizPageState extends State<QuizPage> {
         ),
       ),
       Step(
-        state: _activeCurrentStep <= 1 ? StepState.editing : StepState.complete,
+        state: _activeCurrentStep <= 1 ? StepState.editing : StepState.indexed,
         isActive: _activeCurrentStep >= 1,
         title: Text( AppLocalization.instance.translate(
             'lib.screen.quizPage.quizPage',
@@ -199,7 +200,7 @@ class _QuizPageState extends State<QuizPage> {
         ),
       ),
       Step(
-        state: _activeCurrentStep <= 2 ? StepState.editing : StepState.complete,
+        state: _activeCurrentStep <= 2 ? StepState.editing : StepState.indexed,
         isActive: _activeCurrentStep >= 2,
         title: Text(AppLocalization.instance.translate(
             'lib.screen.quizPage.quizPage',
@@ -226,7 +227,7 @@ class _QuizPageState extends State<QuizPage> {
         TextEditingController(text: quizPageModel.quizMain?.description ?? '');
     final TextEditingController quizDurationNumberController =
         TextEditingController(
-            text: quizPageModel.quizMain?.duration.toString() ?? '');
+            text: quizPageModel.quizMain?.duration==0 ? '' : ( quizPageModel.quizMain?.duration.toString() ?? ''));
     final TextEditingController quizHeaderTextController =
         TextEditingController(text: quizPageModel.quizMain?.headerText ?? '');
     final TextEditingController quizFooterTextController =
@@ -264,6 +265,10 @@ class _QuizPageState extends State<QuizPage> {
             },
           ),
           CommonTextFormField(
+            directionText: AppLocalization.instance.translate(
+                'lib.screen.quizPage.quizPage',
+                'getStepOneLayout',
+                'titleDirectionText'),
             controller: quizTitleController,
             labelText:  AppLocalization.instance.translate(
                 'lib.screen.quizPage.quizPage',
@@ -276,6 +281,10 @@ class _QuizPageState extends State<QuizPage> {
             },
           ),
           CommonTextFormField(
+            directionText: AppLocalization.instance.translate(
+                'lib.screen.quizPage.quizPage',
+                'getStepOneLayout',
+                'descriptionsDirectionText'),
             controller: quizDescriptionController,
             labelText:AppLocalization.instance.translate(
                 'lib.screen.quizPage.quizPage',
@@ -288,6 +297,10 @@ class _QuizPageState extends State<QuizPage> {
             },
           ),
           CommonTextFormField(
+            directionText: AppLocalization.instance.translate(
+                'lib.screen.quizPage.quizPage',
+                'getStepOneLayout',
+                'durationDirectionText'),
             controller: quizDurationNumberController,
             labelText:AppLocalization.instance.translate(
                 'lib.screen.quizPage.quizPage',
@@ -339,76 +352,52 @@ class _QuizPageState extends State<QuizPage> {
               return null;
             },
           ),
-          TextButton(
-            onPressed: () {
-              setState(() {
-                isHeaderTextCollapsed = !isHeaderTextCollapsed;
-              });
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          CollapsibleItemBuilder(items: [
+            CollapsibleItemData(header: Text(AppLocalization.instance.translate(
+                'lib.screen.quizPage.quizPage',
+                'getStepOneLayout',
+                'clickForHeaderAndFooterInformation')), content: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(AppLocalization.instance.translate(
-                    'lib.screen.quizPage.quizPage',
-                    'getStepOneLayout',
-                    'clickForHeaderInformation')),
-                Icon(!isHeaderTextCollapsed
-                    ? Icons.arrow_drop_up_outlined
-                    : Icons.arrow_drop_down_outlined),
+                CommonTextFormField(
+                  directionText: AppLocalization.instance.translate(
+                      'lib.screen.quizPage.quizPage',
+                      'getStepOneLayout',
+                      'headerInformationDirectionText'),
+                  controller: quizHeaderTextController,
+                  labelText:AppLocalization.instance.translate(
+                      'lib.screen.quizPage.quizPage',
+                      'getStepOneLayout',
+                      'headerInformation'),
+                  maxLines: null,
+                  minLines: 1,
+                  onChanged: (text) {
+                    quizPageModel.quizMain?.headerText = text;
+                  },
+                ),
+                const SizedBox(height: 10,),
+                CommonTextFormField(
+                  directionText: AppLocalization.instance.translate(
+                      'lib.screen.quizPage.quizPage',
+                      'getStepOneLayout',
+                      'footerInformationDirectionText'),
+                  controller: quizFooterTextController,
+                  labelText: AppLocalization.instance.translate(
+                      'lib.screen.quizPage.quizPage',
+                      'getStepOneLayout',
+                      'footerInformation'),
+                  maxLines: null,
+                  minLines: 1,
+                  onChanged: (text) {
+                    quizPageModel.quizMain?.footerText = text;
+                  },
+                ),
               ],
-            ),
-          ),
-          if (!isHeaderTextCollapsed)
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: CommonTextFormField(
-                controller: quizHeaderTextController,
-                labelText:AppLocalization.instance.translate(
-                    'lib.screen.quizPage.quizPage',
-                    'getStepOneLayout',
-                    'headerInformation'),
-                maxLines: null,
-                minLines: 1,
-                onChanged: (text) {
-                  quizPageModel.quizMain?.headerText = text;
-                },
-              ),
-            ),
-          TextButton(
-            onPressed: () {
-              setState(() {
-                isFooterTextCollapsed = !isFooterTextCollapsed;
-              });
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(AppLocalization.instance.translate(
-                    'lib.screen.quizPage.quizPage',
-                    'getStepOneLayout',
-                    'clickForFooterInformation')),
-                Icon(!isFooterTextCollapsed
-                    ? Icons.arrow_drop_up_outlined
-                    : Icons.arrow_drop_down_outlined),
-              ],
-            ),
-          ),
-          if (!isFooterTextCollapsed)
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: CommonTextFormField(
-                controller: quizFooterTextController,
-                labelText: AppLocalization.instance.translate(
-                    'lib.screen.quizPage.quizPage',
-                    'getStepOneLayout',
-                    'footerInformation'),
-                maxLines: null,
-                minLines: 1,
-                onChanged: (text) {
-                  quizPageModel.quizMain?.footerText = text;
-                },
-              ),
-            ),
+            )
+
+                , padding: 5, onStateChanged:  (value){},isExpanded: false)
+          ], padding: 10, onStateChanged: (value){}),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [

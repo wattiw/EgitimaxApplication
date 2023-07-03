@@ -460,7 +460,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      await searchButtonOnPressed(userId ?? BigInt.parse('0'));
+                      await searchButtonOnPressed(context,userId ?? BigInt.parse('0'));
                     },
                     child: Text(AppLocalization.instance.translate(
                         'lib.screen.common.questionDataTable',
@@ -533,7 +533,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                           alignment: Alignment.centerRight,
                           child: ElevatedButton(
                             onPressed: () async {
-                              await searchButtonOnPressed(
+                              await searchButtonOnPressed(context,
                                   userId ?? BigInt.parse('0'));
                             },
                             child: Text(AppLocalization.instance.translate(
@@ -575,7 +575,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                           alignment: Alignment.centerRight,
                           child: ElevatedButton(
                             onPressed: () async {
-                              await searchButtonOnPressed(
+                              await searchButtonOnPressed(context,
                                   userId ?? BigInt.parse('0'));
                             },
                             child: Text(AppLocalization.instance.translate(
@@ -710,7 +710,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
     return convertedKeys;
   }
 
-  Future<void> searchButtonOnPressed(BigInt userId) async {
+  Future<void> searchButtonOnPressed(BuildContext context,BigInt userId) async {
     dataTableRoot = null;
     dataTableDataRoot = null;
     dataTableRows = null;
@@ -929,9 +929,9 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
       else
       {
         dataTableRows=null;
-        UIMessage.showMessage(context,
+        UIMessage.showShort(
             AppLocalization.instance.translate('lib.screen.common.questionDataTable',
-                'searchButtonOnPressed', 'noData'));
+                'searchButtonOnPressed', 'noData'),gravity: ToastGravity.CENTER);
       }
       setState(() {});
 
@@ -981,7 +981,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
         ? null
         : academicYearsDataSet.firstValue('data', 'id',
             filterColumn: 'is_default', filterValue: true, insteadOfNull: 0);
-    academicYearId ??= defaultAcademicYear;
+    academicYearId ??= 0;
 
     if (academicYearsRoot == null) {
       //return emptySearchableDropDown();
@@ -1200,6 +1200,10 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
 
   StatefulWidget filterQuestionText() {
     return CommonTextFormField(
+      directionText: AppLocalization.instance.translate(
+          'lib.screen.common.questionDataTable',
+          'filterQuestionText',
+          'questionKeyWordsDirectionText'),
         controller: filterQuestionTextController,
         labelText: AppLocalization.instance.translate(
             'lib.screen.common.questionDataTable',

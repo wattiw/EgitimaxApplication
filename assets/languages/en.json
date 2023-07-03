@@ -403,7 +403,9 @@
       "videoUpload": "Video Upload",
       "videoUploading": "Video uploading",
       "videoTitle": "Video Title",
+      "videoTitleDirectionText": "Please type title !",
       "videoDescription": "Video Description",
+      "videoDescriptionDirectionText": "Please type descriptions !",
       "anyoneCanSeeThisVideo": "Anyone can see this video !",
       "acceptCommunityGuidelines": "Accept Community Guidelines"
     },
@@ -495,6 +497,7 @@
       "ct_subject":"Subject"
     },
     "getLearnHierarchies": {
+      "thereIsNotFurtherLevel": "There is no achievement for this grade and branch!",
       "pleaseSelect": "Please Select"
     }
   },
@@ -518,14 +521,20 @@
     },
     "getStepOneLayout": {
       "title": "Title",
+      "titleDirectionText": "Please type title!",
       "descriptions": "Descriptions",
+      "descriptionsDirectionText": "Please type descriptions !",
       "duration": "Duration (Minutes)",
+      "durationDirectionText": "Please type duration !",
       "pleaseEnterAValidNumber": "Please enter a valid number.",
       "pleaseEnterAValue": "Please enter a value.",
+      "clickForHeaderAndFooterInformation": "Add Header & Footer Information",
       "clickForHeaderInformation": "Click for Header Information",
       "headerInformation": "Header Information",
+      "headerInformationDirectionText": "Please type header info !",
       "clickForFooterInformation": "Click for Footer Information",
       "footerInformation": "Footer Information",
+      "footerInformationDirectionText": "Please type footer information",
       "canEveryoneSeeTheExam": "Can everyone see the exam ?",
       "acceptCommunityGuidelines": "Accept Community Guidelines",
       "academicYear": "Academic Year",
@@ -627,6 +636,7 @@
       "questions": "Questions",
       "branchName": "Branch Name",
       "sectionDescriptions": "Section Descriptions",
+      "sectionDescriptionsDirectionText": "Please type section descriptions !",
       "cancel": "Cancel",
       "save": "Save"
     }
@@ -730,7 +740,8 @@
 
     },
     "filterQuestionText": {
-      "questionKeyWords": "Question key words"
+      "questionKeyWords": "Question key words",
+      "questionKeyWordsDirectionText": "Please type question key words"
 
     },
     "questionFavoriteGroups": {
@@ -819,13 +830,18 @@
     "getStepOneLayout": {
       "academicYear": "Academic Year",
       "title": "Title",
+      "titleDirectionText": "Please type title !",
       "descriptions": "Descriptions",
+      "descriptionsDirectionText": "Please type descriptions!",
       "grade": "Grade",
       "branch": "Branch",
+      "clickWelcomeAndGoodByMsg": "Add Welcome & GoodBy Message",
       "clickWelcomeMsg": "Click to add welcome message",
       "welcomeMsg": "Welcome Message",
+      "welcomeMsgDirectionText": "Please type welcome message !",
       "clickGoodbyeMsg": "Click to add goodbye message",
       "goodbyeMsg": "Goodbye Message",
+      "goodbyeMsgDirectionText": "Please type goodby message !",
       "canEveryoneSeeTheLecture": "Anybody can see this lecture ?"
     },
     "getStepTwoLayout": {
@@ -985,7 +1001,8 @@
       "pleaseSelectBranchName": "Please Select Branch Name"
     },
     "filterVideoText": {
-      "videoKeyWords": "Video Key Words"
+      "videoKeyWords": "Video Key Words",
+      "videoKeyWordsDirectionText": "Please type key words!"
     },
     "videoFavoriteGroups": {
       "all": "All",
@@ -1015,7 +1032,12 @@
       "achievementMeterDescriptions": "It is a demonstration of how much the video achievements of the question achievements cover."
 
     }
+  },
+
+
+  "lib.screen.common.commonTextFormField": {
+    "build": {
+      "enterValue": "Enter"
+    }
   }
-
-
 }

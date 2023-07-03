@@ -404,7 +404,9 @@
       "videoUpload": "Video Yükle",
       "videoUploading": "Video yükleniyor",
       "videoTitle": "Video Başlığı",
+      "videoTitleDirectionText": "Lütfen başlık giriniz !",
       "videoDescription": "Video Açıklaması",
+      "videoDescriptionDirectionText": "Lütfen açıklama giriniz !",
       "anyoneCanSeeThisVideo": "Herkes bu videoyu görebilir!",
       "acceptCommunityGuidelines": "Topluluk İlkelerini Kabul Et"
     },
@@ -497,6 +499,7 @@
       "ct_subject":"Konu"
     },
     "getLearnHierarchies": {
+      "thereIsNotFurtherLevel": "Bu sınıf ve branç için kazanım yok!",
       "pleaseSelect": "Lütfen Seçiniz"
     }
   },
@@ -520,14 +523,20 @@
     },
     "getStepOneLayout": {
       "title": "Başlık",
+      "titleDirectionText": "Lütfen başlık giriniz!",
       "descriptions": "Açıklamalar",
+      "descriptionsDirectionText": "Lütfen açıklama giriniz!",
       "duration": "Süre (Dakika)",
+      "durationDirectionText": "Lütfen süre giriniz !",
       "pleaseEnterAValidNumber": "Lütfen geçerli bir sayı girin.",
       "pleaseEnterAValue": "Lütfen bir değer girin.",
+      "clickForHeaderAndFooterInformation": "Üstbilgi ve Altbilgi Bilgisi Ekle",
       "clickForHeaderInformation": "Üst bilgi için tıklayın",
       "headerInformation": "Üst Başlık Bilgisi",
+      "headerInformationDirectionText": "Lütfen üst bilgi giriniz !",
       "clickForFooterInformation": "Alt bilgi için tıklayın",
       "footerInformation": "Alt Başlık Bilgisi",
+      "footerInformationDirectionText": "Lütfen alt bilgi giriniz!",
       "canEveryoneSeeTheExam": "Herkes sınava erişebilir mi?",
       "acceptCommunityGuidelines": "Topluluk Kurallarını Kabul Et",
       "academicYear": "Akademik Yıl",
@@ -629,6 +638,7 @@
       "questions": "Sorular",
       "branchName": "Branş Adı",
       "sectionDescriptions": "Bölüm Tanımı",
+      "sectionDescriptionsDirectionText": "Lütfen bölüm açıklması girin !",
       "cancel": "İptal",
       "save": "Kaydet"
     }
@@ -727,7 +737,8 @@
       "pleaseSelectDifficultyLevel": "Lütfen zorluk seviyesi seçin!"
     },
     "filterQuestionText": {
-      "questionKeyWords": "Soru anahtar kelimeleri"
+      "questionKeyWords": "Soru anahtar kelimeleri",
+      "questionKeyWordsDirectionText": "Lütfen sorunun temel kelimelerini giriniz"
     },
     "questionFavoriteGroups": {
       "all": "Hepsi",
@@ -814,13 +825,18 @@
     "getStepOneLayout": {
       "academicYear": "Akademik Yıl",
       "title": "Başlık",
+      "titleDirectionText": "Lütfen başlık giriniz!",
       "descriptions": "Açıklamalar",
+      "descriptionsDirectionText": "lütfen açıklama giriniz!",
       "grade": "Sınıf",
       "branch": "Branş",
+      "clickWelcomeAndGoodByMsg": "Hoşgeldin & Güle Güle Mesajı Ekle",
       "clickWelcomeMsg": "Hoş geldin mesajı eklemek için tıkla",
       "welcomeMsg": "Hoş Geldin Mesajı",
+      "welcomeMsgDirectionText": "Lütfen hoşgeldin mesajı giriniz !",
       "clickGoodbyeMsg": "Güle güle mesajı eklemek için tıkla",
       "goodbyeMsg": "Güle Güle Mesajı",
+      "goodbyeMsgDirectionText": "Lütfen güle güle mesajı giriniz !",
       "canEveryoneSeeTheLecture": "Herkes bu dersi görebilir mi?"
     },
     "getStepTwoLayout": {
@@ -980,7 +996,8 @@
       "pleaseSelectBranchName": "Lütfen Branş Adı Seçin"
     },
     "filterVideoText": {
-      "videoKeyWords": "Video Anahtar Kelimeler"
+      "videoKeyWords": "Video Anahtar Kelimeler",
+      "videoKeyWordsDirectionText": "Lütfen anahtar kelimeleri giriniz"
     },
     "videoFavoriteGroups": {
       "all": "Tümü",
@@ -1008,6 +1025,12 @@
       "closingMessage": "Kapanış Mesajı",
       "achievementMeter": "Kazanımetre",
       "achievementMeterDescriptions": "Kazanımetre, video başarıları ile soru başarılarının ne kadarının kapsadığının bir göstergesidir."
+    }
+  },
+
+  "lib.screen.common.commonTextFormField": {
+    "build": {
+      "enterValue": "Enter"
     }
   }
 

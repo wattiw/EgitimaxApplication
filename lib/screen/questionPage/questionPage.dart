@@ -620,7 +620,7 @@ class _QuestionPageState extends State<QuestionPage> {
   List<Step> questionOperationsSteps(BuildContext context,QuestionState state) {
     var qOSteps = [
       Step(
-        state: _activeCurrentStep <= 0 ? StepState.editing : StepState.complete,
+        state: _activeCurrentStep <= 0 ? StepState.editing : StepState.indexed,
         isActive: _activeCurrentStep >= 0,
         title: Text(AppLocalization.instance.translate(
             'lib.screen.questionPage.questionPage',
@@ -644,7 +644,7 @@ class _QuestionPageState extends State<QuestionPage> {
         ),
       ),
       Step(
-        state: _activeCurrentStep <= 1 ? StepState.editing : StepState.complete,
+        state: _activeCurrentStep <= 1 ? StepState.editing : StepState.indexed,
         isActive: _activeCurrentStep >= 1,
         title: Text(AppLocalization.instance.translate(
             'lib.screen.questionPage.questionPage',
@@ -661,7 +661,7 @@ class _QuestionPageState extends State<QuestionPage> {
         ),
       ),
       Step(
-        state: _activeCurrentStep <= 2 ? StepState.editing : StepState.complete,
+        state: _activeCurrentStep <= 2 ? StepState.editing : StepState.indexed,
         isActive: _activeCurrentStep >= 2,
         title: Text(AppLocalization.instance.translate(
             'lib.screen.questionPage.questionPage',

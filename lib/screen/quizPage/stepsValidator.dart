@@ -15,7 +15,7 @@ class StepsValidator {
     bool isGradeSet = false;
     bool isTitleSet = false;
     bool isDescriptionSet = false;
-    bool isDurationSet = false;
+    bool isDurationSet = true;
     bool isPublicSet = false;
     bool isConditionsAccepted = false;
 
@@ -36,7 +36,7 @@ class StepsValidator {
       isDescriptionSet = true;
     }
     if (quizModel.quizMain!.duration != null && quizModel.quizMain!.duration!=0) {
-      isDurationSet = true;
+      isDurationSet = true; // duration zorunlu değil
     }
 
     if (quizModel.quizMain!.isPublic != null) {

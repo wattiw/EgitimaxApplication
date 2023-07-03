@@ -865,9 +865,9 @@ class _VideoDataTableState extends State<VideoDataTable> {
       else
         {
           dataTableRows=null;
-          UIMessage.showMessage(context,
+          UIMessage.showShort(
               AppLocalization.instance.translate('lib.screen.common.videoDataTable',
-                  'searchButtonOnPressed', 'noData'));
+                  'searchButtonOnPressed', 'noData'),gravity: ToastGravity.CENTER);
         }
 
       setState(() {});
@@ -916,7 +916,7 @@ class _VideoDataTableState extends State<VideoDataTable> {
         ? null
         : academicYearsDataSet.firstValue('data', 'id',
             filterColumn: 'is_default', filterValue: true, insteadOfNull: 0);
-    academicYearId ??= defaultAcademicYear;
+    academicYearId ??= 0;
 
     if (academicYearsRoot == null) {
       //return emptySearchableDropDown();
@@ -1083,6 +1083,10 @@ class _VideoDataTableState extends State<VideoDataTable> {
 
   StatefulWidget filterVideoText() {
     return CommonTextFormField(
+        directionText: AppLocalization.instance.translate(
+            'lib.screen.common.videoDataTable',
+            'filterVideoText',
+            'videoKeyWordsDirectionText'),
         controller: filterVideoTextController,
         labelText: AppLocalization.instance.translate(
             'lib.screen.common.videoDataTable',

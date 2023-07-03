@@ -316,6 +316,7 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
           event.videoPageModel.videoId = BigInt.parse('0');
           setAgainRootIdAsZero = false;
 
+          event.videoPageModel.selectedAchievements={};
           event.videoPageModel.videoTitle = '';
           event.videoPageModel.videoDescriptions = '';
           event.videoPageModel.videoData = null;
