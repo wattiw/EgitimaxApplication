@@ -406,7 +406,9 @@ class _VideoPageState extends State<VideoPage> {
                       Text('${AppLocalization.instance.translate(
                           'lib.screen.videoPage.videoPage',
                           'getStepOneLayout',
-                          'videoUploaded')} ${videoPageModel.fileNameOfUploaded ?? ''}'),
+                          'videoUploaded')} ${
+                          videoPageModel.fileNameOfUploaded !=null &&
+                              videoPageModel.fileNameOfUploaded !='' ? ' | ${videoPageModel.fileNameOfUploaded}' : ''}'),
                       IconButton(
                           onPressed:
                               videoProcessing ? null : _handleUploadButtonPressed,

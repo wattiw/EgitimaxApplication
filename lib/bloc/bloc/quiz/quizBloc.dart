@@ -334,6 +334,27 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
         if(setAgainRootIdAsZero)
         {
           event.quizPageModel.quizId=BigInt.parse('0');
+          event.quizPageModel.quizMain!.title='';
+          event.quizPageModel.quizMain!.description='';
+          event.quizPageModel.quizMain!.duration=0;
+          event.quizPageModel.quizMain!.headerText='';
+          event.quizPageModel.quizMain!.footerText='';
+
+          event.quizPageModel.quizMain!.quizSections=List.empty(growable: true);
+          QuizSection qs = QuizSection();
+          qs.id = BigInt.parse('0');
+          qs.quizId = event.quizPageModel.quizId;
+          qs.branchId = userBranchId;
+          qs.orderNo = 1;
+          qs.sectionDesc =AppLocalization.instance.translate(
+              'lib.bloc.bloc.quiz.quizBloc',
+              'initEvent',
+              'mainSection');
+          qs.isActive = 0;
+          qs.quizSectionQuestionMaps = List.empty(growable: true);
+
+          event.quizPageModel.quizMain!.quizSections?.add(qs);
+
           setAgainRootIdAsZero=false;
         }
 

@@ -450,6 +450,24 @@ class QuestionBloc extends Bloc<QuestionEvent, QuestionState> {
 
         if(setAgainRootIdAsZero)
         {
+          event.questionPageModel.question='';
+
+
+          for(var op in event.questionPageModel.options!)
+            {
+              op.data='';
+              op.text='';
+              op.questId=BigInt.parse('0');
+              op.isCorrect=false;
+            }
+
+          for(var opC in event.questionPageModel.questionOptionsController!)
+          {
+            opC.data='';
+            opC.textController.setText('');
+            opC.isCorrect=false;
+          }
+
           event.questionPageModel.questionId=BigInt.parse('0');
           setAgainRootIdAsZero=false;
         }
