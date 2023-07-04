@@ -12,6 +12,7 @@ class Assets {
   static const String commonCommonDropdownButtonFormField = 'lib/screen/common/commonDropdownButtonFormField.dart';
   static const String commonCommonTextFormField = 'lib/screen/common/commonTextFormField.dart';
   static const String commonDataTableData = 'lib/model/common/dataTableData.dart';
+  static const String commonFlutterQuill = 'lib/screen/common/flutterQuill.dart';
   static const String commonGetDataSet = 'lib/model/common/getDataSet.dart';
   static const String commonHtmlEditor = 'lib/screen/common/htmlEditor.dart';
   static const String commonIsPublicCheckBox = 'lib/screen/common/isPublicCheckBox.dart';

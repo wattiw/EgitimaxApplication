@@ -125,7 +125,11 @@
   },
   "lib.screen.questionPage.questionPageComponents.questionQuillHtmlEditor": {
     "build": {
-      "typeHere": "Type here..."
+      "typeHere": "Type here...",
+      "small": "Small",
+      "normal": "Normal",
+      "large": "Large",
+      "huge": "Huge"
     }
   },
   "lib.screen.questionPage.questionPageComponents.questionType": {

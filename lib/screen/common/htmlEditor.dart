@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 
 class HtmlEditorObject extends StatefulWidget {
-  String? content;
-  double? height;
+  final String? content;
+  final double? height;
   final ValueChanged<String>? onTextChanged;
 
   HtmlEditorObject({this.content, this.onTextChanged, this.height});
@@ -21,65 +21,71 @@ class _HtmlEditorObjectState extends State<HtmlEditorObject> {
   );
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-/*        ToolbarWidget(
-          controller: controller,
-          htmlToolbarOptions: const HtmlToolbarOptions(
-            toolbarType : ToolbarType.nativeGrid,
-            toolbarPosition: ToolbarPosition.custom, //required to place toolbar anywhere!
-            //other options
-          ),
-            callbacks:null
-        ),*/
-        HtmlEditor(
-          controller: controller,
-          htmlEditorOptions: HtmlEditorOptions(
-            autoAdjustHeight:true,
-            adjustHeightForKeyboard:true,
-            hint: "Type Here...",
-            initialText: widget.content ?? '',
-            shouldEnsureVisible: true,
-          ),
-          htmlToolbarOptions:   HtmlToolbarOptions(
-            defaultToolbarButtons: [
-              StyleButtons(style:true),
-              FontSettingButtons(fontSizeUnit: true),
-              FontButtons(clearAll: false),
-              ColorButtons(),
-              ListButtons(listStyles: false),
-              ParagraphButtons(
-                  textDirection: false,
-                  lineHeight: false,
-                  caseConverter: false),
-              InsertButtons(
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          ToolbarWidget(
+            controller: controller,
+            htmlToolbarOptions: const HtmlToolbarOptions(
+              defaultToolbarButtons: [
+                StyleButtons(style: true),
+                FontSettingButtons(fontSizeUnit: true),
+                FontButtons(clearAll: true),
+                ColorButtons(),
+                ListButtons(listStyles: true),
+                ParagraphButtons(
+                  textDirection: true,
+                  lineHeight: true,
+                  caseConverter: true,
+                ),
+                InsertButtons(
                   video: false,
                   audio: false,
-                  table: false,
-                  hr: false,
-                  otherFile: false)
-            ],
-
-            toolbarItemHeight:36,
-            dropdownElevation :3,
-            buttonBorderWidth: 10,
-            dropdownIconSize: 14,
-            initiallyExpanded: true,
-            textStyle: TextStyle(fontSize: 10, color: Colors.black),
-            toolbarType: ToolbarType.nativeExpandable,
-            toolbarPosition: ToolbarPosition.aboveEditor,
+                  table: true,
+                  hr: true,
+                  otherFile: false,
+                ),
+              ],
+              toolbarItemHeight: 36,
+              dropdownElevation: 3,
+              buttonBorderWidth: 10,
+              dropdownIconSize: 14,
+              initiallyExpanded: true,
+              toolbarType: ToolbarType.nativeScrollable,
+            ),
+            callbacks: null,
           ),
-          otherOptions: OtherOptions(
-            height: widget.height ?? 400,
+          HtmlEditor(
+            controller: controller,
+            htmlToolbarOptions: const HtmlToolbarOptions(
+              toolbarPosition: ToolbarPosition.custom,
+            ),
+            htmlEditorOptions: HtmlEditorOptions(
+              autoAdjustHeight: true,
+              adjustHeightForKeyboard: true,
+              hint: "Type Here...",
+              initialText: widget.content ?? '',
+              shouldEnsureVisible: true,
+            ),
+            otherOptions: OtherOptions(
+              height: widget.height ?? 400,
+            ),
+            callbacks: Callbacks(onChangeContent: (String? changed) {
+              if (widget.onTextChanged != null) {
+                widget.onTextChanged!(changed ?? '');
+              }
+            }),
           ),
-          callbacks: Callbacks(onChangeContent: (String? changed) {
-            if (widget.onTextChanged != null) {
-              widget.onTextChanged!(changed ?? '');
-            }
-          }),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

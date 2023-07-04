@@ -62,28 +62,30 @@ class _QuestionPageState extends State<QuestionPage> {
     ToolBarStyle.bold,
     ToolBarStyle.italic,
     ToolBarStyle.underline,
-    ToolBarStyle.strike,
-    ToolBarStyle.blockQuote,
-    ToolBarStyle.codeBlock,
-    ToolBarStyle.indentMinus,
-    ToolBarStyle.indentAdd,
-    ToolBarStyle.directionRtl,
-    ToolBarStyle.directionLtr,
-    ToolBarStyle.headerOne,
-    ToolBarStyle.headerTwo,
+    //ToolBarStyle.strike,
+    //ToolBarStyle.blockQuote,
+    //ToolBarStyle.codeBlock,
+    //ToolBarStyle.indentMinus,
+    //ToolBarStyle.indentAdd,
+    //ToolBarStyle.directionRtl,
+    ToolBarStyle.subscript,
+    ToolBarStyle.superscript,
+    //ToolBarStyle.directionLtr,
+    //ToolBarStyle.headerOne,
+    //ToolBarStyle.headerTwo,
     ToolBarStyle.color,
-    ToolBarStyle.background,
-    ToolBarStyle.align,
+    //ToolBarStyle.background,
+    //ToolBarStyle.align,
     ToolBarStyle.listOrdered,
     ToolBarStyle.listBullet,
     ToolBarStyle.size,
-    ToolBarStyle.link,
+    //ToolBarStyle.link,
     ToolBarStyle.image,
-    ToolBarStyle.video,
-    ToolBarStyle.clean,
+    //ToolBarStyle.video,
+    //ToolBarStyle.clean,
     ToolBarStyle.undo,
     ToolBarStyle.redo,
-    ToolBarStyle.clearHistory,
+    //ToolBarStyle.clearHistory,
   ];
   late QuillEditorController questionController = QuillEditorController();
 
@@ -538,6 +540,7 @@ class _QuestionPageState extends State<QuestionPage> {
 
   @override
   Widget build(BuildContext context) {
+    _activeCurrentStep = 0;
     return BlocProvider(
       create: (_) => questionBloc,
       child: Scaffold(

@@ -127,7 +127,11 @@
   },
   "lib.screen.questionPage.questionPageComponents.questionQuillHtmlEditor": {
     "build": {
-      "typeHere": "Buraya yazın..."
+      "typeHere": "Buraya yazın...",
+      "small": "Küçük",
+      "normal": "Normal",
+      "large": "Büyük",
+      "huge": "Devasa"
     }
   },
   "lib.screen.questionPage.questionPageComponents.questionType": {

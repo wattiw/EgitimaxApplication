@@ -21,16 +21,17 @@ class QuestionBloc extends Bloc<QuestionEvent, QuestionState> {
       emit(LoadingState());
       await Future.delayed(const Duration(seconds: 1));
       try {
-
-        //Burada kullanıcın en son giridği seçimleri set etmek için video id en son kullanıcı tarafından girilen video id'e set edilir.
+        //Burada kullanıcın en son giridği seçimleri set etmek için question id en son kullanıcı tarafından girilen question id'e set edilir.
         //sonra tekrar 0'a set edilir çok önemlidir.
 
-        bool setAgainRootIdAsZero=false;
-        if(event.questionPageModel.questionId==BigInt.parse('0'))
-        {
-          var lastActionIdDataSet=await questionRepository.lastActionId(['*'], event.questionPageModel.userId);
-          event.questionPageModel.questionId=lastActionIdDataSet.firstValueWithType<BigInt>('data', 'id',insteadOfNull: BigInt.parse('0'));
-          setAgainRootIdAsZero=true;
+        bool setAgainRootIdAsZero = false;
+        if (event.questionPageModel.questionId == BigInt.parse('0')) {
+          var lastActionIdDataSet = await questionRepository.lastActionId(
+              ['*'], event.questionPageModel.userId);
+          event.questionPageModel.questionId =
+              lastActionIdDataSet.firstValueWithType<BigInt>(
+                  'data', 'id', insteadOfNull: BigInt.parse('0'));
+          setAgainRootIdAsZero = true;
         }
 
         Locale currentLocale = WidgetsBinding.instance.window.locale;
@@ -38,26 +39,45 @@ class QuestionBloc extends Bloc<QuestionEvent, QuestionState> {
         String countryCode = currentLocale.languageCode; // 'TR'
 
         var tblQueQuestionMainDataSet = await appRepositories
-            .tblQueQuestionMain('Question/GetObject',['id','country', 'grade_id', 'academic_year', 'question_type', 'difficulty_lev', 'subdom_id'],id: event.questionPageModel.questionId);
+            .tblQueQuestionMain('Question/GetObject', [
+          'id',
+          'country',
+          'grade_id',
+          'academic_year',
+          'question_type',
+          'difficulty_lev',
+          'subdom_id'
+        ], id: event.questionPageModel.questionId);
         var tblQueQuestOptionDataSet = await appRepositories
-            .tblQueQuestOption('Question/GetObject',['id','quest_id',  'is_active', 'is_correct', 'opt_identifier', 'opt_text', 'opt_text'],quest_id: event.questionPageModel.questionId);
+            .tblQueQuestOption('Question/GetObject', [
+          'id',
+          'quest_id',
+          'is_active',
+          'is_correct',
+          'opt_identifier',
+          'opt_text',
+          'opt_text'
+        ], quest_id: event.questionPageModel.questionId);
         var tblQueQuestAchvMapDataSet = await appRepositories
-            .tblQueQuestAchvMap('Question/GetObject',['id','quest_id','achv_id'],quest_id: event.questionPageModel.questionId);
-        var tblUserMainDataSet = await appRepositories.tblUserMain('Question/GetObject',['id','country_id','grade_id'],
+            .tblQueQuestAchvMap(
+            'Question/GetObject', ['id', 'quest_id', 'achv_id'],
+            quest_id: event.questionPageModel.questionId);
+        var tblUserMainDataSet = await appRepositories.tblUserMain(
+            'Question/GetObject', ['id', 'country_id', 'grade_id'],
             id: event.questionPageModel.userId);
 
         int countryId = 0;
         Map<int, String> countries = {};
         if (event.questionPageModel.questionId != null &&
             event.questionPageModel.questionId != BigInt.parse('0')) {
-
           var questionCountryId = tblQueQuestionMainDataSet
               .firstValue('data', 'country', insteadOfNull: 0);
           if (questionCountryId != null && questionCountryId != 0) {
             countryId = questionCountryId;
           } else {
             var tblLocL1CountryDataSet = await appRepositories
-                .tblLocL1Country('Question/GetObject',['id','countrycode'],countrycode: countryCode.toUpperCase());
+                .tblLocL1Country('Question/GetObject', ['id', 'countrycode'],
+                countrycode: countryCode.toUpperCase());
             var deviceCountryId = tblLocL1CountryDataSet
                 .firstValue('data', 'id', insteadOfNull: 0);
             countryId = deviceCountryId;
@@ -68,86 +88,66 @@ class QuestionBloc extends Bloc<QuestionEvent, QuestionState> {
           if (userCountryId != null && userCountryId != 0) {
             countryId = userCountryId;
           } else {
-            var tblLocL1Country = await appRepositories.tblLocL1Country('Question/GetObject',['id','countrycode'],
+            var tblLocL1Country = await appRepositories.tblLocL1Country(
+                'Question/GetObject', ['id', 'countrycode'],
                 countrycode: countryCode.toUpperCase());
             var deviceCountryId =
-                tblLocL1Country.firstValue('data', 'id', insteadOfNull: 0);
+            tblLocL1Country.firstValue('data', 'id', insteadOfNull: 0);
             countryId = deviceCountryId;
           }
         }
 
-        if(countryId==0 || countryId==null)
-          {
-            var userCountryId = tblUserMainDataSet
-                .firstValue('data', 'country_id', insteadOfNull: 0);
-            if (userCountryId != null && userCountryId != 0) {
-              countryId = userCountryId;
-            } else {
-              var tblLocL1Country = await appRepositories.tblLocL1Country('Question/GetObject',['id','countrycode'],
-                  countrycode: countryCode.toUpperCase());
-              var deviceCountryId =
-              tblLocL1Country.firstValue('data', 'id', insteadOfNull: 0);
-              countryId = deviceCountryId;
-            }
-          }
-
-        String? question;
 
         List<Option>? options = [];
 
-        String? freeTextAnswer;
+
 
         int gradeId = 0;
         Map<int, String> grades = {};
         var tblClassGradeDataSet =
-            await appRepositories.tblClassGrade('Question/GetObject',['id','grade_name','country_id'],country_id: countryId);
+        await appRepositories.tblClassGrade(
+            'Question/GetObject', ['id', 'grade_name', 'country_id'],
+            country_id: countryId);
 
         int academicYearId = 0;
         Map<int, String> academicYears = {};
         var tblUtilAcademicYearDataSet =
-            await appRepositories.tblUtilAcademicYear('Question/GetObject',['id','is_default','acad_year']);
+        await appRepositories.tblUtilAcademicYear(
+            'Question/GetObject', ['id', 'is_default', 'acad_year']);
 
         int questionTypeId = 0;
         Map<int, String> questionTypes = {};
         var tblQueQuestTypeDataSet = await appRepositories
-            .tblQueQuestType('Question/GetObject',['id','quest_type']); // Json'dan dil değerleri okunacak
+            .tblQueQuestType('Question/GetObject',
+            ['id', 'quest_type']); // Json'dan dil değerleri okunacak
 
         int difficultyLevelId = 0;
         Map<int, String> difficultyLevels = {};
         var tblUtilDifficultyDataSet = await appRepositories
-            .tblUtilDifficulty('Question/GetObject',['id','dif_level']); // Jsondan dil değrleri okunacak
+            .tblUtilDifficulty('Question/GetObject',
+            ['id', 'dif_level']); // Jsondan dil değrleri okunacak
 
         int branchId = 0;
         Map<int, String> branches = {};
         var tblLearnBranchDataSet =
-            await appRepositories.tblLearnBranch('Question/GetObject',['id','branch_name','country_id'],country_id: countryId);
-
-        int domainId = 0;
-        Map<int, String> domains = {};
-        var tblLearnDomainDataSet =
-            await appRepositories.tblLearnDomain('Question/GetObject',['id','branch_id','domain_name','country_id'],country_id: countryId);
-
-        int subDomainId = 0;
-        Map<int, String> subDomains = {};
-        var tblLearnSubdomainDataSet =
-            await appRepositories.tblLearnSubdomain('Question/GetObject',['id','domain_id','subdom_name']);
+        await appRepositories.tblLearnBranch(
+            'Question/GetObject', ['id', 'branch_name', 'country_id'],
+            country_id: countryId);
 
         Set<int> achievementIds = {};
         Map<int, String> achievements = {};
 
         if (event.questionPageModel.questionId != null &&
             event.questionPageModel.questionId != BigInt.parse('0')) {
-          var questionHtmlString = tblQueQuestionMainDataSet.firstValue(
+          event.questionPageModel.question= tblQueQuestionMainDataSet.firstValue(
               'collectiondata_question', 'QuestionDocument',
               insteadOfNull: GeneralAppConstant.Slogan);
-          question = questionHtmlString;
-          event.questionPageModel.question=question;
-          var questionFreeTextAnswerHtmlString = tblQueQuestionMainDataSet
+
+          event.questionPageModel.freeTextAnswer = tblQueQuestionMainDataSet
               .firstValue('collectiondata_question', 'QuestionAnswerDocument',
                   insteadOfNull: GeneralAppConstant.Slogan);
-          freeTextAnswer = questionFreeTextAnswerHtmlString;
 
-          event.questionPageModel.freeTextAnswer=freeTextAnswer;
+
 
           var questionOptionsFromSql = tblQueQuestOptionDataSet.selectDataTable(
               'data',
@@ -191,16 +191,15 @@ class QuestionBloc extends Bloc<QuestionEvent, QuestionState> {
             i++;
           }
 
-          options = questionOptions;
-          event.questionPageModel.options=options;
+          event.questionPageModel.options = questionOptions;
           event.questionPageModel.questionOptionsController=questionOptionsController; // Önemli İnit 'de func tetikleniyor fakat zamanlama  dan dolayı null geliyor.Event'in bitmesi beklenmiyor.
 
           if (countryId == null || countryId == 0) {
             var tblLocL1Country = await appRepositories.tblLocL1Country('Question/GetObject',['id','lang','countrycode'],
                 countrycode: countryCode.toUpperCase());
             var deviceCountries =
-                tblLocL1Country.toKeyValuePairsWithTypes<int, int>('data', 'id',
-                    valueColumn: 'lang');
+            tblLocL1Country.toKeyValuePairsWithTypes<int, int>('data', 'id',
+                valueColumn: 'lang');
             for (var country in deviceCountries.entries) {
               int countryId = country.key;
               int countryLangId = country.value;
@@ -212,10 +211,10 @@ class QuestionBloc extends Bloc<QuestionEvent, QuestionState> {
             }
           } else {
             var tblLocL1Country =
-                await appRepositories.tblLocL1Country('Question/GetObject',['id','lang'],id: countryId);
+            await appRepositories.tblLocL1Country('Question/GetObject',['id','lang'],id: countryId);
             var userCountries =
-                tblLocL1Country.toKeyValuePairsWithTypes<int, int>('data', 'id',
-                    valueColumn: 'lang');
+            tblLocL1Country.toKeyValuePairsWithTypes<int, int>('data', 'id',
+                valueColumn: 'lang');
 
             for (var country in userCountries.entries) {
               int countryId = country.key;
@@ -227,6 +226,7 @@ class QuestionBloc extends Bloc<QuestionEvent, QuestionState> {
               countries.putIfAbsent(countryId, () => countryName);
             }
           }
+
           event.questionPageModel.countries = countries;
 
           var questionGradeId = tblQueQuestionMainDataSet
@@ -245,30 +245,11 @@ class QuestionBloc extends Bloc<QuestionEvent, QuestionState> {
               .firstValue('data', 'difficulty_lev', insteadOfNull: 0);
           difficultyLevelId = questionDifficultyLevelId;
 
-          //Artık kullanılmıyor
-          var achievementIdInner = tblQueQuestAchvMapDataSet.firstValue('data', 'achv_id', insteadOfNull: 0);
-
-          //Artık kullanılmıyor
-          var tblLearnSubdomAchMapDataSet = await appRepositories.tblLearnSubdomAchMap('Question/GetObject',['id','subdom_id','achv_id'],achv_id: achievementIdInner);
-          var subDomainIdInner = tblLearnSubdomAchMapDataSet.firstValue('data', 'subdom_id', insteadOfNull: 0);
-          //Artık kullanılmıyor
-          var tblLearnSubdomainDataSet =await appRepositories.tblLearnSubdomain('Question/GetObject',['id','domain_id','subdom_name'],id: subDomainIdInner);
-          //Artık kullanılmıyor
-          var domainIdInner = tblLearnSubdomainDataSet.firstValue('data', 'domain_id', insteadOfNull: 0);
-          //Artık kullanılmıyor
-          var tblLearnDomainDataSet = await appRepositories.tblLearnDomain('Question/GetObject',['id','branch_id','domain_name','country_id'],id: domainIdInner, country_id: countryId);
-
-          var questionBranchId = tblLearnDomainDataSet.firstValue('data', 'branch_id', insteadOfNull: 0);
-          branchId = questionBranchId;
-
-          var questionDomainId = tblLearnDomainDataSet.firstValue('data', 'id',
-              filterColumn: 'id',
-              filterValue: domainIdInner,
-              insteadOfNull: 0);
-          domainId = questionDomainId;
 
           var questionSubDomainId = tblQueQuestionMainDataSet.firstValue('data', 'subdom_id', insteadOfNull: 0);
-          subDomainId = questionSubDomainId;
+          var questionBranchDataSet=await appRepositories.tblLearnMain('Question/GetObject', ['id','branch_id'],id:questionSubDomainId );
+          branchId=questionBranchDataSet.firstValue('data', 'branch_id',insteadOfNull: 0);
+
 
           var questionAchievemetns = tblQueQuestAchvMapDataSet
               .toKeyValuePairsWithTypes<int, int>('data', 'achv_id',
@@ -343,12 +324,6 @@ class QuestionBloc extends Bloc<QuestionEvent, QuestionState> {
               .firstValue('data', 'branch_id', insteadOfNull: 0);
           branchId = userBranchId;
 
-          var userDomainId = tblLearnDomainDataSet.firstValue('data', 'id',
-              filterColumn: 'branch_id',
-              filterValue: branchId,
-              insteadOfNull: 0);
-          domainId = userDomainId;
-
           //user için sudbomain ve achievements'e gerek yok
         }
 
@@ -386,33 +361,6 @@ class QuestionBloc extends Bloc<QuestionEvent, QuestionState> {
             valueColumn: 'branch_name');
         event.questionPageModel.branches = branches;
         event.questionPageModel.selectedBranch = branchId;
-
-        domains = tblLearnDomainDataSet.toKeyValuePairsWithTypes<int, String>(
-            'data', 'id',
-            valueColumn: 'domain_name',
-            filterColumn: 'branch_id',
-            filterValue: branchId);
-        event.questionPageModel.domains = domains;
-        event.questionPageModel.selectedDomain = domainId;
-
-        subDomains = tblLearnSubdomainDataSet
-            .toKeyValuePairsWithTypes<int, String>('data', 'id',
-                valueColumn: 'subdom_name',
-                filterColumn: 'domain_id',
-                filterValue: domainId);
-        event.questionPageModel.subDomains = subDomains;
-        event.questionPageModel.selectedSubDomain = subDomainId;
-
-        event.questionPageModel.achievementsBulk= await questionRepository.getAchievementsFromSubDomainId(['id','achivement_text','subdom_id','country_id']);
-
-        var tblLearnAchivementDataSet =
-            await questionRepository.getAchievementsFromSubDomainId(['id','achivement_text','subdom_id','country_id'],
-                subdom_id: subDomainId, country_id: countryId);
-        achievements = tblLearnAchivementDataSet
-            .toKeyValuePairsWithTypes<int, String>('data', 'id',
-                valueColumn: 'achivement_text');
-        event.questionPageModel.achievements = achievements;
-        event.questionPageModel.selectedAchievements = achievementIds;
 
 
         var learnId=tblQueQuestionMainDataSet.firstValue('data', 'subdom_id', insteadOfNull: 0);
@@ -461,12 +409,16 @@ class QuestionBloc extends Bloc<QuestionEvent, QuestionState> {
               op.isCorrect=false;
             }
 
-          for(var opC in event.questionPageModel.questionOptionsController!)
-          {
-            opC.data='';
-            opC.textController.setText('');
-            opC.isCorrect=false;
-          }
+          if(event.questionPageModel!=null && event.questionPageModel.questionOptionsController!=null &&  event.questionPageModel.questionOptionsController!.isNotEmpty)
+            {
+              for(var opC in event.questionPageModel.questionOptionsController!)
+              {
+                opC.data='';
+                opC.textController.setText('');
+                opC.isCorrect=false;
+              }
+            }
+
 
           event.questionPageModel.selectedAchievements= {};
 
@@ -584,7 +536,7 @@ class QuestionBloc extends Bloc<QuestionEvent, QuestionState> {
           country: event.questionPageModel.selectedCountry,
           userId: isCorporateUser ? mainUserId :event.questionPageModel.userId,
           gradeId: event.questionPageModel.selectedGrade,
-          subdomId: event.questionPageModel.selectedSubDomain,
+          subdomId: event.questionPageModel.selectedLearn,
           questionText: event.questionPageModel.question,
           questionImage: null,
           resolution: event.questionPageModel.freeTextAnswer,
