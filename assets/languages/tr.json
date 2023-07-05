@@ -169,7 +169,8 @@
       "noDataRetrieved": "Veri alınamadı!"
     },
     "build": {
-      "questionOptions": "Soru Şıkları"
+      "questionOptions": "Soru Şıkları",
+      "questionOptionsSubTitle": "Lütfen soru şıklarını ekleyiniz !"
     },
     "initialOptionsStateContainer": {
       "qPOpsPagePreparingToLoad": "QPOps sayfası yüklenmeye hazırlanıyor."

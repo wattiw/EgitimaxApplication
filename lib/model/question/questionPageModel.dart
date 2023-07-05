@@ -1,5 +1,4 @@
 import 'package:egitimaxapplication/model/question/question.dart';
-import 'package:flutter_quill/flutter_quill.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 
 class QuestionPageModel {
@@ -70,7 +69,6 @@ class QuestionPageModel {
 
 class QuestionOptionsController {
   QuillEditorController textController = QuillEditorController();
-  QuillController controller = QuillController.basic();
   bool? isToolbarOpened = false;
   String? data;
   String? mark;

@@ -167,7 +167,8 @@
       "noDataRetrieved": "No data retrieved !"
     },
     "build": {
-      "questionOptions": "Question Options"
+      "questionOptions": "Question Options",
+      "questionOptionsSubTitle": "Please add question options !"
     },
     "initialOptionsStateContainer": {
       "qPOpsPagePreparingToLoad": "QPOps Page Preparing to Load."

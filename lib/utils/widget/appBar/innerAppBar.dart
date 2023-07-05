@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class InnerAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
+  final String? subTitle;
 
-  const InnerAppBar({Key? key, required this.title}) : super(key: key);
+  const InnerAppBar({Key? key, required this.title, this.subTitle}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,13 +13,34 @@ class InnerAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.transparent,
       elevation: 0,
       centerTitle: false,
-      title: Text(
-        title,
-        style: const TextStyle(
-          //color: Colors.black,
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-        ),
+      title: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Align(
+            alignment: Alignment.topLeft,
+            child: Text(
+              title,
+              style: const TextStyle(
+                //color: Colors.black,
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          if(subTitle!=null)
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              subTitle??'',
+              style: const TextStyle(
+                //color: Colors.black,
+                fontSize: 10,
+                fontWeight: FontWeight.normal,
+              ),
+            ),
+          ),
+        ],
       ),
       leading: IconButton(
         icon: const Icon(

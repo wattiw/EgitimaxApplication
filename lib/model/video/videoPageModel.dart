@@ -175,14 +175,18 @@ class VideoPageModel {
           children: [Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(
-                '$itemKey :',
-                style: const TextStyle(fontWeight: FontWeight.bold),
-                softWrap: true,
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
+              Expanded(
+                flex: 4,
+                child: Text(
+                  '$itemKey :',
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  softWrap: true,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
               Expanded(
+                flex: 9,
                 child: Text(
                   itemValue,
                   style: const TextStyle(fontWeight: FontWeight.normal),

@@ -10,15 +10,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 
-
-
 class QuestionOptions extends StatefulWidget {
   QuestionOptions({
     super.key,
     this.setActiveCurrentStep,
     this.questionPageModel,
     this.setQuestionPageModel,
-
   });
 
   QuestionPageModel? questionPageModel;
@@ -46,7 +43,6 @@ class _QuestionOptionsState extends State<QuestionOptions> {
   double? iconSize = 14;
 
   final customToolBarList = [
-
     ToolBarStyle.bold,
     ToolBarStyle.italic,
     ToolBarStyle.underline,
@@ -66,49 +62,48 @@ class _QuestionOptionsState extends State<QuestionOptions> {
     //ToolBarStyle.align,
     ToolBarStyle.listOrdered,
     ToolBarStyle.listBullet,
-    ToolBarStyle.size,
+    //ToolBarStyle.size,
     //ToolBarStyle.link,
     ToolBarStyle.image,
     //ToolBarStyle.video,
     //ToolBarStyle.clean,
-    ToolBarStyle.undo,
-    ToolBarStyle.redo,
+    //ToolBarStyle.undo,
+    //ToolBarStyle.redo,
     //ToolBarStyle.clearHistory,
   ];
 
   @override
   void initState() {
-
     super.initState();
     questionOptionsBloc = QuestionOptionsBloc();
     questionOptionsBloc.add(QuestionOptionsInitEvent());
     setOptionsAndAnswerControllers();
   }
 
-  void setOptionsToModel()
-  {
-    if (widget.questionOptionsController!=null && widget.questionOptionsController!.isNotEmpty)
-    {
+  void setOptionsToModel() {
+    if (widget.questionOptionsController != null &&
+        widget.questionOptionsController!.isNotEmpty) {
       widget.questionPageModel?.options?.clear();
-      List<Option> newOptions=List.empty(growable: true);
+      List<Option> newOptions = List.empty(growable: true);
       for (int i = 0; i < widget.questionOptionsController!.length; i++) {
         var currentOption = widget.questionOptionsController![i];
-        Option newOp=Option();
-        newOp.text=currentOption.data;
-        newOp.data=currentOption.data;
-        newOp.isCorrect=currentOption.isCorrect;
-        newOp.mark=currentOption.mark;
-        newOp.questId=widget.questionPageModel?.questionId;
+        Option newOp = Option();
+        newOp.text = currentOption.data;
+        newOp.data = currentOption.data;
+        newOp.isCorrect = currentOption.isCorrect;
+        newOp.mark = currentOption.mark;
+        newOp.questId = widget.questionPageModel?.questionId;
         newOptions.add(newOp);
       }
-      widget.questionPageModel?.options=newOptions;
+      widget.questionPageModel?.options = newOptions;
       widget.setQuestionPageModel!(widget.questionPageModel);
     }
   }
-  void setOptionsAndAnswerControllers() {
 
-    if (widget.questionPageModel!=null && widget.questionPageModel?.options != null && widget.questionPageModel!.options!.isNotEmpty)
-    {
+  void setOptionsAndAnswerControllers() {
+    if (widget.questionPageModel != null &&
+        widget.questionPageModel?.options != null &&
+        widget.questionPageModel!.options!.isNotEmpty) {
       widget.questionOptionsController.clear();
 
       for (int i = 0; i < widget.questionPageModel!.options!.length; i++) {
@@ -134,7 +129,10 @@ class _QuestionOptionsState extends State<QuestionOptions> {
       }
     }
 
-    widget.questionResolutionsController.setText(widget.questionPageModel!=null ? (widget.questionPageModel!.freeTextAnswer ?? '') :'');
+    widget.questionResolutionsController.setText(
+        widget.questionPageModel != null
+            ? (widget.questionPageModel!.freeTextAnswer ?? '')
+            : '');
   }
 
   @override
@@ -142,6 +140,7 @@ class _QuestionOptionsState extends State<QuestionOptions> {
     for (int i = 0; i < widget.questionOptionsController.length; i++) {
       widget.questionOptionsController[i].textController.dispose();
     }
+    widget.questionResolutionsController.dispose();
     super.dispose();
   }
 
@@ -160,7 +159,12 @@ class _QuestionOptionsState extends State<QuestionOptions> {
               title: AppLocalization.instance.translate(
                   'lib.screen.questionPage.questionOptionsPage',
                   'build',
-                  'questionOptions')),
+                  'questionOptions'),
+            subTitle: AppLocalization.instance.translate(
+                'lib.screen.questionPage.questionOptionsPage',
+                'build',
+                'questionOptionsSubTitle'),
+          ),
           body: BlocBuilder<QuestionOptionsBloc, QuestionOptionsState>(
             builder: (context, state) {
               if (state is InitialInitState) {
@@ -224,7 +228,6 @@ class _QuestionOptionsState extends State<QuestionOptions> {
     );
   }
 
-
   Future<Widget> initialOptionsStateContainer(InitialInitState state) async {
     return Text(AppLocalization.instance.translate(
         'lib.screen.questionPage.questionOptionsPage',
@@ -241,345 +244,298 @@ class _QuestionOptionsState extends State<QuestionOptions> {
 
   Future<Widget> loadedOptionsStateContainer(LoadedInitState state) async {
     return Column(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Flexible(
-          child: Padding(
-            padding: const EdgeInsets.all(2),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (!widget.expandedResolution)
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: widget.questionOptionsController.length,
-                      itemBuilder: (context, index) {
-                        String optionMaker =
-                            '${String.fromCharCode(index + 65)})' ??
-                                AppLocalization.instance.translate(
-                                    'lib.screen.questionPage.questionOptionsPage',
-                                    'loadedOptionsStateContainer',
-                                    'errorMarked');
+        if (!widget.expandedResolution)
+          Container(
+            constraints: const BoxConstraints(maxHeight: 400),
+            child: ListView.builder(
+              itemCount: widget.questionOptionsController.length,
+              itemBuilder: (context, index) {
+                String optionMaker = '${String.fromCharCode(index + 65)})' ??
+                    AppLocalization.instance.translate(
+                        'lib.screen.questionPage.questionOptionsPage',
+                        'loadedOptionsStateContainer',
+                        'errorMarked');
 
-                        return Column(
-                          mainAxisSize: MainAxisSize.min,
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.max,
                           children: [
                             Container(
-                              margin: const EdgeInsets.fromLTRB(2, 0, 2, 0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Text(
-                                        '$optionMaker.',
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                  Expanded(
-                                    flex: 1,
-                                    child: Align(
-                                      alignment: Alignment.topRight,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Tooltip(
-                                            message: AppLocalization.instance
-                                                .translate(
-                                                    'lib.screen.questionPage.questionOptionsPage',
-                                                    'loadedOptionsStateContainer',
-                                                    'isCorrect'),
-                                            child: Checkbox(
-                                              value: widget
-                                                  .questionOptionsController[
-                                                      index]
-                                                  .isCorrect,
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  if (value == true) {
-                                                    for (int i = 0;
-                                                        i <
-                                                            widget
-                                                                .questionOptionsController
-                                                                .length;
-                                                        i++) {
-                                                      if (i != index) {
-                                                        widget
-                                                            .questionOptionsController[
-                                                                i]
-                                                            .isCorrect = false;
-                                                      }
-                                                    }
-                                                  }
-                                                  widget
-                                                      .questionOptionsController[
-                                                          index]
-                                                      .isCorrect = value ?? false;
-                                                });
-                                              },
-                                            ),
+                              alignment: Alignment.topCenter,
+                                child: Tooltip(
+                                  message: AppLocalization.instance.translate(
+                                      'lib.screen.questionPage.questionOptionsPage',
+                                      'loadedOptionsStateContainer',
+                                      'isCorrect'),
+                                  child: Checkbox(
+                                    value: widget
+                                        .questionOptionsController[index].isCorrect,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        if (value == true) {
+                                          for (int i = 0;
+                                          i <
+                                              widget.questionOptionsController
+                                                  .length;
+                                          i++) {
+                                            if (i != index) {
+                                              widget.questionOptionsController[i]
+                                                  .isCorrect = false;
+                                            }
+                                          }
+                                        }
+                                        widget.questionOptionsController[index]
+                                            .isCorrect = value ?? false;
+                                      });
+                                    },
+                                  ),
+                                )),
+                            Container(
+                                alignment: Alignment.topCenter,
+                                child: Text(
+                                  '$optionMaker',
+                                  style: const TextStyle(fontWeight: FontWeight.bold),
+                                )),
+                            Expanded(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    if (widget.questionOptionsController[index]
+                                        .isToolBarVisible)
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          border: Border.all(color: Colors.grey),
+                                          borderRadius: BorderRadius.circular(3),
+                                        ),
+                                        margin: const EdgeInsets.fromLTRB(2, 1, 2, 1),
+                                        padding: const EdgeInsets.all(2),
+                                        child: SingleChildScrollView(
+                                          physics: const BouncingScrollPhysics(),
+                                          scrollDirection: Axis.horizontal,
+                                          child: ToolBar(
+                                            direction: Axis.horizontal,
+                                            toolBarConfig: customToolBarList,
+                                            padding: const EdgeInsets.all(2),
+                                            iconSize: iconSize,
+                                            controller: widget
+                                                .questionOptionsController[index]
+                                                .textController,
+                                            customButtons: [
+                                              if(false) // Şıklarda kaydet'i kaldırdık
+                                              InkWell(
+                                                onTap: () {
+                                                  setOptionsToModel();
+                                                },
+                                                child: Icon(
+                                                  Icons.save,
+                                                  size: iconSize,
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                          IconButton(
-                                            tooltip: AppLocalization.instance
-                                                .translate(
-                                                    'lib.screen.questionPage.questionOptionsPage',
-                                                    'loadedOptionsStateContainer',
-                                                    'deleteOption'),
-                                            icon: const Icon(Icons.delete),
-                                            onPressed: () {
-                                              setState(() {
-                                                widget.questionOptionsController
-                                                    .removeAt(index);
-                                                for (int i = 0;
-                                                    i <
-                                                        widget
-                                                            .questionOptionsController
-                                                            .length;
-                                                    i++) {
-                                                  String optionMakr =
-                                                      '${String.fromCharCode(i + 65)})' ??
-                                                          AppLocalization
-                                                              .instance
-                                                              .translate(
-                                                                  'lib.screen.questionPage.questionOptionsPage',
-                                                                  'loadedOptionsStateContainer',
-                                                                  'errorMarked');
-                                                  widget
-                                                      .questionOptionsController[
-                                                          i]
-                                                      .mark = optionMakr;
-                                                }
-                                              });
-                                            },
-                                          ),
-                                          IconButton(
-                                            tooltip: AppLocalization.instance
-                                                .translate(
-                                                    'lib.screen.questionPage.questionOptionsPage',
-                                                    'loadedOptionsStateContainer',
-                                                    'toolbar'),
-                                            icon: Icon(widget
-                                                    .questionOptionsController[
-                                                        index]
-                                                    .isToolBarVisible
-                                                ? Icons.arrow_drop_up_outlined
-                                                : Icons
-                                                    .arrow_drop_down_outlined),
-                                            onPressed: () {
-                                              setState(() {
-                                                widget
-                                                        .questionOptionsController[
-                                                            index]
-                                                        .isToolBarVisible =
-                                                    !widget
-                                                        .questionOptionsController[
-                                                            index]
-                                                        .isToolBarVisible;
-                                              });
-                                            },
-                                          ),
-                                        ],
+                                        ),
+                                      ),
+                                    Container(
+                                      //padding: const EdgeInsets.all(2.0),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.grey),
+                                        borderRadius: BorderRadius.circular(3.0),
+                                      ),
+                                      padding: const EdgeInsets.all(2),
+                                      margin: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+                                      child: QuillHtmlEditor(
+                                        text: widget
+                                            .questionOptionsController[index].data,
+                                        hintText: AppLocalization.instance.translate(
+                                            'lib.screen.questionPage.questionOptionsPage',
+                                            'loadedOptionsStateContainer',
+                                            'typeHere'),
+                                        isEnabled: true,
+                                        minHeight: 10,
+                                        controller: widget
+                                            .questionOptionsController[index]
+                                            .textController,
+                                        textStyle: TextStyle(
+                                          fontSize: componentTextStyle.fontSize,
+                                          locale:
+                                          AppLocalizationConstant.DefaultLocale,
+                                        ),
+                                        hintTextStyle: TextStyle(
+                                          fontSize: componentTextStyle.fontSize,
+                                          locale:
+                                          AppLocalizationConstant.DefaultLocale,
+                                        ),
+                                        hintTextAlign: TextAlign.start,
+                                        padding: const EdgeInsets.all(2),
+                                        hintTextPadding: EdgeInsets.zero,
+                                        //backgroundColor: _backgroundColor,
+                                        onTextChanged: (text) {
+                                          widget.questionOptionsController[index]
+                                              .data = text;
+                                          widget.questionOptionsController[index]
+                                              .mark = optionMaker;
+                                          setOptionsToModel();
+                                        },
                                       ),
                                     ),
+                                  ],
+                                )),
+                            Container(
+                              alignment: Alignment.topCenter,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  PopupMenuButton(
+                                    itemBuilder: (BuildContext context) =>
+                                        CustomOptionPopupMenu.getMenuItems(
+                                            context),
+                                    offset: const Offset(0, kToolbarHeight),
+                                    child: const Icon(Icons.menu),
+                                    onSelected: (selectedMenuItem) {
+                                      var xx = selectedMenuItem;
+
+                                      if (selectedMenuItem == 'delete') {
+                                        setState(() {
+                                          widget.questionOptionsController
+                                              .removeAt(index);
+                                          for (int i = 0;
+                                          i <
+                                              widget.questionOptionsController
+                                                  .length;
+                                          i++) {
+                                            String optionMakr =
+                                                '${String.fromCharCode(i + 65)})' ??
+                                                    AppLocalization.instance.translate(
+                                                        'lib.screen.questionPage.questionOptionsPage',
+                                                        'loadedOptionsStateContainer',
+                                                        'errorMarked');
+                                            widget.questionOptionsController[i]
+                                                .mark = optionMakr;
+                                          }
+                                        });
+                                      } else if (selectedMenuItem == 'toolbar') {
+                                        setState(() {
+                                          widget.questionOptionsController[index]
+                                              .isToolBarVisible =
+                                          !widget
+                                              .questionOptionsController[
+                                          index]
+                                              .isToolBarVisible;
+                                        });
+                                      } else {}
+                                    },
                                   )
                                 ],
                               ),
                             ),
-                            if (widget.questionOptionsController[index]
-                                .isToolBarVisible)
-                              Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(3),
-                                ),
-                                margin: const EdgeInsets.fromLTRB(2, 1, 2, 1),
-                                padding: const EdgeInsets.all(2),
-                                child: SingleChildScrollView(
-                                  physics: const BouncingScrollPhysics(),
-                                  scrollDirection: Axis.horizontal,
-                                  child: ToolBar(
-                                    direction: Axis.horizontal,
-                                    toolBarConfig: customToolBarList,
-                                    padding: const EdgeInsets.all(2),
-                                    iconSize: iconSize,
-                                    controller: widget
-                                        .questionOptionsController[index]
-                                        .textController,
-                                    customButtons: [
-                                      InkWell(
-                                        onTap: () {
-                                          setOptionsToModel();
-                                        },
-                                        child: Icon(
-                                          Icons.save,
-                                          size: iconSize,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 2),
-                              child: Container(
-                                //padding: const EdgeInsets.all(2.0),
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(3.0),
-                                ),
-                                padding: const EdgeInsets.all(2),
-                                margin: const EdgeInsets.fromLTRB(2, 0, 2, 0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      verticalDirection: VerticalDirection.up,
-                                      children: [
-                                        Expanded(
-                                          child: QuillHtmlEditor(
-                                            text: widget
-                                                .questionOptionsController[
-                                                    index]
-                                                .data,
-                                            hintText: AppLocalization.instance
-                                                .translate(
-                                                    'lib.screen.questionPage.questionOptionsPage',
-                                                    'loadedOptionsStateContainer',
-                                                    'typeHere'),
-                                            isEnabled: true,
-                                            minHeight: 10,
-                                            controller: widget
-                                                .questionOptionsController[
-                                                    index]
-                                                .textController,
-                                            textStyle: TextStyle(
-                                              fontSize:
-                                                  componentTextStyle.fontSize,
-                                              locale: AppLocalizationConstant
-                                                  .DefaultLocale,
-                                            ),
-                                            hintTextStyle: TextStyle(
-                                              fontSize:
-                                                  componentTextStyle.fontSize,
-                                              locale: AppLocalizationConstant
-                                                  .DefaultLocale,
-                                            ),
-                                            hintTextAlign: TextAlign.start,
-                                            padding: const EdgeInsets.all(2),
-                                            hintTextPadding: EdgeInsets.zero,
-                                            //backgroundColor: _backgroundColor,
-                                            onTextChanged: (text) {
-                                               widget.questionOptionsController[index].data = text;
-                                               widget.questionOptionsController[index].mark = optionMaker;
-                                               setOptionsToModel();
-
-                                            },
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            //const Divider(color: Colors.grey),
                           ],
-                        );
-                      },
-                    ),
-                  ),
-                if (widget.expandedResolution)
-                  Column(
-                    children: [
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          AppLocalization.instance.translate(
-                              'lib.screen.questionPage.questionOptionsPage',
-                              'loadedOptionsStateContainer',
-                              'resolutionText'),
-                          style: TextStyle(
-                              fontSize: componentTextStyle.fontSize,
-                              fontWeight: FontWeight.bold),
                         ),
                       ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(3),
-                        ),
-                        padding: const EdgeInsets.all(2),
-                        margin: const EdgeInsets.fromLTRB(2, 0, 2, 0),
-                        child: SingleChildScrollView(
-                          physics: const BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          child: ToolBar(
-                            direction: Axis.horizontal,
-                            toolBarConfig: customToolBarList,
-                            padding: const EdgeInsets.all(2),
-                            iconSize: iconSize,
-                            controller: widget.questionResolutionsController ??
-                                QuillEditorController(),
-                            customButtons: const [],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(3),
-                          ),
-                          padding: const EdgeInsets.all(2),
-                          margin: const EdgeInsets.fromLTRB(2, 0, 2, 0),
-                          child: SizedBox(
-                            width: double.infinity,
-                            child: QuillHtmlEditor(
-                              controller:
-                                  widget.questionResolutionsController ??
-                                      QuillEditorController(),
-                              text: widget.questionPageModel?.freeTextAnswer ??
-                                  '',
-                              hintText: AppLocalization.instance.translate(
-                                  'lib.screen.questionPage.questionOptionsPage',
-                                  'loadedOptionsStateContainer',
-                                  'typeHere'),
-                              isEnabled: true,
-                              minHeight: 300,
-                              textStyle: componentTextStyle,
-                              hintTextStyle: componentTextStyle,
-                              hintTextAlign: TextAlign.start,
-                              padding: const EdgeInsets.only(left: 2, top: 2),
-                              hintTextPadding: EdgeInsets.zero,
-                              onFocusChanged: (focus) {},
-                              onTextChanged: (text) {
-                                widget.questionPageModel?.freeTextAnswer=text;
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
+                      const SizedBox(height: 10,)
                     ],
                   ),
-              ],
+                );
+              },
             ),
           ),
-        ),
+        if (widget.expandedResolution)
+          Container(
+            constraints: const BoxConstraints(maxHeight: 400),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      AppLocalization.instance.translate(
+                          'lib.screen.questionPage.questionOptionsPage',
+                          'loadedOptionsStateContainer',
+                          'resolutionText'),
+                      style: TextStyle(
+                          fontSize: componentTextStyle.fontSize,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(3),
+                    ),
+                    padding: const EdgeInsets.all(2),
+                    margin: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      child: ToolBar(
+                        direction: Axis.horizontal,
+                        toolBarConfig: customToolBarList,
+                        padding: const EdgeInsets.all(2),
+                        iconSize: iconSize,
+                        controller: widget.questionResolutionsController ??
+                            QuillEditorController(),
+                        customButtons: const [],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Container(
+                    height: 250,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(3),
+                    ),
+                    padding: const EdgeInsets.all(2),
+                    margin: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: QuillHtmlEditor(
+                        controller: widget.questionResolutionsController ??
+                            QuillEditorController(),
+                        text: widget.questionPageModel?.freeTextAnswer ?? '',
+                        hintText: AppLocalization.instance.translate(
+                            'lib.screen.questionPage.questionOptionsPage',
+                            'loadedOptionsStateContainer',
+                            'typeHere'),
+                        isEnabled: true,
+                        minHeight: 300,
+                        textStyle: componentTextStyle,
+                        hintTextStyle: componentTextStyle,
+                        hintTextAlign: TextAlign.start,
+                        padding: const EdgeInsets.only(left: 2, top: 2),
+                        hintTextPadding: EdgeInsets.zero,
+                        onFocusChanged: (focus) {},
+                        onTextChanged: (text) {
+                          widget.questionPageModel?.freeTextAnswer = text;
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        const SizedBox(height: 10,),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
@@ -608,7 +564,7 @@ class _QuestionOptionsState extends State<QuestionOptions> {
                                         'loadedOptionsStateContainer',
                                         'errorMarked');
                             QuestionOptionsController newOption =
-                                QuestionOptionsController();
+                            QuestionOptionsController();
                             newOption.mark = optionMakr;
                             newOption.data = '';
                             widget.questionOptionsController.add(newOption);
@@ -629,9 +585,9 @@ class _QuestionOptionsState extends State<QuestionOptions> {
                       onPressed: () {
                         setState(() {
                           widget.expandedResolution =
-                              !widget.expandedResolution;
+                          !widget.expandedResolution;
                           widget.isHiddenAddOptionButton =
-                              !widget.isHiddenAddOptionButton!;
+                          !widget.isHiddenAddOptionButton!;
                         });
                       },
                       child: Icon(widget.expandedResolution
@@ -654,7 +610,8 @@ class _QuestionOptionsState extends State<QuestionOptions> {
                     Flexible(
                       child: ElevatedButton(
                         onPressed: () {
-                          widget.setQuestionPageModel!(widget.questionPageModel);
+                          widget.setQuestionPageModel!(
+                              widget.questionPageModel);
                           widget.setActiveCurrentStep!(1);
                           Navigator.pop(context);
                         },
@@ -671,9 +628,6 @@ class _QuestionOptionsState extends State<QuestionOptions> {
             ),
           ],
         ),
-        const SizedBox(
-          height: 8,
-        )
       ],
     );
     return Text(AppLocalization.instance.translate(
@@ -685,5 +639,44 @@ class _QuestionOptionsState extends State<QuestionOptions> {
   Future<Widget> errorOptionsStateContainer(ErrorInitState state) async {
     return Text(
         '${AppLocalization.instance.translate('lib.screen.questionPage.questionOptionsPage', 'errorOptionsStateContainer', 'qPOpsAnErrorOccurredWhileLoadingThePageError:')}${state.errorMessage}');
+  }
+}
+
+class CustomOptionPopupMenu {
+  static List<PopupMenuEntry> getMenuItems(BuildContext context) {
+    final theme = Theme.of(context);
+    return <PopupMenuEntry>[
+      PopupMenuItem(
+        value: 'toolbar',
+        child: Row(
+          children: [
+            Icon(Icons.edit_note_sharp),
+            SizedBox(
+              width: 3,
+            ),
+            Text(AppLocalization.instance.translate(
+                'lib.screen.questionPage.questionOptionsPage',
+                'loadedOptionsStateContainer',
+                'toolbar'))
+          ],
+        ),
+      ),
+      const PopupMenuDivider(),
+      PopupMenuItem(
+        value: 'delete',
+        child: Row(
+          children: [
+            Icon(Icons.delete_forever),
+            SizedBox(
+              width: 3,
+            ),
+            Text(AppLocalization.instance.translate(
+                'lib.screen.questionPage.questionOptionsPage',
+                'loadedOptionsStateContainer',
+                'deleteOption'))
+          ],
+        ),
+      ),
+    ];
   }
 }

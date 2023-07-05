@@ -64,7 +64,6 @@ class Assets {
   static const String questionPageComponentsQuestionFreeTextAnswerQuillHtmlEditor = 'lib/screen/questionPage/questionPageComponents/questionFreeTextAnswerQuillHtmlEditor.dart';
   static const String questionPageComponentsQuestionQuillHtmlEditor = 'lib/screen/questionPage/questionPageComponents/questionQuillHtmlEditor.dart';
   static const String questionPageComponentsQuestionQuillHtmlEditorToolBar = 'lib/screen/questionPage/questionPageComponents/questionQuillHtmlEditorToolBar.dart';
-  static const String questionPageQuestionOptions = 'lib/screen/questionPage/questionOptions.dart';
   static const String questionPageQuestionOptionsPage = 'lib/screen/questionPage/questionOptionsPage.dart';
   static const String questionPageQuestionPage = 'lib/screen/questionPage/questionPage.dart';
   static const String questionPageStepsValidator = 'lib/screen/questionPage/stepsValidator.dart';
