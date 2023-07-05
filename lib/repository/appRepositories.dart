@@ -5,6 +5,7 @@ import 'package:egitimaxapplication/repository/lecture/lectureRepository.dart';
 import 'package:egitimaxapplication/repository/mainLayout/mainLayoutRepository.dart';
 import 'package:egitimaxapplication/repository/myHomePage/myHomePageRepository.dart';
 import 'package:egitimaxapplication/repository/question/questionRepository.dart';
+import 'package:egitimaxapplication/repository/questions/questionsRepository.dart';
 import 'package:egitimaxapplication/repository/quiz/quizRepository.dart';
 import 'package:egitimaxapplication/repository/video/videoRepository.dart';
 import 'package:egitimaxapplication/utils/extension/apiDataSetExtension.dart';
@@ -18,6 +19,8 @@ abstract class AppRepositoriesBase {
   Future<MyHomePageRepository> myHomePageRepository();
 
   Future<QuestionRepository> questionRepository();
+
+  Future<QuestionsRepository> questionsRepository();
 
   Future<VideoRepository> videoRepository();
 
@@ -43,6 +46,10 @@ class AppRepositories implements AppRepositoriesBase {
   @override
   Future<QuestionRepository> questionRepository() async {
     return QuestionRepository();
+  }
+  @override
+  Future<QuestionsRepository> questionsRepository() async {
+    return QuestionsRepository();
   }
 
   @override

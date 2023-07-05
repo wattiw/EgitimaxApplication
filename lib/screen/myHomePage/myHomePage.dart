@@ -1,9 +1,5 @@
-import 'package:egitimaxapplication/screen/questionPage/questionPage.dart';
-import 'package:egitimaxapplication/screen/quizPage/quizPage.dart';
 import 'package:egitimaxapplication/utils/constant/appConstant/generalAppConstant.dart';
 import 'package:egitimaxapplication/utils/constant/router/appRouterConstant.dart';
-import 'package:egitimaxapplication/utils/constant/router/heroTagConstant.dart';
-import 'package:egitimaxapplication/utils/widget/layout/mainLayout.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {

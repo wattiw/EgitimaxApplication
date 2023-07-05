@@ -1,6 +1,7 @@
 class AppRouterConstant {
   static const String home = '/';
   static const String question = '/question';
+  static const String questions = '/questions';
   static const String video = '/video';
   static const String quiz = '/quiz';
   static const String questionSelector = '/questionSelector';
@@ -10,6 +11,7 @@ class AppRouterConstant {
   static List<String> get routeConstants => [
     home,
     question,
+    questions,
     video,
     quiz,
     questionSelector,

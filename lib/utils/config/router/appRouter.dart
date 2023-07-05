@@ -3,6 +3,7 @@ import 'package:egitimaxapplication/screen/common/questionDataTable.dart';
 import 'package:egitimaxapplication/screen/common/videoDataTable.dart';
 import 'package:egitimaxapplication/screen/lecture/lecturePage.dart';
 import 'package:egitimaxapplication/screen/questionPage/questionPage.dart';
+import 'package:egitimaxapplication/screen/questionsPage/questions.dart';
 import 'package:egitimaxapplication/screen/quizPage/quizPage.dart';
 import 'package:egitimaxapplication/screen/videoPage/videoPage.dart';
 import 'package:egitimaxapplication/utils/config/language/appLocalizations.dart';
@@ -59,7 +60,12 @@ class AppRouter {
               name: HeroTagConstant.lecture), // use the route name as the Hero tag
         );
 
-
+      case AppRouterConstant.questions:
+        return MaterialPageRoute(
+          builder: (_) => MainLayout(context: context, loadedStateContainer: QuestionsPage(userId: BigInt.parse(GeneralAppConstant.TempUserIdSilSonra!),)),
+          settings: const RouteSettings(
+              name: HeroTagConstant.questions), // use the route name as the Hero tag
+        );
 
       default:
         return MaterialPageRoute(

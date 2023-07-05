@@ -77,6 +77,12 @@ class Assets {
   static const String questionQuestionRepository = 'lib/repository/question/questionRepository.dart';
   static const String questionQuestionState = 'lib/bloc/state/question/questionState.dart';
   static const String questionSetQuestionObjects = 'lib/model/question/setQuestionObjects.dart';
+  static const String questionsPageQuestions = 'lib/screen/questionsPage/questions.dart';
+  static const String questionsQuestionsBloc = 'lib/bloc/bloc/questions/questionsBloc.dart';
+  static const String questionsQuestionsEvent = 'lib/bloc/event/questions/questionsEvent.dart';
+  static const String questionsQuestionsPageModel = 'lib/model/questions/questionsPageModel.dart';
+  static const String questionsQuestionsRepository = 'lib/repository/questions/questionsRepository.dart';
+  static const String questionsQuestionsState = 'lib/bloc/state/questions/questionsState.dart';
   static const String quizPageQuizPage = 'lib/screen/quizPage/quizPage.dart';
   static const String quizPageQuizSectionDataTable = 'lib/screen/quizPage/quizSectionDataTable.dart';
   static const String quizPageStepsValidator = 'lib/screen/quizPage/stepsValidator.dart';
