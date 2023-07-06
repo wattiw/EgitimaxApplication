@@ -14,7 +14,11 @@ class CommonDataTable extends StatefulWidget {
   List<String>? dataTableHideColumn;
   List<Map<Map<String, String>, Widget>>? dataTableRows;
   bool? showCheckboxColumn;
+  bool? singleSelection;
   bool? showDataTableMenu;
+  bool? filterSelectionMenuIsActive;
+  bool? columnSelectionMenuIsActive;
+  bool? exportButtonIsActive;
   bool? createDataTableColumnAlias;
   Map<String, Map<Map<String, String>, Widget>>? innerDataTableRows;
   Map<String, TextEditingController>? filterControllers;
@@ -43,6 +47,10 @@ class CommonDataTable extends StatefulWidget {
       this.dataTableRows,
       this.showCheckboxColumn,
       this.showDataTableMenu,
+        this.singleSelection,
+        this.filterSelectionMenuIsActive,
+        this.columnSelectionMenuIsActive,
+        this.exportButtonIsActive,
       this.createDataTableColumnAlias,
       this.onSelectedRowsChanged,
       this.dataTableDisableColumnFilter,
@@ -207,7 +215,7 @@ class _CommonDataTableState extends State<CommonDataTable> {
           }
 
           cells.add(DataCell(Container(
-              alignment: Alignment.center,
+              alignment: Alignment.centerLeft,
               key: Key(containerKey!),
               child: Container(
                   key: Key(cell.key.entries.first.key),
@@ -599,7 +607,19 @@ class _CommonDataTableState extends State<CommonDataTable> {
 
   void onSelectedRow(bool value, String? index) {
     if (index != null) {
+
+      if(widget.singleSelection==true)
+        {
+          widget.selectedRowKeys.forEach((key, value) {
+            if(key!=index)
+              {
+                widget.selectedRowKeys[key] = false;
+              }
+          });
+        }
+
       widget.selectedRowKeys[index] = value;
+
       catchSelectedRows();
       setState(() {});
     }
@@ -651,7 +671,7 @@ class _CommonDataTableState extends State<CommonDataTable> {
         var dc = DataColumn(
           tooltip: colNameAsDisplay,
           label: Container(
-            alignment: Alignment.center,
+            alignment: Alignment.centerLeft,
             key: Key(colName),
             child: Text(
               colNameAsDisplay,
@@ -716,6 +736,7 @@ class _CommonDataTableState extends State<CommonDataTable> {
 
     CommonDataTableMenu cDTM = CommonDataTableMenu(
       widgetList: [
+        if(!(widget.columnSelectionMenuIsActive==false))
         ColumnChooserButton(
             selectedItems: selectedColumnItems,
             columnData: mergeLists(
@@ -747,6 +768,7 @@ class _CommonDataTableState extends State<CommonDataTable> {
 
               setState(() {});
             }),
+        if(!(widget.filterSelectionMenuIsActive==false))
         ColumnFilterChooserButton(
             selectedItems: selectedNonFilterColumnItems,
             columnData: mergeLists(
@@ -771,6 +793,7 @@ class _CommonDataTableState extends State<CommonDataTable> {
 
               setState(() {});
             }),
+        if(!(widget.exportButtonIsActive==false))
         ExportButton(
           onPressed: () {},
         ),
@@ -1001,7 +1024,7 @@ class _CommonDataTableState extends State<CommonDataTable> {
       dataTextStyle: theme.dataTableTheme.dataTextStyle,
       checkboxHorizontalMargin: theme.dataTableTheme.checkboxHorizontalMargin,
       clipBehavior: Clip.none,
-      showCheckboxColumn: widget.showCheckboxColumn ?? false,
+      showCheckboxColumn: widget.singleSelection==true ? false :( widget.showCheckboxColumn ?? false),
       headingRowHeight: theme.dataTableTheme.headingRowHeight,
       horizontalMargin: theme.dataTableTheme.horizontalMargin,
       dataRowMaxHeight: theme.dataTableTheme.dataRowMaxHeight,
@@ -1016,30 +1039,36 @@ class _CommonDataTableState extends State<CommonDataTable> {
       rows: tempRows,
     );
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: <Widget>[
-        if (widget.toolBarButtons != null && widget.toolBarButtons!.isNotEmpty)
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: widget.toolBarButtons ?? [],
+
+    return Container(
+      alignment: Alignment.topLeft,
+      width: double.infinity,
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: <Widget>[
+          if (widget.toolBarButtons != null && widget.toolBarButtons!.isNotEmpty)
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: widget.toolBarButtons ?? [],
+            ),
+          if (widget.toolBarButtons != null && widget.toolBarButtons!.isNotEmpty)
+            const SizedBox(
+              height: 5,
+            ),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: SizedBox(
+              child: false ? Container() : datatable,
+            ),
           ),
-        if (widget.toolBarButtons != null && widget.toolBarButtons!.isNotEmpty)
           const SizedBox(
-            height: 5,
-          ),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: SizedBox(
-            child: false ? Container() : datatable,
-          ),
-        ),
-        const SizedBox(
-          height: 20,
-        )
-      ],
+            height: 20,
+          )
+        ],
+      ),
     );
   }
 }

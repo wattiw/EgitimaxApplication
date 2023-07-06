@@ -153,86 +153,86 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
               padding: const EdgeInsets.all(3.0),
               itemBuilder: (BuildContext context) => [
                      PopupMenuItem<String>(
-                      padding: EdgeInsets.all(3.0),
+                      padding: const EdgeInsets.all(3.0),
                       value: 'add_question',
-                      textStyle: TextStyle(fontSize: 10),
+                      textStyle: const TextStyle(fontSize: 10),
                       child: Row(
                         children: [
-                          Icon(Icons.add, size: 14),
-                          SizedBox(width: 8),
+                          const Icon(Icons.add, size: 14),
+                          const SizedBox(width: 8),
                           Text(AppLocalization.instance.translate(
                               'lib.screen.quizPage.quizSectionDataTable',
                               'build',
-                              'addQuestion'), style: TextStyle(fontSize: 10)),
+                              'addQuestion'), style: const TextStyle(fontSize: 10)),
                         ],
                       ),
                     ),
                      PopupMenuItem<String>(
-                      padding: EdgeInsets.all(3.0),
+                      padding: const EdgeInsets.all(3.0),
                       value: 'edit',
-                      textStyle: TextStyle(fontSize: 10),
+                      textStyle: const TextStyle(fontSize: 10),
                       child: Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.edit,
                             size: 14,
                           ),
-                          SizedBox(width: 8),
+                          const SizedBox(width: 8),
                           Text(AppLocalization.instance.translate(
                               'lib.screen.quizPage.quizSectionDataTable',
                               'build',
-                              'edit'), style: TextStyle(fontSize: 10)),
+                              'edit'), style: const TextStyle(fontSize: 10)),
                         ],
                       ),
                     ),
                     if (section.orderNo != 1)
                        PopupMenuItem<String>(
-                        padding: EdgeInsets.all(3.0),
+                        padding: const EdgeInsets.all(3.0),
                         value: 'move_up',
-                        textStyle: TextStyle(fontSize: 10),
+                        textStyle: const TextStyle(fontSize: 10),
                         child: Row(
                           children: [
-                            Icon(Icons.arrow_upward, size: 14),
-                            SizedBox(width: 8),
+                            const Icon(Icons.arrow_upward, size: 14),
+                            const SizedBox(width: 8),
                             Text(AppLocalization.instance.translate(
                                 'lib.screen.quizPage.quizSectionDataTable',
                                 'build',
-                                'moveUp'), style: TextStyle(fontSize: 10)),
+                                'moveUp'), style: const TextStyle(fontSize: 10)),
                           ],
                         ),
                       ),
                     if (widget.quizPageModel.quizMain!.quizSections?.length !=
                         section.orderNo)
                        PopupMenuItem<String>(
-                        padding: EdgeInsets.all(3.0),
+                        padding: const EdgeInsets.all(3.0),
                         value: 'move_down',
-                        textStyle: TextStyle(fontSize: 10),
+                        textStyle: const TextStyle(fontSize: 10),
                         child: Row(
                           children: [
-                            Icon(Icons.arrow_downward, size: 14),
-                            SizedBox(width: 8),
+                            const Icon(Icons.arrow_downward, size: 14),
+                            const SizedBox(width: 8),
                             Text(AppLocalization.instance.translate(
                                 'lib.screen.quizPage.quizSectionDataTable',
                                 'build',
-                                'moveDown'), style: TextStyle(fontSize: 10)),
+                                'moveDown'), style: const TextStyle(fontSize: 10)),
                           ],
                         ),
                       ),
                     if (section.orderNo != 1)
                        PopupMenuItem<String>(
-                        padding: EdgeInsets.all(3.0),
+                        padding: const EdgeInsets.all(3.0),
                         value: 'delete',
-                        textStyle: TextStyle(fontSize: 10),
+                        textStyle: const TextStyle(fontSize: 10),
                         child: Row(
                           children: [
-                            Icon(Icons.delete, size: 14),
-                            SizedBox(width: 8),
+                            const Icon(Icons.delete, size: 14),
+                            const SizedBox(width: 8),
                             Text(
                               AppLocalization.instance.translate(
                                   'lib.screen.quizPage.quizSectionDataTable',
                                   'build',
                                   'delete'),
-                              style: TextStyle(fontSize: 10),
+                              style: const TextStyle(fontSize: 10),
                             ),
                           ],
                         ),
@@ -419,10 +419,10 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
                         'lib.screen.quizPage.quizSectionDataTable',
                         'build',
                         'selectAction'),
-                    style: TextStyle(color: Colors.blue, fontSize: 10),
+                    style: const TextStyle(color: Colors.blue, fontSize: 10),
                   ),
-                  SizedBox(width: 5.0),
-                  Icon(Icons.arrow_drop_down),
+                  const SizedBox(width: 5.0),
+                  const Icon(Icons.arrow_drop_down),
                 ],
               )),
         ],
@@ -505,8 +505,8 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Icon(Icons.add),
-                  SizedBox(width: 3),
+                  const Icon(Icons.add),
+                  const SizedBox(width: 3),
                   // Adjust the spacing between the icon and text
                   Text(AppLocalization.instance.translate(
                       'lib.screen.quizPage.quizSectionDataTable',
@@ -751,52 +751,52 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
                   itemBuilder: (BuildContext context) => [
                         if (orderNo != 1)
                            PopupMenuItem<String>(
-                            padding: EdgeInsets.all(3.0),
+                            padding: const EdgeInsets.all(3.0),
                             value: 'move_up',
-                            textStyle: TextStyle(fontSize: 10),
+                            textStyle: const TextStyle(fontSize: 10),
                             child: Row(
                               children: [
-                                Icon(Icons.arrow_upward, size: 14),
-                                SizedBox(width: 8),
+                                const Icon(Icons.arrow_upward, size: 14),
+                                const SizedBox(width: 8),
                                 Text(AppLocalization.instance.translate(
                                     'lib.screen.quizPage.quizSectionDataTable',
                                     'createSectionQuestionsWidget',
-                                    'moveUp'), style: TextStyle(fontSize: 10)),
+                                    'moveUp'), style: const TextStyle(fontSize: 10)),
                               ],
                             ),
                           ),
                         if (section.quizSectionQuestionMaps!.length != orderNo)
                            PopupMenuItem<String>(
-                            padding: EdgeInsets.all(3.0),
+                            padding: const EdgeInsets.all(3.0),
                             value: 'move_down',
-                            textStyle: TextStyle(fontSize: 10),
+                            textStyle: const TextStyle(fontSize: 10),
                             child: Row(
                               children: [
-                                Icon(Icons.arrow_downward, size: 14),
-                                SizedBox(width: 8),
+                                const Icon(Icons.arrow_downward, size: 14),
+                                const SizedBox(width: 8),
                                 Text(AppLocalization.instance.translate(
                                     'lib.screen.quizPage.quizSectionDataTable',
                                     'createSectionQuestionsWidget',
                                     'moveDown'),
-                                    style: TextStyle(fontSize: 10)),
+                                    style: const TextStyle(fontSize: 10)),
                               ],
                             ),
                           ),
                         if (orderNo != 1)
                            PopupMenuItem<String>(
-                            padding: EdgeInsets.all(3.0),
+                            padding: const EdgeInsets.all(3.0),
                             value: 'delete',
-                            textStyle: TextStyle(fontSize: 10),
+                            textStyle: const TextStyle(fontSize: 10),
                             child: Row(
                               children: [
-                                Icon(Icons.delete, size: 14),
-                                SizedBox(width: 8),
+                                const Icon(Icons.delete, size: 14),
+                                const SizedBox(width: 8),
                                 Text(
                                   AppLocalization.instance.translate(
                                       'lib.screen.quizPage.quizSectionDataTable',
                                       'createSectionQuestionsWidget',
                                       'delete'),
-                                  style: TextStyle(fontSize: 10),
+                                  style: const TextStyle(fontSize: 10),
                                 ),
                               ],
                             ),
@@ -889,10 +889,10 @@ class _QuizSectionDataTableState extends State<QuizSectionDataTable> {
                             'lib.screen.quizPage.quizSectionDataTable',
                             'createSectionQuestionsWidget',
                             'actions'),
-                        style: TextStyle(color: Colors.blue, fontSize: 10),
+                        style: const TextStyle(color: Colors.blue, fontSize: 10),
                       ),
-                      SizedBox(width: 5.0),
-                      Icon(Icons.arrow_drop_down),
+                      const SizedBox(width: 5.0),
+                      const Icon(Icons.arrow_drop_down),
                     ],
                   )),
             ],

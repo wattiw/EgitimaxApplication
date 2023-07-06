@@ -129,7 +129,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
   String? filterTitle; // Başlangıç başlık değeri
 
   TextEditingController filterQuestionTextController = TextEditingController();
-  TextEditingController ageController = TextEditingController();
+
 
   bool isFilterExpanded = false;
 
@@ -168,7 +168,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
   @override
   void dispose() {
     filterQuestionTextController.dispose();
-    ageController.dispose();
+
     super.dispose();
   }
 
@@ -195,7 +195,7 @@ class _QuestionDataTableState extends State<QuestionDataTable> {
                 const Icon(
                   Icons.manage_search,
                 ),
-                SizedBox(width: 5),
+                const SizedBox(width: 5),
                 Text(AppLocalization.instance.translate(
                     'lib.screen.common.questionDataTable', 'build', 'filters')),
               ],
