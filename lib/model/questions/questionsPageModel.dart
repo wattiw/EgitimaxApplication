@@ -9,6 +9,9 @@ class QuestionsPageModel {
 
   QuestionsPageModel({required this.userId});
 
+  bool? isCorporateUser;
+  BigInt? mainUserId;
+
   bool loadedInitialData=false;
 
   BuildContext? context;

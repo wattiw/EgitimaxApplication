@@ -193,7 +193,7 @@ extension QuestionsRepositoryExtension on QuestionsRepository {
                   isqufa.isMyFavorite,
                    concatenated_group_ids.fav_group_ids,
                    `egitimax`.`getLearnInfoById`(subdom_id) AS learn_data
-                  FROM tbl_que_question_main root 
+                  FROM (SELECT * FROM tbl_que_question_main WHERE is_active=1 ) root 
                   left join tbl_util_academic_year acye on root.academic_year=acye.id 
                   left join tbl_util_difficulty dile on root.difficulty_lev=dile.id 
                   left join tbl_learn_main sudo on root.subdom_id=sudo.id 

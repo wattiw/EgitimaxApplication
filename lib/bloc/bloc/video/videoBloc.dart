@@ -420,7 +420,7 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
             insteadOfNull: BigInt.parse('0'));
         bool isCorporateUser;
         if (mainUserId != BigInt.parse(mainUserId.toString()) &&
-            mainUserId != null) {
+            mainUserId != null  && mainUserId!=BigInt.parse('0')) {
           isCorporateUser = true;
         } else {
           isCorporateUser = false;

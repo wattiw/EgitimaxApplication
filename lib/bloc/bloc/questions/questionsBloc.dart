@@ -24,6 +24,18 @@ class QuestionsBloc extends Bloc<QuestionsEvent, QuestionsState> {
       await Future.delayed(const Duration(seconds: 1));
       try {
 
+        var tblUserSubuserDataSet=await appRepositories.tblUserSubuser('Question/GetObject',['id','main_user_id','sub_user_id'],sub_user_id: event.questionsPageModel.userId);
+        var mainUserId=tblUserSubuserDataSet.firstValueWithType<BigInt>('data', 'main_user_id',insteadOfNull: BigInt.parse('0'));
+        bool isCorporateUser;
+        if (event.questionsPageModel.userId!=BigInt.parse(mainUserId.toString()) && mainUserId!=null && mainUserId!=BigInt.parse('0')) {
+          isCorporateUser = true;
+        } else {
+          isCorporateUser = false;
+        }
+
+        event.questionsPageModel.isCorporateUser = isCorporateUser;
+        event.questionsPageModel.mainUserId = mainUserId;
+
         event.questionsPageModel.dataTableRoot = null;
         event.questionsPageModel.dataTableDataRoot = null;
         event.questionsPageModel.dataTableRows = null;
@@ -33,7 +45,7 @@ class QuestionsBloc extends Bloc<QuestionsEvent, QuestionsState> {
         var dataSet = await questionsRepository.getQuestionDataTableData(['*'],
             getNoSqlData: 0,
             user_id_for_isMyFavorite: event.questionsPageModel.userId,
-            user_id: event.questionsPageModel.userId,
+            user_id: isCorporateUser ? mainUserId : event.questionsPageModel.userId,
             academic_year: event.questionsPageModel.academicYearId == 0 ? null : event.questionsPageModel.academicYearId,
             difficulty_lev: event.questionsPageModel.difficultyId == 0 ? null : event.questionsPageModel.difficultyId,
             grade_id: event.questionsPageModel.gradeId == 0 ? null : event.questionsPageModel.gradeId,

@@ -302,7 +302,7 @@ class LectureBloc extends Bloc<LectureEvent, LectureState> {
             insteadOfNull: BigInt.parse('0'));
         bool isCorporateUser;
         if (event.lecturePageModel.userId != BigInt.parse(mainUserId.toString()) &&
-            mainUserId != null) {
+            mainUserId != null && mainUserId!=BigInt.parse('0')) {
           isCorporateUser = true;
         } else {
           isCorporateUser = false;

@@ -2,6 +2,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:egitimaxapplication/bloc/bloc/questions/questionsBloc.dart';
 import 'package:egitimaxapplication/bloc/state/questions/questionsState.dart';
 import 'package:egitimaxapplication/model/common/dataTableData.dart';
+import 'package:egitimaxapplication/model/question/setQuestionObjects.dart';
 import 'package:egitimaxapplication/model/questions/questionsPageModel.dart';
 import 'package:egitimaxapplication/repository/appRepositories.dart';
 import 'package:egitimaxapplication/repository/questions/questionsRepository.dart';
@@ -81,7 +82,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
                     (BuildContext context, AsyncSnapshot<Widget> snapshot) {
                   if (snapshot.hasData) {
                     return Padding(
-                      padding: const EdgeInsets.all(10.0),
+                      padding: const EdgeInsets.all(5.0),
                       child: snapshot.data ?? Container(),
                     );
                   } else if (snapshot.hasError) {
@@ -105,11 +106,41 @@ class _QuestionsPageState extends State<QuestionsPage> {
   }
 
   Widget _buildInit(BuildContext context, InitState state) {
-    return Container();
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const CircularProgressIndicator(),
+          const SizedBox(height: 16),
+          Text(AppLocalization.instance.translate(
+              'lib.screen.questionPage.questionPage',
+              '_buildInit',
+              'initializing')),
+        ],
+      ),
+    );
   }
 
   Widget _buildLoading(BuildContext context, LoadingState state) {
-    return Container();
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const CircularProgressIndicator(),
+          const SizedBox(height: 16),
+          Text(
+            AppLocalization.instance.translate(
+                'lib.screen.questionPage.questionPage',
+                '_buildLoadingStep1',
+                'firstStepLoading'),
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Future<Widget> _buildLoaded(BuildContext context, LoadedState state) async {
@@ -484,7 +515,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+        padding: const EdgeInsets.fromLTRB(5, 1, 5, 1),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -539,122 +570,19 @@ class _QuestionsPageState extends State<QuestionsPage> {
                               Text('Add')
                             ],
                           )),
-                    ),
-                  if (state.questionsPageModel.selectedKeys != null &&
-                      state.questionsPageModel.selectedKeys!.isNotEmpty &&
-                      false)
-                    Padding(
-                      padding: const EdgeInsets.only(right: 5),
-                      child: ElevatedButton(
-                          onPressed: () {
-                            if (state.questionsPageModel.selectedKeys != null &&
-                                state.questionsPageModel.selectedKeys!
-                                    .isNotEmpty &&
-                                state.questionsPageModel.selectedKeys!.first !=
-                                    null) {
-                              String questionIdAsString = state
-                                  .questionsPageModel.selectedKeys!.first
-                                  .toString();
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => MainLayout(
-                                      context: context,
-                                      loadedStateContainer: QuestionPage(
-                                        userId: widget.userId,
-                                        isEditorMode: true,
-                                        questionId:
-                                            BigInt.parse(questionIdAsString),
-                                      )),
-                                  settings: const RouteSettings(
-                                      name: HeroTagConstant
-                                          .question), // use the route name as the Hero tag
-                                ),
-                              );
-                            }
-                          },
-                          child: const Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Icon(Icons.edit),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text('Edit')
-                            ],
-                          )),
-                    ),
-                  if (state.questionsPageModel.selectedKeys != null &&
-                      state.questionsPageModel.selectedKeys!.isNotEmpty &&
-                      false)
-                    Padding(
-                      padding: const EdgeInsets.only(right: 0),
-                      child: ElevatedButton(
-                          onPressed: () {
-                            UserInteractiveMessage(
-                              title: 'Question Delete',
-                              message: 'Do you want to delete this question ?',
-                              yesButtonText: 'Yes',
-                              noButtonText: 'No',
-                              onSelection: (bool value) {
-                                if (value) {
-                                  if (state.questionsPageModel.selectedKeys !=
-                                          null &&
-                                      state.questionsPageModel.selectedKeys!
-                                          .isNotEmpty &&
-                                      state.questionsPageModel.selectedKeys!
-                                              .first !=
-                                          null) {
-                                    String questionIdAsString = state
-                                        .questionsPageModel.selectedKeys!.first
-                                        .toString();
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (_) => MainLayout(
-                                            context: context,
-                                            loadedStateContainer: QuestionPage(
-                                              userId: widget.userId,
-                                              isEditorMode: true,
-                                              questionId: BigInt.parse(
-                                                  questionIdAsString),
-                                            )),
-                                        settings: const RouteSettings(
-                                            name: HeroTagConstant
-                                                .question), // use the route name as the Hero tag
-                                      ),
-                                    );
-                                  }
-                                } else {}
-                                setState(() {});
-                              },
-                            ).show(context);
-                          },
-                          child: const Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Icon(Icons.delete_forever_outlined),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text('Delete')
-                            ],
-                          )),
-                    ),
+                    )
                 ],
               ),
             ),
             const SizedBox(
-              height: 10,
+              height: 2,
             ),
             SizedBox(
               width: double.infinity,
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: SizedBox(
-                  height: 400,
+                  height: 500,
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: state.questionsPageModel.dataTableDataRoot != null &&
@@ -772,7 +700,32 @@ class _QuestionsPageState extends State<QuestionsPage> {
   }
 
   Widget _buildError(BuildContext context, ErrorState state) {
-    return Container();
+    String errorMessage;
+    if (state is ErrorState) {
+      errorMessage = state.errorMessage;
+    } else {
+      errorMessage = AppLocalization.instance.translate(
+          'lib.screen.questionPage.questionPage',
+          '_buildError',
+          'unknownError');
+    }
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.error_outline,
+            size: 48.0,
+            color: Theme.of(context).colorScheme.error,
+          ),
+          const SizedBox(height: 16.0),
+          Text(
+            errorMessage,
+            style: const TextStyle(fontSize: 16.0),
+          ),
+        ],
+      ),
+    );
   }
 
   List<BigInt> convertToBigIntList(List<dynamic>? dataTableSelectedKeys) {
@@ -808,7 +761,9 @@ class _QuestionsPageState extends State<QuestionsPage> {
       ],
           getNoSqlData: 0,
           user_id_for_isMyFavorite: widget.userId,
-          user_id: widget.userId,
+          user_id: state.questionsPageModel.isCorporateUser == true
+              ? state.questionsPageModel.mainUserId
+              : state.questionsPageModel.userId,
           academic_year: state.questionsPageModel.academicYearId == 0
               ? null
               : state.questionsPageModel.academicYearId,
@@ -1031,7 +986,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
                                         null)
                                 ? state.questionsPageModel.selectedKeys!.first
                                     .toString()
-                                : '0';
+                                : idValue.toString();
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -1055,7 +1010,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
                         message: 'Do you want to delete this question ?',
                         yesButtonText: 'Yes',
                         noButtonText: 'No',
-                        onSelection: (bool value) {
+                        onSelection: (bool value) async {
                           if (value) {
                             if (idValue != null ||
                                 (state
@@ -1066,25 +1021,46 @@ class _QuestionsPageState extends State<QuestionsPage> {
                                     state.questionsPageModel.selectedKeys!
                                             .first !=
                                         null)) {
-                              String questionIdAsString = state
-                                  .questionsPageModel.selectedKeys!.first
-                                  .toString();
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => MainLayout(
-                                      context: context,
-                                      loadedStateContainer: QuestionPage(
-                                        userId: widget.userId,
-                                        isEditorMode: true,
-                                        questionId: idValue ??
-                                            BigInt.parse(questionIdAsString),
-                                      )),
-                                  settings: const RouteSettings(
-                                      name: HeroTagConstant
-                                          .question), // use the route name as the Hero tag
-                                ),
-                              );
+                              String questionIdAsString = (state
+                                              .questionsPageModel
+                                              .selectedKeys !=
+                                          null &&
+                                      state.questionsPageModel.selectedKeys!
+                                          .isNotEmpty &&
+                                      state.questionsPageModel.selectedKeys!
+                                              .first !=
+                                          null)
+                                  ? state.questionsPageModel.selectedKeys!.first
+                                      .toString()
+                                  : idValue.toString();
+
+                              SetQuestionObjects setObject =
+                                  SetQuestionObjects();
+                              setObject.isPassive = true;
+                              setObject.questionId =
+                                  BigInt.parse(questionIdAsString);
+                              setObject.userId =
+                                  state.questionsPageModel.userId;
+
+                              var questionsRepository =
+                                  await appRepositories.questionsRepository();
+
+                              var isDeleted = await questionsRepository
+                                  .setDataSet(setObject: setObject);
+
+                              var x = state.questionsPageModel.dataTableRows;
+
+                              state.questionsPageModel.dataTableRows
+                                  ?.removeWhere((row) {
+                                for (var key in row.keys) {
+                                  for (var innerKey in key.entries) {
+                                    if (innerKey.value == idValue.toString()) {
+                                      return true;
+                                    }
+                                  }
+                                }
+                                return false;
+                              });
                             }
                           } else {}
                           setState(() {});
@@ -1201,7 +1177,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
           'likeCount',
           'actions'
         ];
-        state.questionsPageModel.dataTableHideColumn =hiddenColumns;
+        state.questionsPageModel.dataTableHideColumn = hiddenColumns;
         state.questionsPageModel.dataTableRows =
             modifiedRows; //dataTableData.rowsAsWidget; // Map Is List<Map<Map<columnName, columnValueAsString>, Widget(Show Your Widget With Cell Value Bind)>>?
       }

@@ -450,7 +450,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
             insteadOfNull: BigInt.parse('0'));
         bool isCorporateUser;
         if (event.quizPageModel.userId != BigInt.parse(mainUserId.toString()) &&
-            mainUserId != null) {
+            mainUserId != null && mainUserId!=BigInt.parse('0')) {
           isCorporateUser = true;
         } else {
           isCorporateUser = false;

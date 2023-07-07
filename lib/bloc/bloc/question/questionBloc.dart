@@ -510,7 +510,7 @@ class QuestionBloc extends Bloc<QuestionEvent, QuestionState> {
         var tblUserSubuserDataSet=await appRepositories.tblUserSubuser('Question/GetObject',['id','main_user_id','sub_user_id'],sub_user_id: event.questionPageModel.userId);
         var mainUserId=tblUserSubuserDataSet.firstValueWithType<BigInt>('data', 'main_user_id',insteadOfNull: BigInt.parse('0'));
         bool isCorporateUser;
-        if (event.questionPageModel.userId!=BigInt.parse(mainUserId.toString()) && mainUserId!=null) {
+        if (event.questionPageModel.userId!=BigInt.parse(mainUserId.toString()) && mainUserId!=null && mainUserId!=BigInt.parse('0')) {
           isCorporateUser = true;
         } else {
           isCorporateUser = false;
